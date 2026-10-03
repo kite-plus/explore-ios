@@ -65,7 +65,8 @@ struct FollowingView: View {
         .task(id: "\(language.rawValue)|\(tag ?? "")|\(app.generation)") {
             feed.language = language
             feed.tag = tag
-            await feed.load(using: app.client)
+            feed.version = app.generation
+            await feed.refreshIfNeeded(using: app.client)
             if let error = feed.lastError {
                 app.handleAuthError(error)
             }

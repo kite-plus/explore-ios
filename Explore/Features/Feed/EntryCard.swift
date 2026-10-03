@@ -46,7 +46,11 @@ struct EntryCard: View {
                     .typesettingLanguage(contentLanguage ?? Locale.Language(identifier: "en"), isEnabled: contentLanguage != nil)
 
                     if let path = entry.imagePath {
-                        EntryThumbnail(url: app.client.imageURL(path))
+                        // A new address, such as after a server switch,
+                        // gets a fresh thumbnail rather than the old image.
+                        let url = app.client.imageURL(path)
+                        EntryThumbnail(url: url)
+                            .id(url)
                     }
                 }
                 .contentShape(.rect)

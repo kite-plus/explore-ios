@@ -44,6 +44,9 @@ final class FeedModel {
     let source: Source
     var language: LanguageFilter = .all
     var tag: String?
+    /// Changes when what the list shows changes on the server's side, such
+    /// as the account or its follows; a new version reloads the list.
+    var version = 0
 
     private(set) var entries: [Entry] = []
     private(set) var blog: Blog?
@@ -54,6 +57,7 @@ final class FeedModel {
     /// The error behind a failed first page, for callers that react to it.
     private(set) var lastError: APIError?
     private var loadedKey: String?
+    private var loadedAt: Date?
 
     init(source: Source, tag: String? = nil) {
         self.source = source
@@ -66,12 +70,43 @@ final class FeedModel {
         (phase == .idle || phase == .loading) && entries.isEmpty
     }
 
-    private var key: String { "\(source)|\(language.rawValue)|\(tag ?? "")" }
+    private func key(for client: APIClient) -> String {
+        "\(client.server.absoluteString)|\(source)|\(language.rawValue)|\(tag ?? "")|\(version)"
+    }
+
+    /// Shows the list when a screen appears. A list already loaded for the
+    /// same filters stays as it is, pages and all; after ten minutes it
+    /// gains the newer posts on top.
+    func refreshIfNeeded(using client: APIClient) async {
+        guard loadedKey == key(for: client), phase == .loaded, !entries.isEmpty, let loadedAt else {
+            await load(using: client)
+            return
+        }
+        guard Date.now.timeIntervalSince(loadedAt) > 600 else { return }
+        do {
+            let page = try await fetch(client, cursor: nil, fresh: true)
+            try Task.checkCancellation()
+            let known = Set(entries.map(\.id))
+            let newer = page.entries.prefix { !known.contains($0.id) }
+            if newer.count == page.entries.count {
+                // Nothing on the first page is known: start over rather
+                // than leave a gap.
+                entries = Self.unique(page.entries)
+                nextCursor = page.next
+            } else {
+                entries.insert(contentsOf: newer, at: 0)
+            }
+            if let blog = page.blog { self.blog = blog }
+            self.loadedAt = .now
+        } catch {
+            // The list on screen is still right for its filters.
+        }
+    }
 
     /// Loads the first page. Content for the same filters stays on screen
     /// while it refreshes; new filters start from placeholders.
     func load(using client: APIClient, fresh: Bool = false) async {
-        let requestKey = key
+        let requestKey = key(for: client)
         if loadedKey != requestKey {
             entries = []
             blog = nil
@@ -87,6 +122,7 @@ final class FeedModel {
             nextCursor = page.next
             if let blog = page.blog { self.blog = blog }
             loadedKey = requestKey
+            loadedAt = .now
             loadMoreError = nil
             lastError = nil
             phase = .loaded

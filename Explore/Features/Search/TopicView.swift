@@ -49,7 +49,7 @@ struct TopicView: View {
         }
         .task(id: "\(language.rawValue)|\(app.server.absoluteString)") {
             feed.language = language
-            await feed.load(using: app.client)
+            await feed.refreshIfNeeded(using: app.client)
         }
     }
 }

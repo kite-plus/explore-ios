@@ -59,7 +59,7 @@ struct BlogDetailView: View {
             }
         }
         .task(id: app.server.absoluteString) {
-            await feed.load(using: app.client)
+            await feed.refreshIfNeeded(using: app.client)
         }
         .refreshable {
             await feed.load(using: app.client, fresh: true)

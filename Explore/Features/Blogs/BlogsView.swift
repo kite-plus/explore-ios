@@ -9,9 +9,24 @@ final class DirectoryModel {
     private(set) var isLoadingMore = false
     private(set) var loadMoreError: String?
     private var loadedKey: String?
+    private var loadedAt: Date?
+
+    /// Loads the directory when it is missing, belongs to another server or
+    /// language, or is older than ten minutes; otherwise keeps the pages.
+    func loadIfNeeded(using client: APIClient, language: LanguageFilter) async {
+        if loadedKey == Self.key(client, language), phase == .loaded,
+           let loadedAt, Date.now.timeIntervalSince(loadedAt) < 600 {
+            return
+        }
+        await load(using: client, language: language)
+    }
+
+    private static func key(_ client: APIClient, _ language: LanguageFilter) -> String {
+        "\(client.server.absoluteString)|\(language.rawValue)"
+    }
 
     func load(using client: APIClient, language: LanguageFilter, fresh: Bool = false) async {
-        let key = "\(client.server.absoluteString)|\(language.rawValue)"
+        let key = Self.key(client, language)
         if loadedKey != key {
             blogs = []
             nextCursor = nil
@@ -23,6 +38,7 @@ final class DirectoryModel {
             blogs = page.data
             nextCursor = page.nextCursor
             loadedKey = key
+            loadedAt = .now
             loadMoreError = nil
             phase = .loaded
         } catch {
@@ -95,7 +111,7 @@ struct BlogsView: View {
                 await model.load(using: app.client, language: language, fresh: true)
             }
             .task(id: "\(language.rawValue)|\(app.server.absoluteString)") {
-                await model.load(using: app.client, language: language)
+                await model.loadIfNeeded(using: app.client, language: language)
             }
         }
     }
