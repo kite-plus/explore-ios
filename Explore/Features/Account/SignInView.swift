@@ -44,6 +44,7 @@ struct SignInView: View {
                             Text("Create Account").tag(SignInMode.register)
                         }
                         .pickerStyle(.segmented)
+                        .controlSize(.extraLarge)
                     }
 
                     VStack(spacing: 12) {
