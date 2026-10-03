@@ -16,6 +16,7 @@
 - **搜索**：浏览 Explore 的主题，或者按名称、地址、简介即时搜索博客。
 - **我的**：登录或创建账号，修改名称和密码，删除账号，用 DNS 记录认领自己的博客，提交博客并跟踪审核进度，还可以连接其他 Explore 服务器。
 - **阅读**：文章默认在 App 内的 Safari 视图中打开，也可以改为直接用 Safari 打开，并可开启阅读器视图。链接和网站一样只加上 `utm_source`，不添加任何其他内容。
+- **小组件**：在主屏幕（三种尺寸）和锁定屏幕上显示最新文章，可以只看中文或英文博客。点一下文章，就在作者的网站打开。
 - **语言**：英文和简体中文。文章标题和摘要始终保持作者原文的语言。
 
 ## 液态玻璃
@@ -35,15 +36,19 @@ App 没有任何统计，也不向第三方发出请求：文章缩略图和博�
 
 需要 Xcode 26 或更新版本。打开 `Explore.xcodeproj`，选择 `Explore` scheme，在 iOS 26 或更新版本的 iPhone、iPad 模拟器上运行。要在真机上运行，请在 Signing & Capabilities 里选择你的开发团队。
 
-项目没有第三方依赖。源码在 `Explore/` 下：
+项目没有第三方依赖。App 在 `Explore/`，小组件在 `ExploreWidget/`，两者共用的代码在 `Shared/`：
 
 | 目录 | 内容 |
 |---|---|
-| `App` | App 入口、标签页、导航、深度链接和共享的 App 状态 |
-| `Core` | API 客户端与数据模型、图片加载、钥匙串、格式化和链接处理 |
-| `Design` | 颜色、网格渐变背景、博客头像和共用的玻璃组件 |
-| `Features` | 每个功能一个目录：发现、订阅、博客、搜索、账号和提交 |
-| `Resources` | 资源目录、App 图标、字符串目录和隐私清单 |
+| `Explore/App` | App 入口、标签页、导航、深度链接和共享的 App 状态 |
+| `Explore/Core` | API 客户端、图片加载、钥匙串、格式化和链接处理 |
+| `Explore/Design` | 颜色、网格渐变背景、博客头像和共用的玻璃组件 |
+| `Explore/Features` | 每个功能一个目录：发现、订阅、博客、搜索、账号和提交 |
+| `Explore/Resources` | 资源目录、App 图标、字符串目录和隐私清单 |
+| `ExploreWidget` | “最新文章”小组件 |
+| `Shared` | API 数据模型、时间解析、界面语言和头像颜色 |
+
+小组件固定读取 explore.kite.plus；在 App 里切换的服务器只对 App 生效。
 
 客户端遵循 Explore 的 [docs/design/api.md](https://github.com/kite-plus/explore/blob/main/docs/design/api.md) 中描述的接口。
 

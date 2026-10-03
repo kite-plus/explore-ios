@@ -16,6 +16,7 @@ A native client for [Explore](https://github.com/kite-plus/explore), the stream 
 - **Search**: browse Explore's topics, or find blogs by name, address or description as you type.
 - **Me**: sign in or create an account, change your name or password, delete your account, claim your blog with a DNS record, submit a blog and follow its review, and point the app at another Explore server.
 - **Reading**: posts open in Safari's view inside the app, or in Safari itself if you prefer, with an optional Reader view. Links get `utm_source` as on the website; nothing else is added.
+- **Widget**: the latest posts on the Home Screen in three sizes and on the Lock Screen, optionally narrowed to Chinese or English blogs. Tapping a post opens it on the author's site.
 - **Languages**: English and Simplified Chinese. Titles and excerpts always stay in the language the author wrote them in.
 
 ## Liquid Glass
@@ -35,15 +36,19 @@ The app has no analytics and makes no requests to third parties: post thumbnails
 
 You need Xcode 26 or later. Open `Explore.xcodeproj`, choose the `Explore` scheme and run it on an iPhone or iPad simulator with iOS 26 or later. To run on a device, pick your team under Signing & Capabilities.
 
-The project has no third-party dependencies. Sources live in `Explore/`:
+The project has no third-party dependencies. The app lives in `Explore/`, the widget in `ExploreWidget/`, and what both use in `Shared/`:
 
 | Folder | What it holds |
 |---|---|
-| `App` | the app entry point, tabs, navigation, deep links and the shared app model |
-| `Core` | the API client and models, image loading, keychain, formatting and link handling |
-| `Design` | colors, mesh backdrops, avatars and the shared glass pieces |
-| `Features` | one folder per area: Discover, Following, Blogs, Search, Account and Submit |
-| `Resources` | the asset catalog, the app icon, the string catalog and the privacy manifest |
+| `Explore/App` | the app entry point, tabs, navigation, deep links and the shared app model |
+| `Explore/Core` | the API client, image loading, keychain, formatting and link handling |
+| `Explore/Design` | colors, mesh backdrops, avatars and the shared glass pieces |
+| `Explore/Features` | one folder per area: Discover, Following, Blogs, Search, Account and Submit |
+| `Explore/Resources` | the asset catalog, the app icon, the string catalog and the privacy manifest |
+| `ExploreWidget` | the Latest Posts widget |
+| `Shared` | the API models, timestamps, the interface language and avatar colors |
+
+The widget reads from explore.kite.plus; the server chosen in the app applies to the app only.
 
 The client follows the API described in Explore's [docs/design/api.md](https://github.com/kite-plus/explore/blob/main/docs/design/api.md).
 

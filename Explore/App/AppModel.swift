@@ -52,6 +52,8 @@ final class AppModel {
     var sheet: AppSheet?
     /// A screen a link asked for, waiting for its tab's stack to show it.
     private(set) var pendingRoute: (tab: AppTab, route: Route)?
+    /// A post the widget asked to open on the author's site.
+    private(set) var pendingPost: URL?
     private(set) var toast: Toast?
 
     private(set) var client: APIClient
@@ -311,6 +313,13 @@ final class AppModel {
         }
         if parts.first == "en" { parts.removeFirst() }
         switch (parts.first, parts.dropFirst().first) {
+        case ("open", _):
+            let target = URLComponents(url: url, resolvingAgainstBaseURL: false)?
+                .queryItems?.first { $0.name == "url" }?.value
+                .flatMap(URL.init(string:))
+            if let target, ["http", "https"].contains(target.scheme?.lowercased() ?? "") {
+                pendingPost = target
+            }
         case let ("blogs", host?):
             let host = host.lowercased()
             show(.blog(BlogRef(host: host, name: host, siteURL: "https://\(host)/", language: "")), in: .blogs)
@@ -340,6 +349,11 @@ final class AppModel {
     private func show(_ route: Route, in tab: AppTab) {
         self.tab = tab
         pendingRoute = (tab, route)
+    }
+
+    func takePendingPost() -> URL? {
+        defer { pendingPost = nil }
+        return pendingPost
     }
 
     /// Hands the pending screen to the stack of the given tab, once.

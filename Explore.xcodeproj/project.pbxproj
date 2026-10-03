@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		E0A000000000000000000045 /* ExploreWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = E0A000000000000000000040 /* ExploreWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		E0A000000000000000000025 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -14,11 +18,33 @@
 			remoteGlobalIDString = E0A000000000000000000010;
 			remoteInfo = Explore;
 		};
+		E0A000000000000000000046 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E0A000000000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E0A000000000000000000050;
+			remoteInfo = ExploreWidget;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		E0A000000000000000000043 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				E0A000000000000000000045 /* ExploreWidget.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		E0A000000000000000000004 /* Explore.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Explore.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0A000000000000000000005 /* ExploreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ExploreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E0A000000000000000000040 /* ExploreWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ExploreWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -35,6 +61,16 @@
 		E0A000000000000000000008 /* Config */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Config;
+			sourceTree = "<group>";
+		};
+		E0A000000000000000000041 /* Shared */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		E0A000000000000000000042 /* ExploreWidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = ExploreWidget;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -54,6 +90,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E0A000000000000000000052 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -61,6 +104,8 @@
 			isa = PBXGroup;
 			children = (
 				E0A000000000000000000006 /* Explore */,
+				E0A000000000000000000041 /* Shared */,
+				E0A000000000000000000042 /* ExploreWidget */,
 				E0A000000000000000000007 /* ExploreTests */,
 				E0A000000000000000000008 /* Config */,
 				E0A000000000000000000003 /* Products */,
@@ -72,6 +117,7 @@
 			children = (
 				E0A000000000000000000004 /* Explore.app */,
 				E0A000000000000000000005 /* ExploreTests.xctest */,
+				E0A000000000000000000040 /* ExploreWidget.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -86,13 +132,16 @@
 				E0A000000000000000000011 /* Sources */,
 				E0A000000000000000000012 /* Frameworks */,
 				E0A000000000000000000013 /* Resources */,
+				E0A000000000000000000043 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				E0A000000000000000000044 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				E0A000000000000000000006 /* Explore */,
+				E0A000000000000000000041 /* Shared */,
 			);
 			name = Explore;
 			packageProductDependencies = (
@@ -124,6 +173,29 @@
 			productReference = E0A000000000000000000005 /* ExploreTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		E0A000000000000000000050 /* ExploreWidget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E0A000000000000000000054 /* Build configuration list for PBXNativeTarget "ExploreWidget" */;
+			buildPhases = (
+				E0A000000000000000000051 /* Sources */,
+				E0A000000000000000000052 /* Frameworks */,
+				E0A000000000000000000053 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				E0A000000000000000000042 /* ExploreWidget */,
+				E0A000000000000000000041 /* Shared */,
+			);
+			name = ExploreWidget;
+			packageProductDependencies = (
+			);
+			productName = ExploreWidget;
+			productReference = E0A000000000000000000040 /* ExploreWidget.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -140,6 +212,9 @@
 					E0A000000000000000000020 = {
 						CreatedOnToolsVersion = 27.0;
 						TestTargetID = E0A000000000000000000010;
+					};
+					E0A000000000000000000050 = {
+						CreatedOnToolsVersion = 27.0;
 					};
 				};
 			};
@@ -159,6 +234,7 @@
 			projectRoot = "";
 			targets = (
 				E0A000000000000000000010 /* Explore */,
+				E0A000000000000000000050 /* ExploreWidget */,
 				E0A000000000000000000020 /* ExploreTests */,
 			);
 		};
@@ -173,6 +249,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		E0A000000000000000000023 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E0A000000000000000000053 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -196,6 +279,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E0A000000000000000000051 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -203,6 +293,11 @@
 			isa = PBXTargetDependency;
 			target = E0A000000000000000000010 /* Explore */;
 			targetProxy = E0A000000000000000000025 /* PBXContainerItemProxy */;
+		};
+		E0A000000000000000000044 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E0A000000000000000000050 /* ExploreWidget */;
+			targetProxy = E0A000000000000000000046 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -434,6 +529,62 @@
 			};
 			name = Release;
 		};
+		E0A000000000000000000055 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Config/Widget-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = Explore;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = plus.kite.explore.widget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		E0A000000000000000000056 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Config/Widget-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = Explore;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = plus.kite.explore.widget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -460,6 +611,15 @@
 			buildConfigurations = (
 				E0A000000000000000000037 /* Debug */,
 				E0A000000000000000000038 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E0A000000000000000000054 /* Build configuration list for PBXNativeTarget "ExploreWidget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E0A000000000000000000055 /* Debug */,
+				E0A000000000000000000056 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

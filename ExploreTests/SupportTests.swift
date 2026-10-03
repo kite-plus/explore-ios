@@ -128,6 +128,15 @@ struct DeepLinkTests {
         #expect(app.tab == .discover)
     }
 
+    @Test func opensPostsFromTheWidget() {
+        let app = AppModel()
+        app.open(URL(string: "explore://open?url=https%3A%2F%2Fblog.example.com%2Fp%3Fid%3D1")!)
+        #expect(app.takePendingPost() == URL(string: "https://blog.example.com/p?id=1"))
+        #expect(app.takePendingPost() == nil)
+        app.open(URL(string: "explore://open?url=javascript:alert(1)")!)
+        #expect(app.takePendingPost() == nil)
+    }
+
     @Test func routesWaitForTheirTab() {
         let app = AppModel()
         app.open(URL(string: "explore://submissions/abc")!)

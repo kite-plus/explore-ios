@@ -54,6 +54,11 @@ struct RootView: View {
         .onOpenURL { url in
             app.open(url)
         }
+        .onChange(of: app.pendingPost) {
+            if let post = app.takePendingPost() {
+                LinkOpener.open(post, source: app.sourceTag)
+            }
+        }
         .task {
             #if DEBUG
             // Lets screenshots and manual checks start on any screen:
