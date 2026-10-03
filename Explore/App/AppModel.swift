@@ -1,7 +1,22 @@
 import SwiftUI
 
 enum AppTab: Hashable {
-    case discover, following, blogs, me
+    case discover, blogs, me
+}
+
+/// The streams Discover switches between, as the website's tabs do.
+enum DiscoverStream: String, CaseIterable, Identifiable {
+    case latest, recommended, following
+
+    var id: String { rawValue }
+
+    var title: LocalizedStringKey {
+        switch self {
+        case .latest: "Latest"
+        case .recommended: "Recommended"
+        case .following: "Following"
+        }
+    }
 }
 
 /// Sheets that any screen can ask for.
@@ -49,6 +64,7 @@ final class AppModel {
     static let defaultServer = URL(string: "https://explore.kite.plus")!
 
     var tab: AppTab = .discover
+    var stream: DiscoverStream = .latest
     var sheet: AppSheet?
     /// A screen a link asked for, waiting for its tab's stack to show it.
     private(set) var pendingRoute: (tab: AppTab, route: Route)?
@@ -337,8 +353,8 @@ final class AppModel {
     // MARK: Links into the app
 
     /// Opens explore:// links, and website addresses with the same paths:
-    /// /blogs/{host}, /topics/{slug}, /submissions/{id}, /submit, /sign-in
-    /// and the tab names.
+    /// /blogs/{host}, /topics/{slug}, /submissions/{id}, /submit, /sign-in,
+    /// the streams /recommended and /following, and the tab names.
     func open(_ url: URL) {
         var parts = url.pathComponents.filter { $0 != "/" }
         if url.scheme == "explore", let host = url.host(percentEncoded: false) {
@@ -366,8 +382,12 @@ final class AppModel {
             sheet = .submit
         case ("sign-in", _), ("login", _):
             sheet = isSignedIn ? nil : .signIn(.signIn)
+        case (nil, _):
+            show(.latest)
+        case ("recommended", _):
+            show(.recommended)
         case ("following", _):
-            tab = .following
+            show(.following)
         case ("me", _), ("account", _):
             tab = .me
         case ("search", _):
@@ -383,6 +403,11 @@ final class AppModel {
     private func show(_ route: Route, in tab: AppTab) {
         self.tab = tab
         pendingRoute = (tab, route)
+    }
+
+    private func show(_ stream: DiscoverStream) {
+        tab = .discover
+        self.stream = stream
     }
 
     func takeSearchRequest() -> Bool {

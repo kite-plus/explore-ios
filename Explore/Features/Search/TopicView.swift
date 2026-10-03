@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// The latest posts Explore filed under one topic.
+/// The latest posts Explore filed under one tag.
 struct TopicView: View {
     let slug: String
 
@@ -22,7 +22,7 @@ struct TopicView: View {
             ContentUnavailableView {
                 Label("No Posts Yet", systemImage: TopicStyle.symbol(for: slug))
             } description: {
-                Text("No posts under this topic yet.")
+                Text("No posts under this tag yet.")
             }
             .padding(.vertical, 30)
         }
@@ -60,7 +60,7 @@ private struct TopicBanner: View {
 
     var body: some View {
         ZStack(alignment: .bottomLeading) {
-            Color(.secondarySystemGroupedBackground)
+            Color(.secondarySystemBackground)
             Image(systemName: TopicStyle.symbol(for: slug))
                 .font(.system(size: 120, weight: .semibold))
                 .foregroundStyle(Color(.quaternaryLabel))
@@ -71,7 +71,7 @@ private struct TopicBanner: View {
                 Text(name)
                     .font(.largeTitle.bold())
                     .foregroundStyle(Color.primary)
-                Text("Posts Explore filed under this topic, newest first.")
+                Text("Posts Explore filed under this tag, newest first.")
                     .font(.subheadline)
                     .foregroundStyle(Color.secondary)
             }

@@ -1,36 +1,30 @@
 import SwiftUI
 
-/// New posts from the blogs the reader follows. Following needs an account;
-/// everything else in the app works without one.
-struct FollowingView: View {
+/// New posts from the blogs the reader follows, Discover's third stream.
+/// Following needs an account; everything else in the app works without
+/// one, so before signing in the stream invites the reader to.
+struct FollowingStream: View {
+    let feed: FeedModel
+    let language: LanguageFilter
+    let tag: String?
+
     @Environment(AppModel.self) private var app
-    @AppStorage("following.language") private var language: LanguageFilter = .all
-    @State private var tag: String?
-    @State private var feed = FeedModel(source: .following)
 
     var body: some View {
-        ExploreStack(tab: .following) {
-            Group {
-                if app.isSignedIn {
-                    stream
-                } else if app.isRestoringSession {
-                    ProgressView()
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .background(Color(.systemGroupedBackground))
-                } else {
-                    FollowingWelcome()
-                }
-            }
-            .navigationTitle("Following")
-            .navigationSubtitle(app.isSignedIn ? Text("Posts from the blogs you follow") : Text(verbatim: ""))
+        if app.isSignedIn {
+            list
+        } else if app.isRestoringSession {
+            ProgressView()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color(.systemBackground))
+        } else {
+            FollowingWelcome()
         }
     }
 
-    private var stream: some View {
+    private var list: some View {
         EntryList(feed: feed, endText: "That's everything from the blogs you follow") {
             EmptyView()
-        } pinned: {
-            FeedFilterBar(language: $language, tag: $tag)
         } empty: {
             if app.followedHosts.isEmpty {
                 ContentUnavailableView {
@@ -55,13 +49,6 @@ struct FollowingView: View {
                 .padding(.vertical, 40)
             }
         }
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                NavigationLink(value: Route.subscriptions) {
-                    Label("Manage", systemImage: "list.bullet")
-                }
-            }
-        }
         .refreshable {
             await app.loadFollows()
             await feed.load(using: app.client, fresh: true)
@@ -78,8 +65,9 @@ struct FollowingView: View {
     }
 }
 
-/// The Following tab before signing in, kept plain: grays, an uncolored
-/// glass disc and a black or white button, whatever the appearance.
+/// The Following stream before signing in, kept plain: grays, an
+/// uncolored glass disc and a black or white button, whatever the
+/// appearance.
 private struct FollowingWelcome: View {
     @Environment(AppModel.self) private var app
 
@@ -132,6 +120,6 @@ private struct FollowingWelcome: View {
             .frame(maxWidth: .infinity)
         }
         .scrollBounceBehavior(.basedOnSize)
-        .background(Color(.systemGroupedBackground))
+        .background(Color(.systemBackground))
     }
 }

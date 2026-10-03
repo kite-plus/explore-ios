@@ -1,34 +1,29 @@
 import SwiftUI
 
-/// A scrolling column of post cards with placeholders, errors, an empty
-/// state and paging. The header scrolls with the posts.
-struct EntryList<Header: View, Pinned: View, Empty: View>: View {
+/// A stream of posts under the days they came out on, as the website lists
+/// them: a heading for each day, then flat rows split by hairlines. It
+/// brings placeholders, errors, an empty state and paging; the header
+/// scrolls with the posts.
+struct EntryList<Header: View, Empty: View>: View {
     let feed: FeedModel
     var showsBlog = true
     var contextBlog: BlogRef?
     var endText: LocalizedStringKey? = "You're all caught up"
     var onScroll: ((CGFloat) -> Void)?
     @ViewBuilder var header: Header
-    /// Stays under the navigation bar while the posts scroll beneath it.
-    @ViewBuilder var pinned: Pinned
     @ViewBuilder var empty: Empty
 
     @Environment(AppModel.self) private var app
 
     var body: some View {
         ScrollView {
-            LazyVStack(spacing: 12, pinnedViews: [.sectionHeaders]) {
+            LazyVStack(alignment: .leading, spacing: 0) {
                 header
-                    .padding(.horizontal, 16)
-                    .frame(maxWidth: 720)
-                    .frame(maxWidth: .infinity)
-                Section {
-                    content
-                } header: {
-                    pinned
-                }
+                rows
             }
-            .padding(.top, 4)
+            .padding(.horizontal, 16)
+            .frame(maxWidth: 720)
+            .frame(maxWidth: .infinity)
             .padding(.bottom, 32)
         }
         .scrollDismissesKeyboard(.immediately)
@@ -37,24 +32,15 @@ struct EntryList<Header: View, Pinned: View, Empty: View>: View {
         } action: { _, offset in
             onScroll?(offset)
         }
-        .background(Color(.systemGroupedBackground))
-    }
-
-    @ViewBuilder
-    private var content: some View {
-        Group {
-            rows
-        }
-        .padding(.horizontal, 16)
-        .frame(maxWidth: 720)
-        .frame(maxWidth: .infinity)
+        .background(Color(.systemBackground))
     }
 
     @ViewBuilder
     private var rows: some View {
         if feed.showsPlaceholders {
-            ForEach(0..<4, id: \.self) { _ in
+            ForEach(0..<4, id: \.self) { index in
                 EntryPlaceholder()
+                if index < 3 { Divider() }
             }
         } else if case let .failed(message) = feed.phase {
             LoadFailedView(message: message) {
@@ -63,9 +49,23 @@ struct EntryList<Header: View, Pinned: View, Empty: View>: View {
         } else if feed.entries.isEmpty {
             empty
         } else {
-            ForEach(feed.entries) { entry in
-                EntryCard(entry: entry, showsBlog: showsBlog, contextBlog: contextBlog ?? feed.blog?.ref)
-                    .transition(.opacity)
+            // One flat run of headings and rows: a lazy stack handles that
+            // better than a list nested in a list.
+            ForEach(ListItem.items(DayGroup.groups(of: feed.entries), now: .now)) { item in
+                switch item {
+                case let .heading(group, first, now):
+                    DayHeading(group: group, now: now, first: first)
+                case let .entry(entry, clockTime, last):
+                    VStack(spacing: 0) {
+                        EntryRow(
+                            entry: entry, showsBlog: showsBlog, contextBlog: contextBlog ?? feed.blog?.ref,
+                            clockTime: clockTime
+                        )
+                        if !last {
+                            Divider()
+                        }
+                    }
+                }
             }
             PageFooter(
                 isLoading: feed.isLoadingMore,
@@ -80,15 +80,48 @@ struct EntryList<Header: View, Pinned: View, Empty: View>: View {
     }
 }
 
-extension EntryList where Pinned == EmptyView {
-    init(
-        feed: FeedModel, showsBlog: Bool = true, contextBlog: BlogRef? = nil,
-        endText: LocalizedStringKey? = "You're all caught up", onScroll: ((CGFloat) -> Void)? = nil,
-        @ViewBuilder header: () -> Header, @ViewBuilder empty: () -> Empty
-    ) {
-        self.init(
-            feed: feed, showsBlog: showsBlog, contextBlog: contextBlog, endText: endText, onScroll: onScroll,
-            header: header, pinned: { EmptyView() }, empty: empty
-        )
+/// A day's heading or one of its posts, in the order the list shows them.
+private enum ListItem: Identifiable {
+    case heading(DayGroup, first: Bool, now: Date)
+    case entry(Entry, clockTime: Bool, last: Bool)
+
+    var id: String {
+        switch self {
+        case let .heading(group, _, _): "day-\(group.id)"
+        case let .entry(entry, _, _): "post-\(entry.id)"
+        }
+    }
+
+    static func items(_ groups: [DayGroup], now: Date) -> [ListItem] {
+        groups.enumerated().flatMap { index, group in
+            let clockTime = group.showsClockTime(now: now)
+            return [ListItem.heading(group, first: index == 0, now: now)] + group.entries.map { entry in
+                ListItem.entry(entry, clockTime: clockTime, last: entry.id == group.entries.last?.id)
+            }
+        }
+    }
+}
+
+/// "Today" or "Yesterday" with the date beside it, or the date alone.
+private struct DayHeading: View {
+    let group: DayGroup
+    let now: Date
+    let first: Bool
+
+    var body: some View {
+        let heading = group.heading(now: now)
+        HStack(alignment: .firstTextBaseline, spacing: 8) {
+            Text(heading.name)
+                .font(.headline)
+            if let date = heading.date {
+                Text(date)
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+            }
+        }
+        .padding(.top, first ? 14 : 30)
+        .padding(.bottom, 2)
+        .accessibilityElement(children: .combine)
+        .accessibilityAddTraits(.isHeader)
     }
 }

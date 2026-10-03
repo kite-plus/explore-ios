@@ -121,16 +121,6 @@
         }
       }
     },
-    "All Topics" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "全部主题"
-          }
-        }
-      }
-    },
     "Always read on the author's site" : {
       "localizations" : {
         "zh-Hans" : {
@@ -321,12 +311,12 @@
         }
       }
     },
-    "Browse Topics" : {
+    "Browse Tags" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "浏览主题"
+            "value" : "浏览标签"
           }
         }
       }
@@ -1041,6 +1031,16 @@
         }
       }
     },
+    "Filter" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "筛选"
+          }
+        }
+      }
+    },
     "Follow" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1141,6 +1141,16 @@
         }
       }
     },
+    "In use" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已启用"
+          }
+        }
+      }
+    },
     "Independent blogs listed on Explore" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1167,6 +1177,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "最近检测正常"
+          }
+        }
+      }
+    },
+    "Latest" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最新"
           }
         }
       }
@@ -1311,16 +1331,6 @@
         }
       }
     },
-    "New posts from independent blogs" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "独立博客的最新文章"
-          }
-        }
-      }
-    },
     "No Blogs Yet" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1337,6 +1347,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "尚未认领博客"
+          }
+        }
+      }
+    },
+    "No Matching Posts" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "没有匹配的文章"
           }
         }
       }
@@ -1367,6 +1387,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "暂无可展示的文章"
+          }
+        }
+      }
+    },
+    "No Recommendations Yet" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "暂时还没有推荐"
+          }
+        }
+      }
+    },
+    "No Recommended Posts" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "没有推荐文章"
           }
         }
       }
@@ -1411,6 +1451,16 @@
         }
       }
     },
+    "No posts have been rated yet. Recommendations wait for a model to rate posts; until then, see the latest posts." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "还没有评过分的文章。推荐要等模型给文章评分，可以先看最新文章。"
+          }
+        }
+      }
+    },
     "No posts in the last 12 months" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1421,12 +1471,22 @@
         }
       }
     },
-    "No posts under this topic yet." : {
+    "No posts match these filters." : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "这个主题下暂时还没有文章。"
+            "value" : "没有符合筛选条件的文章。"
+          }
+        }
+      }
+    },
+    "No posts under this tag yet." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "这个标签下暂时还没有文章。"
           }
         }
       }
@@ -1591,6 +1651,16 @@
         }
       }
     },
+    "Post feeds" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "文章流"
+          }
+        }
+      }
+    },
     "Post links point to another domain" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1601,12 +1671,12 @@
         }
       }
     },
-    "Posts Explore filed under this topic, newest first." : {
+    "Posts Explore filed under this tag, newest first." : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Explore 归入这个主题的文章，按发布时间排列。"
+            "value" : "Explore 归入这个标签的文章，按发布时间排列。"
           }
         }
       }
@@ -1627,16 +1697,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "已收录博客的文章会出现在这里。"
-          }
-        }
-      }
-    },
-    "Posts from the blogs you follow" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "你订阅的博客的新文章"
           }
         }
       }
@@ -1731,6 +1791,16 @@
         }
       }
     },
+    "Recommended" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "推荐"
+          }
+        }
+      }
+    },
     "Registration is closed on this server right now." : {
       "localizations" : {
         "zh-Hans" : {
@@ -1767,6 +1837,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "报告已提交，等待审核"
+          }
+        }
+      }
+    },
+    "Reset" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重置"
           }
         }
       }
@@ -1811,12 +1891,22 @@
         }
       }
     },
-    "Search blogs and topics" : {
+    "Search blogs and tags" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "搜索博客和主题"
+            "value" : "搜索博客和标签"
+          }
+        }
+      }
+    },
+    "See the Latest Posts" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "看最新文章"
           }
         }
       }
@@ -1847,16 +1937,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "分享"
-          }
-        }
-      }
-    },
-    "Show All Topics" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "显示全部主题"
           }
         }
       }
@@ -2061,12 +2141,32 @@
         }
       }
     },
+    "Tags" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "标签"
+          }
+        }
+      }
+    },
     "That's every listed blog" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "已经是全部收录的博客"
+          }
+        }
+      }
+    },
+    "That's every recommended post" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已经看完了所有推荐文章"
           }
         }
       }
@@ -2311,6 +2411,16 @@
         }
       }
     },
+    "Today" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今天"
+          }
+        }
+      }
+    },
     "Too many requests. Try again in a moment." : {
       "localizations" : {
         "zh-Hans" : {
@@ -2327,26 +2437,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "提交太频繁，请过一会儿再试。"
-          }
-        }
-      }
-    },
-    "Topic" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "主题"
-          }
-        }
-      }
-    },
-    "Topics" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "主题"
           }
         }
       }
@@ -2587,6 +2677,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "例如博客写些什么"
+          }
+        }
+      }
+    },
+    "Yesterday" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "昨天"
           }
         }
       }

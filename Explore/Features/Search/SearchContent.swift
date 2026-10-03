@@ -1,7 +1,7 @@
 import SwiftUI
 
-/// What the search field shows: topics and recently updated blogs before
-/// typing, matching topics and blogs after.
+/// What the search field shows: tags and recently updated blogs before
+/// typing, matching tags and blogs after.
 struct SearchContent: View {
     let query: String
 
@@ -34,7 +34,7 @@ struct SearchContent: View {
 
     @ViewBuilder
     private var browse: some View {
-        SectionTitle("Browse Topics")
+        SectionTitle("Browse Tags")
         if app.topics.isEmpty {
             ProgressView()
                 .frame(maxWidth: .infinity)
@@ -66,7 +66,7 @@ struct SearchContent: View {
             BlogSearchEmpty(index: index, query: trimmed)
         } else {
             if !topics.isEmpty {
-                SectionTitle("Topics")
+                SectionTitle("Tags")
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 156), spacing: 12)], spacing: 12) {
                     ForEach(topics) { topic in
                         TopicTile(topic: topic)

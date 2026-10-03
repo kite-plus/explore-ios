@@ -1,13 +1,18 @@
 import SwiftUI
 
-/// One post: title, excerpt and thumbnail open the post on the author's
-/// site; the byline leads to the blog. Titles and excerpts keep the blog's
-/// own language and are never translated.
-struct EntryCard: View {
+/// One post, laid out as on the website: its blog and time first, then the
+/// title and two lines of excerpt beside the thumbnail, then its tags. The
+/// title, excerpt and thumbnail open the post on the author's site; the
+/// blog's name leads to its page. Titles and excerpts keep the blog's own
+/// language and are never translated.
+struct EntryRow: View {
     let entry: Entry
     var showsBlog = true
     /// The blog the list belongs to, for posts that do not carry one.
     var contextBlog: BlogRef?
+    /// Under a heading that names an earlier day, the time of day rather
+    /// than how long ago.
+    var clockTime = false
 
     @Environment(AppModel.self) private var app
     @Environment(\.navigate) private var navigate
@@ -25,57 +30,80 @@ struct EntryCard: View {
         }
     }
 
-    var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Button(action: open) {
-                HStack(alignment: .top, spacing: 14) {
-                    VStack(alignment: .leading, spacing: 6) {
-                        Text(entry.title)
-                            .font(.headline)
-                            .foregroundStyle(.primary)
-                            .lineLimit(3)
-                        if let excerpt = entry.excerpt, !excerpt.isEmpty {
-                            Text(excerpt)
-                                .font(.subheadline)
-                                .foregroundStyle(.secondary)
-                                .lineLimit(3)
-                        }
-                    }
-                    .multilineTextAlignment(.leading)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .typesettingLanguage(contentLanguage ?? Locale.Language(identifier: "en"), isEnabled: contentLanguage != nil)
+    private var time: String {
+        guard let date = entry.publishedAt else { return String(localized: "Date unknown") }
+        return clockTime ? date.formatted(date: .omitted, time: .shortened) : Formatting.relative(date)
+    }
 
-                    if let path = entry.imagePath {
-                        // A new address, such as after a server switch,
-                        // gets a fresh thumbnail rather than the old image.
-                        let url = app.client.imageURL(path)
-                        EntryThumbnail(url: url)
-                            .id(url)
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack(alignment: .top, spacing: 14) {
+                VStack(alignment: .leading, spacing: 6) {
+                    byline
+                    Button(action: open) {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(entry.title)
+                                .font(.headline)
+                                .foregroundStyle(.primary)
+                                .lineLimit(3)
+                            if let excerpt = entry.excerpt, !excerpt.isEmpty {
+                                Text(excerpt)
+                                    .font(.subheadline)
+                                    .foregroundStyle(.secondary)
+                                    .lineLimit(2)
+                            }
+                        }
+                        .multilineTextAlignment(.leading)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .typesettingLanguage(contentLanguage ?? Locale.Language(identifier: "en"), isEnabled: contentLanguage != nil)
+                        .contentShape(.rect)
                     }
+                    .buttonStyle(PressableStyle())
+                    .accessibilityHint(Text("Opens the post on the author's site"))
                 }
-                .contentShape(.rect)
+
+                if let path = entry.imagePath {
+                    // A new address, such as after a server switch, gets a
+                    // fresh thumbnail rather than the old image.
+                    let url = app.client.imageURL(path)
+                    // The menu takes the room under the thumbnail, so the
+                    // byline beside it keeps the blog's name whole.
+                    VStack(alignment: .trailing, spacing: 6) {
+                        Button(action: open) {
+                            EntryThumbnail(url: url, size: CGSize(width: 96, height: 64), cornerRadius: 10)
+                                .id(url)
+                        }
+                        .buttonStyle(PressableStyle())
+                        .accessibilityHidden(true)
+                        moreMenu
+                    }
+                    .padding(.top, 2)
+                }
             }
-            .buttonStyle(PressableStyle())
-            .accessibilityHint(Text("Opens the post on the author's site"))
 
             if !tags.isEmpty {
-                HStack(spacing: 6) {
+                FlowLayout(spacing: 14, lineSpacing: 6) {
                     ForEach(tags, id: \.slug) { tag in
                         Button {
                             navigate(.topic(tag.slug))
                         } label: {
-                            Pill(text: tag.name, systemImage: TopicStyle.symbol(for: tag.slug))
+                            HStack(spacing: 4) {
+                                Image(systemName: TopicStyle.symbol(for: tag.slug))
+                                    .imageScale(.small)
+                                Text(tag.name)
+                                    .lineLimit(1)
+                            }
+                            .contentShape(.rect)
                         }
                         .buttonStyle(.plain)
                     }
                 }
+                .font(.caption)
+                .foregroundStyle(.secondary)
             }
-
-            footer
         }
-        .padding(16)
-        .background(Color(.secondarySystemGroupedBackground), in: .rect(cornerRadius: 24, style: .continuous))
-        .contentShape(.contextMenuPreview, .rect(cornerRadius: 24, style: .continuous))
+        .padding(.vertical, 14)
+        .contentShape(.contextMenuPreview, .rect(cornerRadius: 12, style: .continuous))
         .contextMenu {
             EntryActions(entry: entry, blog: blog)
         } preview: {
@@ -86,15 +114,17 @@ struct EntryCard: View {
         }
     }
 
-    private var footer: some View {
+    private var byline: some View {
         HStack(spacing: 6) {
             if showsBlog, let blog {
                 Button {
                     navigate(.blog(blog))
                 } label: {
                     HStack(spacing: 6) {
-                        BlogAvatar(host: blog.host, name: blog.name, size: 20)
+                        BlogAvatar(host: blog.host, name: blog.name, size: 18)
                         Text(blog.name)
+                            .fontWeight(.medium)
+                            .foregroundStyle(.primary.opacity(0.8))
                             .lineLimit(1)
                             .typesettingLanguage(contentLanguage ?? Locale.Language(identifier: "en"), isEnabled: contentLanguage != nil)
                     }
@@ -105,24 +135,33 @@ struct EntryCard: View {
                 Text(verbatim: "·")
                     .accessibilityHidden(true)
             }
-            Text(entry.publishedAt.map { Formatting.relative($0) } ?? String(localized: "Date unknown"))
+            Text(time)
                 .lineLimit(1)
                 .layoutPriority(1)
-            Spacer(minLength: 4)
+            Text(verbatim: "·")
+                .accessibilityHidden(true)
             LinkStatusBadge(entry: entry)
-            Menu {
-                EntryActions(entry: entry, blog: blog)
-            } label: {
-                Image(systemName: "ellipsis")
-                    .font(.subheadline.weight(.semibold))
-                    .frame(width: 32, height: 28)
-                    .contentShape(.rect)
+            if entry.imagePath == nil {
+                Spacer(minLength: 4)
+                moreMenu
             }
-            .menuIndicator(.hidden)
-            .accessibilityLabel(Text("More"))
         }
         .font(.footnote)
         .foregroundStyle(.secondary)
+    }
+
+    private var moreMenu: some View {
+        Menu {
+            EntryActions(entry: entry, blog: blog)
+        } label: {
+            Image(systemName: "ellipsis")
+                .font(.footnote.weight(.semibold))
+                .foregroundStyle(.secondary)
+                .frame(width: 30, height: 22)
+                .contentShape(.rect)
+        }
+        .menuIndicator(.hidden)
+        .accessibilityLabel(Text("More"))
     }
 
     private func open() {

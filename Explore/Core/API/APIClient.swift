@@ -49,8 +49,12 @@ final class APIClient {
 
     // MARK: Reading
 
-    func entries(cursor: String?, language: String?, tag: String?, fresh: Bool = false) async throws -> Page<Entry> {
-        try await get("api/v1/entries", query: listQuery(cursor, language, tag), fresh: fresh)
+    /// The latest posts, or with order "recommended" the posts rated solid
+    /// or standout.
+    func entries(cursor: String?, language: String?, tag: String?, order: String? = nil, fresh: Bool = false) async throws -> Page<Entry> {
+        var query = listQuery(cursor, language, tag)
+        if let order { query.append(URLQueryItem(name: "order", value: order)) }
+        return try await get("api/v1/entries", query: query, fresh: fresh)
     }
 
     func followingEntries(cursor: String?, language: String?, tag: String?) async throws -> Page<Entry> {

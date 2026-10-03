@@ -36,26 +36,24 @@ struct LoadFailedView: View {
 /// A gray card in the shape of a post, while the first page loads.
 struct EntryPlaceholder: View {
     var body: some View {
-        Card {
-            VStack(alignment: .leading, spacing: 10) {
-                HStack(alignment: .top, spacing: 14) {
-                    VStack(alignment: .leading, spacing: 6) {
-                        Text(verbatim: "A post title that runs over two lines on most phones")
-                            .font(.headline)
-                        Text(verbatim: "An excerpt of the post as its feed gives it, cut to a hundred and forty characters.")
-                            .font(.subheadline)
-                    }
-                    Spacer(minLength: 0)
-                    RoundedRectangle(cornerRadius: 14, style: .continuous)
-                        .frame(width: 84, height: 84)
-                }
+        HStack(alignment: .top, spacing: 14) {
+            VStack(alignment: .leading, spacing: 8) {
                 HStack(spacing: 6) {
-                    Circle().frame(width: 20, height: 20)
+                    Circle().fill(.quaternary).frame(width: 18, height: 18)
                     Text(verbatim: "Example Blog · 3 hours ago")
                         .font(.footnote)
                 }
+                Text(verbatim: "A post title that runs over two lines on most phones")
+                    .font(.headline)
+                Text(verbatim: "An excerpt of the post as its feed gives it, cut to two lines.")
+                    .font(.subheadline)
             }
+            Spacer(minLength: 0)
+            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                .fill(.quaternary)
+                .frame(width: 96, height: 64)
         }
+        .padding(.vertical, 14)
         .redacted(reason: .placeholder)
         .shimmering()
         .accessibilityHidden(true)
@@ -101,13 +99,14 @@ struct ListEndView: View {
     let text: LocalizedStringKey
 
     var body: some View {
-        HStack(spacing: 8) {
-            Capsule().frame(width: 18, height: 1)
+        HStack(spacing: 12) {
+            Rectangle().fill(.separator).frame(height: 1)
             Text(text)
-            Capsule().frame(width: 18, height: 1)
+                .fixedSize()
+            Rectangle().fill(.separator).frame(height: 1)
         }
         .font(.footnote)
-        .foregroundStyle(.tertiary)
+        .foregroundStyle(.secondary)
         .frame(maxWidth: .infinity)
         .padding(.vertical, 20)
     }

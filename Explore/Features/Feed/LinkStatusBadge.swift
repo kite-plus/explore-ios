@@ -1,8 +1,9 @@
 import SwiftUI
 
 /// The result of Explore's latest check of a post's link: a green check,
-/// "Possibly unavailable" for a 404 or 410, or a prompt to check it now.
-/// Tapping shows the details in a Liquid Glass popover.
+/// "Possibly unavailable" for a 404 or 410, or quiet grey text while it
+/// waits for one, as on the website, since most links have not been
+/// checked yet. Tapping shows the details in a Liquid Glass popover.
 struct LinkStatusBadge: View {
     let entry: Entry
 
@@ -35,23 +36,22 @@ struct LinkStatusBadge: View {
                     .controlSize(.mini)
                 Text("Checking…")
             }
-            .font(.caption.weight(.medium))
-            .foregroundStyle(.orange)
+            .foregroundStyle(.secondary)
             .transition(.opacity)
         } else {
             switch status {
             case .available:
-                Image(systemName: "checkmark.circle.fill")
-                    .font(.subheadline)
+                Image(systemName: "checkmark.circle")
                     .foregroundStyle(.green)
                     .transition(.scale.combined(with: .opacity))
             case .unavailable:
                 Pill(text: String(localized: "Possibly unavailable"), systemImage: "xmark.circle.fill", tint: .red)
             case .unknown:
-                Pill(
-                    text: checkedAt == nil ? String(localized: "Awaiting check") : String(localized: "Status uncertain"),
-                    systemImage: "questionmark.circle", tint: .orange
-                )
+                HStack(spacing: 3) {
+                    Image(systemName: "questionmark.circle")
+                    Text(checkedAt == nil ? "Awaiting check" : "Status uncertain")
+                }
+                .foregroundStyle(.secondary)
             }
         }
     }

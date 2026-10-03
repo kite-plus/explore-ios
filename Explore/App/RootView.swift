@@ -1,7 +1,8 @@
 import SwiftUI
 
-/// The tab bar: Discover, Following, Blogs and Me. It stays fully open, and
-/// search lives at the top of Discover and Blogs.
+/// The tab bar: Discover, Blogs and Me. Discover holds the latest,
+/// recommended and following streams, as the website does. The bar stays
+/// fully open, and search lives at the top of Discover and Blogs.
 struct RootView: View {
     @Environment(AppModel.self) private var app
     @Environment(\.scenePhase) private var scenePhase
@@ -11,9 +12,6 @@ struct RootView: View {
         TabView(selection: $app.tab) {
             Tab("Discover", systemImage: "binoculars", value: AppTab.discover) {
                 DiscoverView()
-            }
-            Tab("Following", systemImage: "heart.text.square", value: AppTab.following) {
-                FollowingView()
             }
             Tab("Blogs", systemImage: "books.vertical", value: AppTab.blogs) {
                 BlogsView()

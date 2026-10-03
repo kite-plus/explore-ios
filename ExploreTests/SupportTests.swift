@@ -131,7 +131,11 @@ struct DeepLinkTests {
         app.open(URL(string: "explore://submit")!)
         #expect(app.sheet?.id == "submit")
         app.open(URL(string: "explore://following")!)
-        #expect(app.tab == .following)
+        #expect(app.tab == .discover && app.stream == .following)
+        app.open(URL(string: "https://explore.kite.plus/en/recommended")!)
+        #expect(app.tab == .discover && app.stream == .recommended)
+        app.open(URL(string: "https://explore.kite.plus/")!)
+        #expect(app.stream == .latest)
         app.open(URL(string: "explore://nowhere")!)
         #expect(app.tab == .discover)
     }

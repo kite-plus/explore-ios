@@ -27,11 +27,12 @@ enum LanguageFilter: String, CaseIterable, Identifiable {
 }
 
 /// One stream of posts, paged with the server's cursor: the latest posts,
-/// the reader's follows, one topic, or one blog.
+/// the recommended ones, the reader's follows, one tag, or one blog.
 @Observable
 final class FeedModel {
     enum Source: Hashable {
         case latest
+        case recommended
         case following
         case blog(String)
     }
@@ -163,6 +164,9 @@ final class FeedModel {
         switch source {
         case .latest:
             let page = try await client.entries(cursor: cursor, language: language.code, tag: tag, fresh: fresh)
+            return PageResult(entries: page.data, next: page.nextCursor, blog: nil)
+        case .recommended:
+            let page = try await client.entries(cursor: cursor, language: language.code, tag: tag, order: "recommended", fresh: fresh)
             return PageResult(entries: page.data, next: page.nextCursor, blog: nil)
         case .following:
             let page = try await client.followingEntries(cursor: cursor, language: language.code, tag: tag)

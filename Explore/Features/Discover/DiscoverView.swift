@@ -1,61 +1,141 @@
 import SwiftUI
 
-/// The latest posts from every listed blog, newest first, with search for
-/// blogs and topics at the top.
+/// Explore's streams in one place, as on the website: the latest posts,
+/// the recommended ones and the reader's follows, as tabs over the same
+/// filters. Each stream keeps its pages, so switching back is instant.
+/// Search for blogs and tags sits at the top.
 struct DiscoverView: View {
     @Environment(AppModel.self) private var app
     @AppStorage("discover.language") private var language: LanguageFilter = .all
     @State private var tag: String?
-    @State private var feed = FeedModel(source: .latest)
+    @State private var latest = FeedModel(source: .latest)
+    @State private var recommended = FeedModel(source: .recommended)
+    @State private var following = FeedModel(source: .following)
     @State private var query = ""
     @State private var searching = false
+    @State private var showsFilters = false
+
+    private var filtered: Bool { language != .all || tag != nil }
+
+    /// What the latest and recommended streams depend on.
+    private var key: String { "\(language.rawValue)|\(tag ?? "")|\(app.server.absoluteString)" }
 
     var body: some View {
+        @Bindable var app = app
         ExploreStack(tab: .discover) {
-            EntryList(feed: feed) {
+            stream
+                .safeAreaBar(edge: .top) {
+                    if !searching {
+                        StreamBar(stream: $app.stream, filtered: filtered) {
+                            showsFilters = true
+                        }
+                    }
+                }
+                .navigationTitle("Discover")
+                .toolbarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .principal) {
+                        BrandTitle()
+                    }
+                    if app.stream == .following, app.isSignedIn {
+                        ToolbarItem(placement: .topBarTrailing) {
+                            NavigationLink(value: Route.subscriptions) {
+                                Label("Manage", systemImage: "list.bullet")
+                            }
+                        }
+                    }
+                }
+                // Search covers the streams instead of replacing them, so
+                // they keep their place for when search is cancelled.
+                .overlay {
+                    if searching {
+                        SearchContent(query: query)
+                            .transition(.opacity)
+                    }
+                }
+                .animation(.smooth(duration: 0.25), value: searching)
+                .searchable(
+                    text: $query, isPresented: $searching,
+                    placement: .navigationBarDrawer(displayMode: .always),
+                    prompt: Text("Search blogs and tags")
+                )
+                .sheet(isPresented: $showsFilters) {
+                    FilterSheet(language: $language, tag: $tag)
+                }
+                .onChange(of: app.searchRequested, initial: true) {
+                    if app.takeSearchRequest() {
+                        searching = true
+                    }
+                }
+        }
+    }
+
+    @ViewBuilder
+    private var stream: some View {
+        switch app.stream {
+        case .latest:
+            EntryList(feed: latest) {
                 if !app.notice.isEmpty {
                     NoticeBanner(text: app.notice)
+                        .padding(.top, 8)
                 }
-            } pinned: {
-                FeedFilterBar(language: $language, tag: $tag)
             } empty: {
                 ContentUnavailableView {
-                    Label("No Posts Yet", systemImage: "binoculars")
+                    Label(filtered ? "No Matching Posts" : "No Posts Yet", systemImage: "binoculars")
                 } description: {
-                    Text(tag == nil ? "Posts from listed blogs show up here." : "No posts under this topic yet.")
+                    Text(filtered ? "No posts match these filters." : "Posts from listed blogs show up here.")
                 }
                 .padding(.vertical, 40)
             }
-            .navigationTitle("Discover")
-            .navigationSubtitle("New posts from independent blogs")
             .refreshable {
-                await feed.load(using: app.client, fresh: true)
+                await latest.load(using: app.client, fresh: true)
             }
-            // Search covers the feed instead of replacing it, so the feed
-            // keeps its place for when search is cancelled.
-            .overlay {
-                if searching {
-                    SearchContent(query: query)
-                        .transition(.opacity)
+            .task(id: key) {
+                await refresh(latest)
+            }
+        case .recommended:
+            EntryList(feed: recommended, endText: "That's every recommended post") {
+                EmptyView()
+            } empty: {
+                if filtered {
+                    ContentUnavailableView {
+                        Label("No Recommended Posts", systemImage: "sparkles")
+                    } description: {
+                        Text("No posts match these filters.")
+                    }
+                    .padding(.vertical, 40)
+                } else {
+                    // Nothing rated yet: the server has no model to rate posts.
+                    ContentUnavailableView {
+                        Label("No Recommendations Yet", systemImage: "sparkles")
+                    } description: {
+                        Text("No posts have been rated yet. Recommendations wait for a model to rate posts; until then, see the latest posts.")
+                    } actions: {
+                        Button {
+                            withAnimation(.snappy) { app.stream = .latest }
+                        } label: {
+                            Text("See the Latest Posts")
+                        }
+                        .buttonStyle(.primaryAction)
+                    }
+                    .padding(.vertical, 40)
                 }
             }
-            .animation(.smooth(duration: 0.25), value: searching)
-            .searchable(
-                text: $query, isPresented: $searching,
-                placement: .navigationBarDrawer(displayMode: .always),
-                prompt: Text("Search blogs and topics")
-            )
-            .task(id: "\(language.rawValue)|\(tag ?? "")|\(app.server.absoluteString)") {
-                feed.language = language
-                feed.tag = tag
-                await feed.refreshIfNeeded(using: app.client)
+            .refreshable {
+                await recommended.load(using: app.client, fresh: true)
             }
-            .onChange(of: app.searchRequested, initial: true) {
-                if app.takeSearchRequest() {
-                    searching = true
-                }
+            .task(id: key) {
+                await refresh(recommended)
             }
+        case .following:
+            FollowingStream(feed: following, language: language, tag: tag)
         }
+    }
+
+    private func refresh(_ feed: FeedModel) async {
+        feed.language = language
+        feed.tag = tag
+        await feed.refreshIfNeeded(using: app.client)
     }
 }
 
@@ -86,7 +166,7 @@ struct NoticeBanner: View {
                 .accessibilityLabel(Text("Dismiss"))
             }
             .padding(14)
-            .background(Color(.secondarySystemGroupedBackground), in: .rect(cornerRadius: 20, style: .continuous))
+            .background(Color(.secondarySystemBackground), in: .rect(cornerRadius: 20, style: .continuous))
             .transition(.opacity.combined(with: .scale(scale: 0.95)))
         }
     }
