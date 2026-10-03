@@ -99,17 +99,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		E0A000000000000000000008 /* Config */ = {
-			isa = PBXGroup;
-			children = (
-				E0A000000000000000000060 /* Info.plist */,
-				E0A000000000000000000061 /* Widget-Info.plist */,
-				E0A000000000000000000062 /* Signing.xcconfig */,
-				E0A000000000000000000063 /* Local.xcconfig.example */,
-			);
-			path = Config;
-			sourceTree = "<group>";
-		};
 		E0A000000000000000000002 = {
 			isa = PBXGroup;
 			children = (
@@ -130,6 +119,17 @@
 				E0A000000000000000000040 /* ExploreWidget.appex */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		E0A000000000000000000008 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				E0A000000000000000000060 /* Info.plist */,
+				E0A000000000000000000061 /* Widget-Info.plist */,
+				E0A000000000000000000062 /* Signing.xcconfig */,
+				E0A000000000000000000063 /* Local.xcconfig.example */,
+			);
+			path = Config;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -196,8 +196,8 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				E0A000000000000000000042 /* ExploreWidget */,
 				E0A000000000000000000041 /* Shared */,
+				E0A000000000000000000042 /* ExploreWidget */,
 			);
 			name = ExploreWidget;
 			packageProductDependencies = (
