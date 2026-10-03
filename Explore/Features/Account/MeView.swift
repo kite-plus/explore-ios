@@ -144,7 +144,7 @@ struct SettingsLabel: View {
     var body: some View {
         Label {
             Text(title)
-                .foregroundStyle(.primary)
+                .foregroundStyle(Color.primary)
         } icon: {
             Image(systemName: symbol)
                 .font(.system(size: 14, weight: .semibold))
