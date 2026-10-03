@@ -36,9 +36,10 @@ struct DayGroupTests {
         let today = groups[0].heading(now: now, calendar: calendar)
         let yesterday = groups[1].heading(now: now, calendar: calendar)
         let earlier = groups[2].heading(now: now, calendar: calendar)
-        #expect(today.name == "Today" && today.date != nil)
-        #expect(yesterday.name == "Yesterday" && yesterday.date != nil)
-        #expect(earlier.date == nil && earlier.name != "Today" && earlier.name != "Yesterday")
+        // In the simulator's language, which need not be English.
+        #expect(today.name == String(localized: "Today") && today.date != nil)
+        #expect(yesterday.name == String(localized: "Yesterday") && yesterday.date != nil)
+        #expect(earlier.date == nil && earlier.name != today.name && earlier.name != yesterday.name)
     }
 
     @Test func givesTheClockTimeOnlyForEarlierDays() {
