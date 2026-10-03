@@ -24,6 +24,7 @@ struct FilterSheet: View {
                             }
                         }
                         .pickerStyle(.segmented)
+                        .controlSize(.large)
                         .labelsHidden()
                     }
                     section("Tags") {
