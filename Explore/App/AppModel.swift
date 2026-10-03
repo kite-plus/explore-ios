@@ -124,7 +124,7 @@ final class AppModel {
     // MARK: Session
 
     func restoreSession() async {
-        guard client.sessionToken != nil, user == nil else { return }
+        guard client.sessionToken != nil, user == nil, !isRestoringSession else { return }
         isRestoringSession = true
         defer { isRestoringSession = false }
         do {

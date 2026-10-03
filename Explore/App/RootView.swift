@@ -5,6 +5,7 @@ import SwiftUI
 /// scrolling up.
 struct RootView: View {
     @Environment(AppModel.self) private var app
+    @Environment(\.scenePhase) private var scenePhase
 
     var body: some View {
         @Bindable var app = app
@@ -53,6 +54,13 @@ struct RootView: View {
         }
         .onOpenURL { url in
             app.open(url)
+        }
+        .onChange(of: scenePhase) { _, phase in
+            // A session kept from an offline launch is checked once the
+            // app is back, rather than waiting for the next launch.
+            if phase == .active {
+                Task { await app.restoreSession() }
+            }
         }
         .onChange(of: app.pendingPost) {
             if let post = app.takePendingPost() {
