@@ -56,10 +56,8 @@ struct RootView: View {
             app.open(url)
         }
         .onChange(of: scenePhase) { _, phase in
-            // A session kept from an offline launch is checked once the
-            // app is back, rather than waiting for the next launch.
             if phase == .active {
-                Task { await app.restoreSession() }
+                Task { await app.catchUp() }
             }
         }
         .onChange(of: app.pendingPost) {

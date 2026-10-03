@@ -111,6 +111,10 @@ struct SearchView: View {
                 ProgressView()
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 40)
+            } else if index.blogs.isEmpty, let error = index.error {
+                LoadFailedView(message: error) {
+                    await index.loadIfNeeded(using: app.client)
+                }
             } else {
                 ContentUnavailableView.search(text: trimmed)
                     .padding(.vertical, 40)

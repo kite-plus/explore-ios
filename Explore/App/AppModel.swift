@@ -59,6 +59,7 @@ final class AppModel {
     private(set) var client: APIClient
     private(set) var user: User?
     private(set) var isRestoringSession = false
+    private var restoringToken: String?
     private(set) var topics: [Topic] = []
     private(set) var notice = ""
     private(set) var registrationEnabled = true
@@ -71,6 +72,8 @@ final class AppModel {
     private(set) var generation = 0
 
     private var toastTask: Task<Void, Never>?
+    private var isLoadingTopics = false
+    private var siteConfigLoadedAt: Date?
 
     var server: URL { client.server }
     var isSignedIn: Bool { user != nil }
@@ -101,7 +104,9 @@ final class AppModel {
     // MARK: Topics and site settings
 
     func loadTopics() async {
-        guard topics.isEmpty else { return }
+        guard topics.isEmpty, !isLoadingTopics else { return }
+        isLoadingTopics = true
+        defer { isLoadingTopics = false }
         if let list = try? await client.topics() {
             topics = list
         }
@@ -111,6 +116,18 @@ final class AppModel {
         guard let config = try? await client.siteConfig() else { return }
         notice = config.notice.trimmingCharacters(in: .whitespacesAndNewlines)
         registrationEnabled = config.registrationEnabled
+        siteConfigLoadedAt = .now
+    }
+
+    /// Catches up when the app becomes active: whatever failed at launch,
+    /// and a site notice older than ten minutes.
+    func catchUp() async {
+        async let topics: Void = loadTopics()
+        async let session: Void = restoreSession()
+        if siteConfigLoadedAt.map({ Date.now.timeIntervalSince($0) > 600 }) ?? true {
+            await loadSiteConfig()
+        }
+        _ = await (topics, session)
     }
 
     func topic(_ slug: String) -> Topic? {
@@ -124,16 +141,28 @@ final class AppModel {
     // MARK: Session
 
     func restoreSession() async {
-        guard client.sessionToken != nil, user == nil, !isRestoringSession else { return }
+        let client = client
+        guard let token = client.sessionToken, user == nil, restoringToken != token else { return }
+        restoringToken = token
         isRestoringSession = true
-        defer { isRestoringSession = false }
+        defer {
+            if restoringToken == token {
+                restoringToken = nil
+                isRestoringSession = false
+            }
+        }
+        // The answer only counts for the server and sign-in it was asked
+        // about; the reader may have switched servers or signed in since.
+        func isCurrent() -> Bool { client === self.client && client.sessionToken == token }
         do {
-            apply(try await client.me())
+            let me = try await client.me()
+            guard isCurrent() else { return }
+            apply(me)
             await loadFollows()
         } catch let error as APIError where error.isUnauthorized {
-            endSession()
+            if isCurrent() { endSession() }
         } catch {
-            // Offline: keep the token and try again next launch.
+            // Offline: keep the token and try again when the app is active.
         }
     }
 
