@@ -1,0 +1,7 @@
+// Signing settings shared by every target. To run on a device, copy
+// Local.xcconfig.example to Local.xcconfig, which git ignores, and set
+// your team there. The widget's identifier follows APP_BUNDLE_ID.
+APP_BUNDLE_ID = plus.kite.explore
+DEVELOPMENT_TEAM =
+
+#include? "Local.xcconfig"

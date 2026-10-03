@@ -1,0 +1,3 @@
+// Copy to Local.xcconfig to sign with your own team.
+DEVELOPMENT_TEAM = ABCDE12345
+APP_BUNDLE_ID = com.example.explore

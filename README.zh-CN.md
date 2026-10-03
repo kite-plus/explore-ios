@@ -34,7 +34,7 @@ App 没有任何统计，也不向第三方发出请求：文章缩略图和博�
 
 ## 构建
 
-需要 Xcode 26 或更新版本。打开 `Explore.xcodeproj`，选择 `Explore` scheme，在 iOS 26 或更新版本的 iPhone、iPad 模拟器上运行。要在真机上运行，请在 Signing & Capabilities 里选择你的开发团队。
+需要 Xcode 26 或更新版本。打开 `Explore.xcodeproj`，选择 `Explore` scheme，在 iOS 26 或更新版本的 iPhone、iPad 模拟器上运行。要在真机上运行，把 `Config/Local.xcconfig.example` 复制为 `Config/Local.xcconfig`，填上你的 `DEVELOPMENT_TEAM`；如果不能使用 `plus.kite.explore` 这个标识，同时修改 `APP_BUNDLE_ID`，小组件的标识会跟着变。这个文件不进 git，项目文件本身不用改。
 
 项目没有第三方依赖。App 在 `Explore/`，小组件在 `ExploreWidget/`，两者共用的代码在 `Shared/`：
 

@@ -34,7 +34,7 @@ The app has no analytics and makes no requests to third parties: post thumbnails
 
 ## Build
 
-You need Xcode 26 or later. Open `Explore.xcodeproj`, choose the `Explore` scheme and run it on an iPhone or iPad simulator with iOS 26 or later. To run on a device, pick your team under Signing & Capabilities.
+You need Xcode 26 or later. Open `Explore.xcodeproj`, choose the `Explore` scheme and run it on an iPhone or iPad simulator with iOS 26 or later. To run on a device, copy `Config/Local.xcconfig.example` to `Config/Local.xcconfig` and set `DEVELOPMENT_TEAM` to your team; change `APP_BUNDLE_ID` as well if `plus.kite.explore` is not yours to use. The widget's identifier follows it. Git ignores that file, so the project itself stays unchanged.
 
 The project has no third-party dependencies. The app lives in `Explore/`, the widget in `ExploreWidget/`, and what both use in `Shared/`:
 
