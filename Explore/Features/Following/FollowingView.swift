@@ -38,8 +38,14 @@ struct FollowingView: View {
                 } description: {
                     Text("Follow blogs from the directory and their new posts gather here.")
                 } actions: {
-                    Button("Browse Blogs") { app.tab = .blogs }
-                        .buttonStyle(.glassProminent)
+                    Button {
+                        app.tab = .blogs
+                    } label: {
+                        Text("Browse Blogs")
+                            .foregroundStyle(Color(.systemBackground))
+                    }
+                    .buttonStyle(.glassProminent)
+                    .tint(Color(.label))
                 }
                 .padding(.vertical, 40)
             } else {
@@ -74,68 +80,62 @@ struct FollowingView: View {
     }
 }
 
-/// The Following tab before signing in.
+/// The Following tab before signing in, kept plain: grays, an uncolored
+/// glass disc and a black or white button, whatever the appearance.
 private struct FollowingWelcome: View {
     @Environment(AppModel.self) private var app
 
     var body: some View {
-        ZStack {
-            MeshBackdrop(colors: [.kite, Color(hex: 0x7C3AED), Color(hex: 0x0D9488)])
-                .opacity(0.75)
-                .ignoresSafeArea()
+        ScrollView {
+            VStack(spacing: 24) {
+                Image(systemName: "heart.text.square")
+                    .font(.system(size: 44, weight: .regular))
+                    .foregroundStyle(Color.secondary)
+                    .frame(width: 104, height: 104)
+                    .glassEffect(.regular, in: .circle)
 
-            ScrollView {
-                VStack(spacing: 24) {
-                    Image(systemName: "heart.text.square.fill")
-                        .font(.system(size: 50, weight: .medium))
-                        .foregroundStyle(.white)
-                        .symbolRenderingMode(.hierarchical)
-                        .frame(width: 112, height: 112)
-                        .glassEffect(.regular.tint(Color.kite.opacity(0.35)), in: .circle)
+                VStack(spacing: 10) {
+                    Text("Follow the Blogs You Love")
+                        .font(.title2.bold())
+                    Text("Sign in to follow blogs and read their new posts in one stream. Reading everything else needs no account.")
+                        .font(.body)
+                        .foregroundStyle(Color.secondary)
+                }
+                .multilineTextAlignment(.center)
 
-                    VStack(spacing: 10) {
-                        Text("Follow the Blogs You Love")
-                            .font(.title.bold())
-                        Text("Sign in to follow blogs and read their new posts in one stream. Reading everything else needs no account.")
-                            .font(.body)
-                            .foregroundStyle(.secondary)
+                VStack(spacing: 12) {
+                    Button {
+                        app.sheet = .signIn(.signIn)
+                    } label: {
+                        Text("Sign In")
+                            .font(.headline)
+                            .foregroundStyle(Color(.systemBackground))
+                            .frame(maxWidth: .infinity)
                     }
-                    .multilineTextAlignment(.center)
+                    .buttonStyle(.glassProminent)
+                    .tint(Color(.label))
+                    .controlSize(.extraLarge)
 
-                    GlassEffectContainer(spacing: 12) {
-                        VStack(spacing: 12) {
-                            Button {
-                                app.sheet = .signIn(.signIn)
-                            } label: {
-                                Text("Sign In")
-                                    .font(.headline)
-                                    .frame(maxWidth: .infinity)
-                            }
-                            .buttonStyle(.glassProminent)
-                            .controlSize(.extraLarge)
-
-                            if app.registrationEnabled {
-                                Button {
-                                    app.sheet = .signIn(.register)
-                                } label: {
-                                    Text("Create Account")
-                                        .font(.headline)
-                                        .frame(maxWidth: .infinity)
-                                }
-                                .buttonStyle(.borderless)
-                                .controlSize(.large)
-                            }
+                    if app.registrationEnabled {
+                        Button {
+                            app.sheet = .signIn(.register)
+                        } label: {
+                            Text("Create Account")
+                                .font(.headline)
+                                .foregroundStyle(Color.secondary)
+                                .frame(maxWidth: .infinity)
                         }
+                        .buttonStyle(.borderless)
+                        .controlSize(.large)
                     }
                 }
-                .padding(28)
-                .glassEffect(.regular, in: .rect(cornerRadius: 36, style: .continuous))
-                .padding(20)
-                .frame(maxWidth: 480)
-                .frame(maxWidth: .infinity)
-                .padding(.top, 40)
             }
-            .scrollBounceBehavior(.basedOnSize)
+            .padding(.horizontal, 32)
+            .padding(.top, 56)
+            .frame(maxWidth: 440)
+            .frame(maxWidth: .infinity)
         }
+        .scrollBounceBehavior(.basedOnSize)
+        .background(Color(.systemGroupedBackground))
     }
 }
