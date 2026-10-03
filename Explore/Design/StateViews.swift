@@ -114,6 +114,10 @@ struct ListEndView: View {
 }
 
 /// Loads the next page when it scrolls into view, or offers a retry.
+///
+/// The task sits on a container that stays put while a page loads; on a
+/// view that the spinner replaced, SwiftUI would cancel the request it
+/// had just started.
 struct PageFooter: View {
     let isLoading: Bool
     let error: String?
@@ -123,11 +127,9 @@ struct PageFooter: View {
     let loadMore: () async -> Void
 
     var body: some View {
-        Group {
+        ZStack {
             if isLoading {
                 ProgressView()
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 20)
             } else if let error {
                 VStack(spacing: 10) {
                     Text(error)
@@ -137,15 +139,15 @@ struct PageFooter: View {
                     Button("Try Again") { Task { await loadMore() } }
                         .buttonStyle(.glass)
                 }
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 16)
-            } else if hasMore {
-                Color.clear
-                    .frame(height: 40)
-                    .task(id: itemCount) { await loadMore() }
-            } else if let endText {
+            } else if !hasMore, let endText {
                 ListEndView(text: endText)
             }
+        }
+        .frame(maxWidth: .infinity, minHeight: 44)
+        .padding(.vertical, 8)
+        .task(id: itemCount) {
+            guard hasMore, !isLoading, error == nil else { return }
+            await loadMore()
         }
     }
 }
