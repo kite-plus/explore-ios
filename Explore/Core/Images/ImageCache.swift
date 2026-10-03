@@ -26,11 +26,14 @@ final class ImageCache {
         return Date.now.timeIntervalSince(at) < 300
     }
 
-    func load(_ url: URL, pixels: CGFloat) async -> UIImage? {
+    /// Set followsServerCache for images that may change, such as blog
+    /// icons: Explore answers a missing icon with a placeholder it keeps
+    /// for an hour, which must not stick on the device.
+    func load(_ url: URL, pixels: CGFloat, followsServerCache: Bool = false) async -> UIImage? {
         let key = Self.key(url, pixels)
         if let image = memory.object(forKey: key as NSString) { return image }
         if let task = inflight[key] { return await task.value }
-        let task = Task { await ImageLoader.fetch(url, maxPixelSize: pixels) }
+        let task = Task { await ImageLoader.fetch(url, maxPixelSize: pixels, followsServerCache: followsServerCache) }
         inflight[key] = task
         let image = await task.value
         inflight[key] = nil
@@ -56,17 +59,18 @@ nonisolated enum ImageLoader {
         config.httpCookieAcceptPolicy = .never
         config.httpCookieStorage = nil
         config.urlCache = URLCache(memoryCapacity: 16 << 20, diskCapacity: 160 << 20)
-        // Images change rarely; reuse what is on disk instead of asking
-        // Explore again every minute.
-        config.requestCachePolicy = .returnCacheDataElseLoad
         config.httpMaximumConnectionsPerHost = 4
         config.timeoutIntervalForRequest = 20
         return URLSession(configuration: config)
     }()
 
     @concurrent
-    static func fetch(_ url: URL, maxPixelSize: CGFloat) async -> UIImage? {
-        guard let (data, response) = try? await session.data(from: url),
+    static func fetch(_ url: URL, maxPixelSize: CGFloat, followsServerCache: Bool) async -> UIImage? {
+        // Post images change rarely: reuse what is on disk instead of asking
+        // Explore again every minute.
+        let policy: URLRequest.CachePolicy = followsServerCache ? .useProtocolCachePolicy : .returnCacheDataElseLoad
+        let request = URLRequest(url: url, cachePolicy: policy, timeoutInterval: 20)
+        guard let (data, response) = try? await session.data(for: request),
               let http = response as? HTTPURLResponse, (200..<300).contains(http.statusCode)
         else { return nil }
         return downsample(data, maxPixelSize: maxPixelSize)

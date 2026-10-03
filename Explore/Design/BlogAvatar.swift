@@ -58,7 +58,7 @@ struct BlogAvatar: View {
                 favicon = Self.usable(cached)
                 return
             }
-            let image = await ImageCache.shared.load(url, pixels: pixels)
+            let image = await ImageCache.shared.load(url, pixels: pixels, followsServerCache: true)
             withAnimation(.smooth(duration: 0.25)) { favicon = Self.usable(image) }
         }
     }
