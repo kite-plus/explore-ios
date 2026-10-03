@@ -291,16 +291,6 @@
         }
       }
     },
-    "Blogs and topics" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "博客与主题"
-          }
-        }
-      }
-    },
     "Blogs show up here once they are listed." : {
       "localizations" : {
         "zh-Hans" : {
@@ -1811,12 +1801,22 @@
         }
       }
     },
-    "Search" : {
+    "Search blogs" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "搜索"
+            "value" : "搜索博客"
+          }
+        }
+      }
+    },
+    "Search blogs and topics" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "搜索博客和主题"
           }
         }
       }

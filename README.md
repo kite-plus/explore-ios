@@ -13,7 +13,7 @@ A native client for [Explore](https://github.com/kite-plus/explore), the stream 
 - **Discover**: the latest posts from every listed blog, filtered by blog language and topic, with pull to refresh and endless paging. Each post shows Explore's latest link check; posts that were never checked can be checked on the spot.
 - **Following**: follow blogs and read their new posts in one stream; manage the list and export it as OPML for any feed reader.
 - **Blogs**: the directory, most recently updated first, and a page for every blog with its feed, its posts and its language and blog system.
-- **Search**: browse Explore's topics, or find blogs by name, address or description as you type.
+- **Search**: the field at the top of Discover browses Explore's topics and finds blogs by name, address or description as you type; the directory has its own at the top of Blogs.
 - **Me**: sign in or create an account, change your name or password, delete your account, claim your blog with a DNS record, submit a blog and follow its review, and point the app at another Explore server.
 - **Reading**: posts open in Safari's view inside the app, or in Safari itself if you prefer, with an optional Reader view. Links get `utm_source` as on the website; nothing else is added.
 - **Widget**: the latest posts on the Home Screen in three sizes and on the Lock Screen, optionally narrowed to Chinese or English blogs. Tapping a post opens it on the author's site.
@@ -23,7 +23,7 @@ A native client for [Explore](https://github.com/kite-plus/explore), the stream 
 
 The app uses the system's Liquid Glass throughout rather than imitating it:
 
-- a tab bar that shrinks while you read, with Search as its own glass tab that turns into the search field;
+- a glass tab bar that keeps all four sections in view;
 - a feed filter that floats over the posts, where the language switch and the topic menu share one glass container and the clear button grows out of the topic capsule;
 - glass actions on blog pages over a mesh gradient in the blog's own color, zoom transitions from directory cards and topic tiles, and glass popovers for link checks;
 - a layered app icon made with Icon Composer, with light, dark and tinted variants.

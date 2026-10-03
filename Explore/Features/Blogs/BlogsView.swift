@@ -68,12 +68,19 @@ struct BlogsView: View {
     @Environment(AppModel.self) private var app
     @AppStorage("blogs.language") private var language: LanguageFilter = .all
     @State private var model = DirectoryModel()
+    @State private var query = ""
+
+    private var trimmed: String { query.trimmingCharacters(in: .whitespacesAndNewlines) }
 
     var body: some View {
         ExploreStack(tab: .blogs) {
             ScrollView {
                 LazyVStack(spacing: 12) {
-                    content
+                    if trimmed.isEmpty {
+                        content
+                    } else {
+                        searchResults
+                    }
                 }
                 .padding(.horizontal, 16)
                 .padding(.bottom, 32)
@@ -107,11 +114,34 @@ struct BlogsView: View {
                     }
                 }
             }
+            .searchable(
+                text: $query,
+                placement: .navigationBarDrawer(displayMode: .always),
+                prompt: Text("Search blogs")
+            )
             .refreshable {
                 await model.load(using: app.client, language: language, fresh: true)
             }
             .task(id: "\(language.rawValue)|\(app.server.absoluteString)") {
                 await model.loadIfNeeded(using: app.client, language: language)
+            }
+            .task(id: trimmed.isEmpty) {
+                if !trimmed.isEmpty {
+                    await app.blogIndex.loadIfNeeded(using: app.client)
+                }
+            }
+        }
+    }
+
+    /// Search runs over every blog, not only the pages loaded so far.
+    @ViewBuilder
+    private var searchResults: some View {
+        let matches = app.blogIndex.matches(trimmed)
+        if matches.isEmpty {
+            BlogSearchEmpty(index: app.blogIndex, query: trimmed)
+        } else {
+            ForEach(matches) { blog in
+                BlogCard(blog: blog)
             }
         }
     }

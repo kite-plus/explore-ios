@@ -1,79 +1,34 @@
 import SwiftUI
 
-/// The whole blog list, kept on the device so search answers as you type.
-/// Explore has no search endpoint; its directory is small enough to hold.
-@Observable
-final class BlogIndex {
-    private(set) var blogs: [Blog] = []
-    private(set) var isLoading = false
-    private(set) var error: String?
-    private var loadedServer: URL?
+/// What the search field shows: topics and recently updated blogs before
+/// typing, matching topics and blogs after.
+struct SearchContent: View {
+    let query: String
 
-    func loadIfNeeded(using client: APIClient) async {
-        guard loadedServer != client.server, !isLoading else { return }
-        isLoading = true
-        defer { isLoading = false }
-        var all: [Blog] = []
-        var cursor: String?
-        do {
-            repeat {
-                let page = try await client.blogs(cursor: cursor, language: nil, limit: 100)
-                all.append(contentsOf: page.data)
-                cursor = page.nextCursor
-            } while cursor != nil && all.count < 3000
-            blogs = all
-            loadedServer = client.server
-            error = nil
-        } catch {
-            guard !error.isCancellation else { return }
-            self.error = error.readableMessage
-        }
-    }
-
-    func matches(_ query: String) -> [Blog] {
-        let terms = query.split(whereSeparator: \.isWhitespace).map(String.init)
-        guard !terms.isEmpty else { return [] }
-        return blogs.filter { blog in
-            terms.allSatisfy { term in
-                blog.name.localizedStandardContains(term)
-                    || blog.host.localizedStandardContains(term)
-                    || blog.about.localizedStandardContains(term)
-            }
-        }
-    }
-}
-
-struct SearchView: View {
     @Environment(AppModel.self) private var app
-    @State private var index = BlogIndex()
-    @State private var query = ""
 
     private var trimmed: String { query.trimmingCharacters(in: .whitespacesAndNewlines) }
 
     var body: some View {
-        ExploreStack(tab: .search) {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 14) {
-                    if trimmed.isEmpty {
-                        browse
-                    } else {
-                        results
-                    }
+        ScrollView {
+            VStack(alignment: .leading, spacing: 14) {
+                if trimmed.isEmpty {
+                    browse
+                } else {
+                    results
                 }
-                .padding(.horizontal, 16)
-                .padding(.bottom, 32)
-                .frame(maxWidth: 720)
-                .frame(maxWidth: .infinity)
-                .animation(.smooth, value: trimmed.isEmpty)
             }
-            .scrollDismissesKeyboard(.immediately)
-            .background(Color(.systemGroupedBackground))
-            .navigationTitle("Search")
-            .searchable(text: $query, prompt: Text("Blogs and topics"))
-            .task(id: app.server.absoluteString) {
-                await index.loadIfNeeded(using: app.client)
-                await app.loadTopics()
-            }
+            .padding(.horizontal, 16)
+            .padding(.bottom, 32)
+            .frame(maxWidth: 720)
+            .frame(maxWidth: .infinity)
+            .animation(.smooth, value: trimmed.isEmpty)
+        }
+        .scrollDismissesKeyboard(.immediately)
+        .background(Color(.systemGroupedBackground))
+        .task(id: app.server.absoluteString) {
+            await app.blogIndex.loadIfNeeded(using: app.client)
+            await app.loadTopics()
         }
     }
 
@@ -91,10 +46,10 @@ struct SearchView: View {
                 }
             }
         }
-        if !index.blogs.isEmpty {
+        if !app.blogIndex.blogs.isEmpty {
             SectionTitle("Recently Updated")
                 .padding(.top, 12)
-            ForEach(index.blogs.prefix(6)) { blog in
+            ForEach(app.blogIndex.blogs.prefix(6)) { blog in
                 BlogRow(blog: blog)
             }
         }
@@ -102,23 +57,13 @@ struct SearchView: View {
 
     @ViewBuilder
     private var results: some View {
+        let index = app.blogIndex
         let topics = app.topics.filter { topic in
             topic.name.values.contains { $0.localizedStandardContains(trimmed) } || topic.slug.localizedStandardContains(trimmed)
         }
         let blogs = index.matches(trimmed)
         if topics.isEmpty && blogs.isEmpty {
-            if index.isLoading {
-                ProgressView()
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 40)
-            } else if index.blogs.isEmpty, let error = index.error {
-                LoadFailedView(message: error) {
-                    await index.loadIfNeeded(using: app.client)
-                }
-            } else {
-                ContentUnavailableView.search(text: trimmed)
-                    .padding(.vertical, 40)
-            }
+            BlogSearchEmpty(index: index, query: trimmed)
         } else {
             if !topics.isEmpty {
                 SectionTitle("Topics")
@@ -135,6 +80,29 @@ struct SearchView: View {
                     BlogRow(blog: blog)
                 }
             }
+        }
+    }
+}
+
+/// Shown when a search finds nothing: still loading, failed, or no match.
+struct BlogSearchEmpty: View {
+    let index: BlogIndex
+    let query: String
+
+    @Environment(AppModel.self) private var app
+
+    var body: some View {
+        if index.isLoading {
+            ProgressView()
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 40)
+        } else if index.blogs.isEmpty, let error = index.error {
+            LoadFailedView(message: error) {
+                await index.loadIfNeeded(using: app.client)
+            }
+        } else {
+            ContentUnavailableView.search(text: query)
+                .padding(.vertical, 40)
         }
     }
 }

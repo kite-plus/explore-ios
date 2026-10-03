@@ -114,8 +114,16 @@ struct DeepLinkTests {
     @Test func opensWebsiteAddresses() {
         let app = AppModel()
         app.open(URL(string: "https://explore.kite.plus/en/topics/ai")!)
-        #expect(app.tab == .search)
-        #expect(app.takePendingRoute(for: .search) == .topic("ai"))
+        #expect(app.tab == .discover)
+        #expect(app.takePendingRoute(for: .discover) == .topic("ai"))
+    }
+
+    @Test func opensSearchOnDiscover() {
+        let app = AppModel()
+        app.open(URL(string: "explore://search")!)
+        #expect(app.tab == .discover)
+        #expect(app.takeSearchRequest())
+        #expect(!app.takeSearchRequest())
     }
 
     @Test func opensSheetsAndTabs() {

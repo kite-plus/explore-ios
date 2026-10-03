@@ -1,8 +1,7 @@
 import SwiftUI
 
-/// The tab bar: Discover, Following, Blogs and Me, with Search as its own
-/// Liquid Glass tab. The bar shrinks while reading and grows back when
-/// scrolling up.
+/// The tab bar: Discover, Following, Blogs and Me. It stays fully open, and
+/// search lives at the top of Discover and Blogs.
 struct RootView: View {
     @Environment(AppModel.self) private var app
     @Environment(\.scenePhase) private var scenePhase
@@ -22,11 +21,8 @@ struct RootView: View {
             Tab("Me", systemImage: "person.crop.circle", value: AppTab.me) {
                 MeView()
             }
-            Tab(value: AppTab.search, role: .search) {
-                SearchView()
-            }
         }
-        .tabBarMinimizeBehavior(.onScrollDown)
+        .tabBarMinimizeBehavior(.never)
         .tabViewStyle(.sidebarAdaptable)
         .overlay(alignment: .top) {
             if let toast = app.toast {

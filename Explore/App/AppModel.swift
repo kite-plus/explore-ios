@@ -1,7 +1,7 @@
 import SwiftUI
 
 enum AppTab: Hashable {
-    case discover, following, blogs, me, search
+    case discover, following, blogs, me
 }
 
 /// Sheets that any screen can ask for.
@@ -54,6 +54,10 @@ final class AppModel {
     private(set) var pendingRoute: (tab: AppTab, route: Route)?
     /// A post the widget asked to open on the author's site.
     private(set) var pendingPost: URL?
+    /// Set when a link asks for search; Discover opens its search field.
+    private(set) var searchRequested = false
+    /// Every blog, for searching; loaded the first time someone searches.
+    let blogIndex = BlogIndex()
     private(set) var toast: Toast?
 
     private(set) var client: APIClient
@@ -355,7 +359,7 @@ final class AppModel {
         case ("blogs", nil):
             tab = .blogs
         case let ("topics", slug?):
-            show(.topic(slug), in: .search)
+            show(.topic(slug), in: .discover)
         case let ("submissions", id?):
             show(.submission(id), in: .me)
         case ("submit", _):
@@ -367,7 +371,8 @@ final class AppModel {
         case ("me", _), ("account", _):
             tab = .me
         case ("search", _):
-            tab = .search
+            tab = .discover
+            searchRequested = true
         case ("about", _):
             show(.about, in: .me)
         default:
@@ -378,6 +383,11 @@ final class AppModel {
     private func show(_ route: Route, in tab: AppTab) {
         self.tab = tab
         pendingRoute = (tab, route)
+    }
+
+    func takeSearchRequest() -> Bool {
+        defer { searchRequested = false }
+        return searchRequested
     }
 
     func takePendingPost() -> URL? {

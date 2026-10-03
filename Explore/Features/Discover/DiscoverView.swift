@@ -1,11 +1,14 @@
 import SwiftUI
 
-/// The latest posts from every listed blog, newest first.
+/// The latest posts from every listed blog, newest first, with search for
+/// blogs and topics at the top.
 struct DiscoverView: View {
     @Environment(AppModel.self) private var app
     @AppStorage("discover.language") private var language: LanguageFilter = .all
     @State private var tag: String?
     @State private var feed = FeedModel(source: .latest)
+    @State private var query = ""
+    @State private var searching = false
 
     var body: some View {
         ExploreStack(tab: .discover) {
@@ -28,10 +31,29 @@ struct DiscoverView: View {
             .refreshable {
                 await feed.load(using: app.client, fresh: true)
             }
+            // Search covers the feed instead of replacing it, so the feed
+            // keeps its place for when search is cancelled.
+            .overlay {
+                if searching {
+                    SearchContent(query: query)
+                        .transition(.opacity)
+                }
+            }
+            .animation(.smooth(duration: 0.25), value: searching)
+            .searchable(
+                text: $query, isPresented: $searching,
+                placement: .navigationBarDrawer(displayMode: .always),
+                prompt: Text("Search blogs and topics")
+            )
             .task(id: "\(language.rawValue)|\(tag ?? "")|\(app.server.absoluteString)") {
                 feed.language = language
                 feed.tag = tag
                 await feed.refreshIfNeeded(using: app.client)
+            }
+            .onChange(of: app.searchRequested, initial: true) {
+                if app.takeSearchRequest() {
+                    searching = true
+                }
             }
         }
     }
