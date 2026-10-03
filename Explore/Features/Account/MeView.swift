@@ -23,21 +23,21 @@ struct MeView: View {
                 if app.isSignedIn {
                     Section("Account") {
                         NavigationLink(value: Route.subscriptions) {
-                            SettingsLabel("Following", symbol: "heart.fill", color: .pink)
+                            SettingsLabel("Following", symbol: "heart.fill")
                         }
                         .badge(app.followedHosts.count)
                         NavigationLink(value: Route.ownedBlogs) {
-                            SettingsLabel("My Blogs", symbol: "checkmark.seal.fill", color: .teal)
+                            SettingsLabel("My Blogs", symbol: "checkmark.seal.fill")
                         }
                         Button {
                             editingName = true
                         } label: {
-                            SettingsLabel("Change Name", symbol: "person.text.rectangle", color: .indigo)
+                            SettingsLabel("Change Name", symbol: "person.text.rectangle")
                         }
                         Button {
                             changingPassword = true
                         } label: {
-                            SettingsLabel("Change Password", symbol: "key.fill", color: .gray)
+                            SettingsLabel("Change Password", symbol: "key.fill")
                         }
                     }
                 }
@@ -46,10 +46,10 @@ struct MeView: View {
                     Button {
                         app.sheet = .submit
                     } label: {
-                        SettingsLabel("Submit a Blog", symbol: "plus.app.fill", color: .kite)
+                        SettingsLabel("Submit a Blog", symbol: "plus.app.fill")
                     }
                     NavigationLink(value: Route.submissions) {
-                        SettingsLabel("My Submissions", symbol: "tray.full.fill", color: .orange)
+                        SettingsLabel("My Submissions", symbol: "tray.full.fill")
                     }
                     .badge(app.submissionIDs.count)
                 } header: {
@@ -60,10 +60,10 @@ struct MeView: View {
 
                 Section {
                     Toggle(isOn: $openInSafari) {
-                        SettingsLabel("Open Links in Safari", symbol: "safari.fill", color: .blue)
+                        SettingsLabel("Open Links in Safari", symbol: "safari.fill")
                     }
                     Toggle(isOn: $readerMode) {
-                        SettingsLabel("Use Reader When Available", symbol: "doc.plaintext.fill", color: .brown)
+                        SettingsLabel("Use Reader When Available", symbol: "doc.plaintext.fill")
                     }
                     .disabled(openInSafari)
                 } header: {
@@ -74,20 +74,20 @@ struct MeView: View {
 
                 Section("Explore") {
                     NavigationLink(value: Route.about) {
-                        SettingsLabel("About Explore", symbol: "info.circle.fill", color: .kite)
+                        SettingsLabel("About Explore", symbol: "info.circle.fill")
                     }
                     ShareLink(item: app.client.feedURL) {
-                        SettingsLabel("Explore's RSS Feed", symbol: "dot.radiowaves.up.forward", color: .orange)
+                        SettingsLabel("Explore's RSS Feed", symbol: "dot.radiowaves.up.forward")
                     }
                     ShareLink(item: app.client.opmlURL) {
-                        SettingsLabel("Export Every Blog as OPML", symbol: "square.and.arrow.up.on.square.fill", color: .green)
+                        SettingsLabel("Export Every Blog as OPML", symbol: "square.and.arrow.up.on.square.fill")
                     }
                     NavigationLink(value: Route.server) {
                         LabeledContent {
                             Text(app.server.host() ?? app.server.absoluteString)
                                 .lineLimit(1)
                         } label: {
-                            SettingsLabel("Server", symbol: "server.rack", color: .gray)
+                            SettingsLabel("Server", symbol: "server.rack")
                         }
                     }
                 }
@@ -129,16 +129,14 @@ struct MeView: View {
     }
 }
 
-/// A settings row label with a colored rounded icon, as in Settings.
+/// A settings row label with its icon on a plain gray square.
 struct SettingsLabel: View {
     let title: LocalizedStringKey
     let symbol: String
-    let color: Color
 
-    init(_ title: LocalizedStringKey, symbol: String, color: Color) {
+    init(_ title: LocalizedStringKey, symbol: String) {
         self.title = title
         self.symbol = symbol
-        self.color = color
     }
 
     var body: some View {
@@ -148,9 +146,9 @@ struct SettingsLabel: View {
         } icon: {
             Image(systemName: symbol)
                 .font(.system(size: 14, weight: .semibold))
-                .foregroundStyle(.white)
+                .foregroundStyle(Color.primary)
                 .frame(width: 29, height: 29)
-                .background(color.gradient, in: .rect(cornerRadius: 7, style: .continuous))
+                .background(Color(.tertiarySystemFill), in: .rect(cornerRadius: 7, style: .continuous))
         }
     }
 }
@@ -163,10 +161,8 @@ private struct ProfileHeader: View {
             if let user = app.user {
                 Text(Palette.initial(of: user.displayName))
                     .font(.system(size: 36, weight: .semibold, design: .rounded))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(Color.secondary)
                     .frame(width: 84, height: 84)
-                    .background(Palette.color(for: user.email).gradient, in: .circle)
-                    .padding(6)
                     .glassEffect(.regular, in: .circle)
                 VStack(spacing: 4) {
                     Text(user.displayName)
@@ -176,7 +172,7 @@ private struct ProfileHeader: View {
                         .foregroundStyle(.secondary)
                 }
                 if user.isAdmin {
-                    Pill(text: String(localized: "Admin"), systemImage: "shield.lefthalf.filled", tint: .kite)
+                    Pill(text: String(localized: "Admin"), systemImage: "shield.lefthalf.filled")
                 }
             } else {
                 GlassMark(size: 76)
@@ -197,16 +193,17 @@ private struct ProfileHeader: View {
                                 .font(.headline)
                                 .frame(maxWidth: .infinity)
                         }
-                        .buttonStyle(.glassProminent)
+                        .buttonStyle(.primaryAction)
                         if app.registrationEnabled {
                             Button {
                                 app.sheet = .signIn(.register)
                             } label: {
                                 Text("Create Account")
                                     .font(.headline)
+                                    .foregroundStyle(Color.secondary)
                                     .frame(maxWidth: .infinity)
                             }
-                            .buttonStyle(.glass)
+                            .buttonStyle(.borderless)
                         }
                     }
                     .controlSize(.large)
@@ -216,11 +213,7 @@ private struct ProfileHeader: View {
         .padding(.horizontal, 20)
         .padding(.vertical, 26)
         .frame(maxWidth: .infinity)
-        .background {
-            MeshBackdrop(colors: [.kite, Color(hex: 0x8B5CF6), Color(hex: 0x14B8A6)])
-                .opacity(0.45)
-        }
-        .clipShape(.rect(cornerRadius: 30, style: .continuous))
+        .background(Color(.secondarySystemGroupedBackground), in: .rect(cornerRadius: 30, style: .continuous))
     }
 }
 

@@ -24,7 +24,7 @@ struct SubscriptionsView: View {
                         Text("Follow blogs from the directory and their new posts gather here.")
                     } actions: {
                         Button("Browse Blogs") { app.tab = .blogs }
-                            .buttonStyle(.glassProminent)
+                            .buttonStyle(.primaryAction)
                     }
                     .listRowBackground(Color.clear)
                 } else {

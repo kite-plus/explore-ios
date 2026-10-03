@@ -25,7 +25,7 @@ The app uses the system's Liquid Glass throughout rather than imitating it:
 
 - a glass tab bar that keeps all four sections in view;
 - a feed filter that floats over the posts, where the language switch and the topic menu share one glass container and the clear button grows out of the topic capsule;
-- glass actions on blog pages over a mesh gradient in the blog's own color, zoom transitions from directory cards and topic tiles, and glass popovers for link checks;
+- glass actions on blog pages, zoom transitions from directory cards and topic tiles, and glass popovers for link checks;
 - a layered app icon made with Icon Composer, with light, dark and tinted variants.
 
 ## Privacy
@@ -42,7 +42,7 @@ The project has no third-party dependencies. The app lives in `Explore/`, the wi
 |---|---|
 | `Explore/App` | the app entry point, tabs, navigation, deep links and the shared app model |
 | `Explore/Core` | the API client, image loading, keychain, formatting and link handling |
-| `Explore/Design` | colors, mesh backdrops, avatars and the shared glass pieces |
+| `Explore/Design` | colors, avatars and the shared glass pieces, including the black and white style of main buttons |
 | `Explore/Features` | one folder per area: Discover, Following, Blogs, Search, Account and Submit |
 | `Explore/Resources` | the asset catalog, the app icon, the string catalog and the privacy manifest |
 | `ExploreWidget` | the Latest Posts widget |

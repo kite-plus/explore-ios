@@ -26,7 +26,7 @@ struct LoadFailedView: View {
                     Text("Try Again")
                 }
             }
-            .buttonStyle(.glassProminent)
+            .buttonStyle(.primaryAction)
             .disabled(retrying)
         }
         .padding(.vertical, 40)

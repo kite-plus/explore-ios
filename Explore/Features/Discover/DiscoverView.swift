@@ -69,7 +69,7 @@ struct NoticeBanner: View {
         if dismissed != text {
             HStack(alignment: .top, spacing: 12) {
                 Image(systemName: "megaphone.fill")
-                    .foregroundStyle(Color.kite)
+                    .foregroundStyle(Color.secondary)
                     .font(.headline)
                 Text(text)
                     .font(.subheadline)
@@ -86,7 +86,7 @@ struct NoticeBanner: View {
                 .accessibilityLabel(Text("Dismiss"))
             }
             .padding(14)
-            .background(Color.kite.opacity(0.1), in: .rect(cornerRadius: 20, style: .continuous))
+            .background(Color(.secondarySystemGroupedBackground), in: .rect(cornerRadius: 20, style: .continuous))
             .transition(.opacity.combined(with: .scale(scale: 0.95)))
         }
     }

@@ -115,7 +115,7 @@ struct ClaimBlogView: View {
                 .multilineTextAlignment(.center)
                 .foregroundStyle(.secondary)
             Button("Done") { dismiss() }
-                .buttonStyle(.glassProminent)
+                .buttonStyle(.primaryAction)
                 .controlSize(.large)
         }
         .padding(32)

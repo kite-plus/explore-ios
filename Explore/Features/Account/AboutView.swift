@@ -17,31 +17,23 @@ struct AboutView: View {
                 }
                 .padding(.vertical, 28)
                 .frame(maxWidth: .infinity)
-                .background(alignment: .bottom) {
-                    MeshBackdrop(colors: [.kite, Color(hex: 0x8B5CF6), Color(hex: 0x14B8A6)])
-                        .frame(height: 700)
-                        .mask(LinearGradient(colors: [.black, .black, .clear], startPoint: .top, endPoint: .bottom))
-                        .opacity(0.4)
-                        .padding(.horizontal, -400)
-                        .allowsHitTesting(false)
-                }
 
-                AboutPoint(symbol: "binoculars.fill", color: .kite, title: "One stream of independent blogs") {
+                AboutPoint(symbol: "binoculars.fill", title: "One stream of independent blogs") {
                     Text("Explore gathers the public feeds of independent blogs and shows their latest posts, newest first. Any blog with RSS, Atom or JSON Feed can join.")
                 }
-                AboutPoint(symbol: "arrow.up.forward.square.fill", color: .green, title: "Always read on the author's site") {
+                AboutPoint(symbol: "arrow.up.forward.square.fill", title: "Always read on the author's site") {
                     Text("A post opens at its original address, with no page in between. Explore adds only utm_source, so the author can tell the visit came from Explore; nothing in it identifies you.")
                 }
-                AboutPoint(symbol: "tray.fill", color: .orange, title: "No post content kept") {
+                AboutPoint(symbol: "tray.fill", title: "No post content kept") {
                     Text("Explore keeps neither post content nor images. What you see is a cache of what each feed says right now; when an author edits or deletes a post, Explore follows.")
                 }
-                AboutPoint(symbol: "hand.raised.fill", color: .pink, title: "Private by design") {
+                AboutPoint(symbol: "hand.raised.fill", title: "Private by design") {
                     Text("Reading needs no account and this app has no analytics. Thumbnails and icons come from Explore's own server, never from third parties. With an account, Explore keeps your email, your name, a hash of your password and the blogs you follow, and never what you read.")
                 }
-                AboutPoint(symbol: "checkmark.seal.fill", color: .teal, title: "How blogs are listed") {
+                AboutPoint(symbol: "checkmark.seal.fill", title: "How blogs are listed") {
                     Text("Authors submit their blog and its feed is checked on the spot. A maintainer reviews blogs that pass: personal and independent blogs, updated within the last 12 months.")
                 }
-                AboutPoint(symbol: "door.left.hand.open", color: .indigo, title: "Leaving is easy") {
+                AboutPoint(symbol: "door.left.hand.open", title: "Leaving is easy") {
                     Text("Authors can leave at any time: answer Explore's crawler with 410 Gone, disallow KiteExplore in robots.txt, or open an issue.")
                 }
 
@@ -73,7 +65,6 @@ struct AboutView: View {
 
 private struct AboutPoint<Content: View>: View {
     let symbol: String
-    let color: Color
     let title: LocalizedStringKey
     @ViewBuilder var text: Content
 
@@ -81,9 +72,9 @@ private struct AboutPoint<Content: View>: View {
         HStack(alignment: .top, spacing: 14) {
             Image(systemName: symbol)
                 .font(.system(size: 18, weight: .semibold))
-                .foregroundStyle(.white)
+                .foregroundStyle(Color.primary)
                 .frame(width: 38, height: 38)
-                .background(color.gradient, in: .rect(cornerRadius: 11, style: .continuous))
+                .background(Color(.tertiarySystemFill), in: .rect(cornerRadius: 11, style: .continuous))
             VStack(alignment: .leading, spacing: 6) {
                 Text(title)
                     .font(.headline)
@@ -111,7 +102,7 @@ private struct LinkRow: View {
             HStack(spacing: 14) {
                 Image(systemName: symbol)
                     .font(.system(size: 15, weight: .semibold))
-                    .foregroundStyle(Color.kite)
+                    .foregroundStyle(Color.secondary)
                     .frame(width: 24)
                 Text(title)
                     .foregroundStyle(.primary)

@@ -20,7 +20,7 @@ struct TopicView: View {
             TopicBanner(slug: slug, name: name)
         } empty: {
             ContentUnavailableView {
-                Label("No Posts Yet", systemImage: TopicStyle.of(slug).symbol)
+                Label("No Posts Yet", systemImage: TopicStyle.symbol(for: slug))
             } description: {
                 Text("No posts under this topic yet.")
             }
@@ -59,23 +59,22 @@ private struct TopicBanner: View {
     let name: String
 
     var body: some View {
-        let style = TopicStyle.of(slug)
         ZStack(alignment: .bottomLeading) {
-            style.gradient
-            Image(systemName: style.symbol)
+            Color(.secondarySystemGroupedBackground)
+            Image(systemName: TopicStyle.symbol(for: slug))
                 .font(.system(size: 120, weight: .semibold))
-                .foregroundStyle(.white.opacity(0.22))
+                .foregroundStyle(Color(.quaternaryLabel))
                 .rotationEffect(.degrees(-12))
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
                 .offset(x: 24, y: -10)
             VStack(alignment: .leading, spacing: 4) {
                 Text(name)
                     .font(.largeTitle.bold())
+                    .foregroundStyle(Color.primary)
                 Text("Posts Explore filed under this topic, newest first.")
                     .font(.subheadline)
-                    .opacity(0.9)
+                    .foregroundStyle(Color.secondary)
             }
-            .foregroundStyle(.white)
             .padding(20)
         }
         .frame(height: 170)

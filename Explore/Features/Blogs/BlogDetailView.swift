@@ -1,8 +1,7 @@
 import SwiftUI
 
 /// A blog's page: who it is, how to visit and follow it, and the posts in
-/// its feed. The header's mesh takes the blog's color and runs up under
-/// the glass navigation bar.
+/// its feed.
 struct BlogDetailView: View {
     let ref: BlogRef
 
@@ -126,24 +125,6 @@ private struct BlogHeader: View {
         }
         .padding(.horizontal, 8)
         .frame(maxWidth: .infinity)
-        .background(alignment: .bottom) {
-            MeshBackdrop(colors: BlogColors.of(ref.host))
-                .frame(height: 1000)
-                .mask {
-                    LinearGradient(
-                        stops: [
-                            .init(color: .black, location: 0),
-                            .init(color: .black.opacity(0.9), location: 0.6),
-                            .init(color: .clear, location: 1),
-                        ],
-                        startPoint: .top, endPoint: .bottom
-                    )
-                }
-                .opacity(0.5)
-                .padding(.horizontal, -500)
-                .allowsHitTesting(false)
-                .accessibilityHidden(true)
-        }
     }
 
     private var actions: some View {
@@ -157,8 +138,7 @@ private struct BlogHeader: View {
                     Label("Visit Blog", systemImage: "safari")
                         .font(.body.weight(.semibold))
                 }
-                .buttonStyle(.glassProminent)
-                .tint(Palette.color(for: ref.host))
+                .buttonStyle(.primaryAction)
                 .controlSize(.large)
 
                 FollowButton(blog: blog?.ref ?? ref, quiet: true)

@@ -123,14 +123,13 @@ struct SignInView: View {
                         HStack(spacing: 8) {
                             if working {
                                 ProgressView()
-                                    .tint(.white)
                             }
                             Text(registering ? "Create Account" : "Sign In")
                                 .font(.headline)
                         }
                         .frame(maxWidth: .infinity)
                     }
-                    .buttonStyle(.glassProminent)
+                    .buttonStyle(.primaryAction)
                     .controlSize(.extraLarge)
                     .disabled(working)
 
@@ -146,11 +145,7 @@ struct SignInView: View {
                 .animation(.snappy, value: error)
             }
             .scrollDismissesKeyboard(.interactively)
-            .background {
-                MeshBackdrop(colors: [.kite, Color(hex: 0x8B5CF6), Color(hex: 0x14B8A6)])
-                    .opacity(0.35)
-                    .ignoresSafeArea()
-            }
+            .background(Color(.systemGroupedBackground))
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button(role: .close) { dismiss() }

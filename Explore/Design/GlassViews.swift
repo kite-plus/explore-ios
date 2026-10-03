@@ -11,7 +11,7 @@ struct ToastView: View {
                 .multilineTextAlignment(.leading)
         } icon: {
             Image(systemName: toast.systemImage)
-                .foregroundStyle(toast.isError ? Color.orange : Color.kite)
+                .foregroundStyle(toast.isError ? Color.orange : Color.primary)
                 .symbolEffect(.bounce, value: toast.id)
         }
         .font(.subheadline.weight(.semibold))
@@ -114,31 +114,47 @@ private extension CGPoint {
     }
 }
 
-/// The app mark floating in Liquid Glass, for sign-in and about screens.
+/// The app mark on an uncolored glass tile, for sign-in and about screens.
 struct GlassMark: View {
     var size: CGFloat = 88
 
     var body: some View {
         KiteMark()
-            .fill(.white.gradient)
-            .frame(width: size * 0.56, height: size * 0.56)
+            .fill(Color.primary)
+            .frame(width: size * 0.5, height: size * 0.5)
             .frame(width: size, height: size)
-            .background(Color.kite.gradient, in: .rect(cornerRadius: size * 0.26, style: .continuous))
             .glassEffect(.regular, in: .rect(cornerRadius: size * 0.26, style: .continuous))
-            .shadow(color: Color.kite.opacity(0.35), radius: 18, y: 8)
             .accessibilityHidden(true)
     }
 }
 
+/// The app's main actions: black glass in light mode and white in dark,
+/// so color stays with the content.
+struct PrimaryActionStyle: PrimitiveButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        Button(role: configuration.role, action: configuration.trigger) {
+            configuration.label
+                .foregroundStyle(Color(.systemBackground))
+                .tint(Color(.systemBackground))
+        }
+        .buttonStyle(.glassProminent)
+        .tint(Color(.label))
+    }
+}
+
+extension PrimitiveButtonStyle where Self == PrimaryActionStyle {
+    static var primaryAction: PrimaryActionStyle { PrimaryActionStyle() }
+}
+
 #Preview("Glass") {
     ZStack {
-        MeshBackdrop(colors: [.kite, .purple, .teal]).ignoresSafeArea()
+        Color(.systemGroupedBackground).ignoresSafeArea()
         VStack(spacing: 24) {
             GlassMark()
             ToastView(toast: Toast(message: "Following Example Blog", systemImage: "heart.fill", isError: false))
             HStack {
                 Pill(text: "中文", systemImage: "character.bubble")
-                Pill(text: "WordPress", tint: .kite)
+                Pill(text: "WordPress")
             }
         }
     }

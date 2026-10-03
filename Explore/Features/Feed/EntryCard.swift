@@ -64,7 +64,7 @@ struct EntryCard: View {
                         Button {
                             navigate(.topic(tag.slug))
                         } label: {
-                            Pill(text: tag.name, systemImage: TopicStyle.of(tag.slug).symbol, tint: TopicStyle.of(tag.slug).color)
+                            Pill(text: tag.name, systemImage: TopicStyle.symbol(for: tag.slug))
                         }
                         .buttonStyle(.plain)
                     }

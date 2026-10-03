@@ -42,10 +42,8 @@ struct FollowingView: View {
                         app.tab = .blogs
                     } label: {
                         Text("Browse Blogs")
-                            .foregroundStyle(Color(.systemBackground))
                     }
-                    .buttonStyle(.glassProminent)
-                    .tint(Color(.label))
+                    .buttonStyle(.primaryAction)
                 }
                 .padding(.vertical, 40)
             } else {
@@ -109,11 +107,9 @@ private struct FollowingWelcome: View {
                     } label: {
                         Text("Sign In")
                             .font(.headline)
-                            .foregroundStyle(Color(.systemBackground))
                             .frame(maxWidth: .infinity)
                     }
-                    .buttonStyle(.glassProminent)
-                    .tint(Color(.label))
+                    .buttonStyle(.primaryAction)
                     .controlSize(.extraLarge)
 
                     if app.registrationEnabled {

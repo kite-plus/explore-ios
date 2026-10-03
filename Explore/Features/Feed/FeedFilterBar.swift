@@ -2,8 +2,8 @@ import SwiftUI
 
 /// The language switch and topic menu above a feed, in Liquid Glass.
 ///
-/// Both sit in one glass container: picking a topic tints its capsule and
-/// grows a clear button out of it; clearing the topic folds it back in.
+/// Both sit in one glass container: picking a topic grows a clear button
+/// out of its capsule; clearing the topic folds it back in.
 struct FeedFilterBar: View {
     @Binding var language: LanguageFilter
     @Binding var tag: String?
@@ -17,13 +17,13 @@ struct FeedFilterBar: View {
             HStack(spacing: 10) {
                 languageSwitch
                 Spacer(minLength: 0)
-                if let tag {
+                if tag != nil {
                     Button {
                         withAnimation(.bouncy) { self.tag = nil }
                     } label: {
                         Image(systemName: "xmark")
                             .font(.subheadline.weight(.bold))
-                            .foregroundStyle(TopicStyle.of(tag).color)
+                            .foregroundStyle(Color.secondary)
                             .frame(width: 44, height: 44)
                             .contentShape(.circle)
                     }
@@ -50,13 +50,13 @@ struct FeedFilterBar: View {
                 } label: {
                     Text(option.title)
                         .font(.subheadline.weight(selected ? .semibold : .medium))
-                        .foregroundStyle(selected ? Color.kite : Color.primary)
+                        .foregroundStyle(selected ? Color.primary : Color.secondary)
                         .padding(.horizontal, 13)
                         .frame(height: 36)
                         .background {
                             if selected {
                                 Capsule()
-                                    .fill(Color.kite.opacity(0.16))
+                                    .fill(Color.primary.opacity(0.1))
                                     .matchedGeometryEffect(id: "selected", in: selection)
                             }
                         }
@@ -74,13 +74,12 @@ struct FeedFilterBar: View {
     }
 
     private var topicMenu: some View {
-        let style = tag.map(TopicStyle.of)
         return Menu {
             Picker(selection: $tag.animation(.bouncy)) {
                 Label("All Topics", systemImage: "square.grid.2x2")
                     .tag(String?.none)
                 ForEach(app.topics) { topic in
-                    Label(topic.name(in: .current), systemImage: TopicStyle.of(topic.slug).symbol)
+                    Label(topic.name(in: .current), systemImage: TopicStyle.symbol(for: topic.slug))
                         .tag(Optional(topic.slug))
                 }
             } label: {
@@ -89,7 +88,7 @@ struct FeedFilterBar: View {
             .pickerStyle(.inline)
         } label: {
             HStack(spacing: 6) {
-                Image(systemName: style?.symbol ?? "number")
+                Image(systemName: tag.map(TopicStyle.symbol(for:)) ?? "number")
                 Text(tag.flatMap(app.topicName) ?? String(localized: "Topics"))
                     .lineLimit(1)
                 Image(systemName: "chevron.down")
@@ -97,13 +96,13 @@ struct FeedFilterBar: View {
                     .opacity(0.6)
             }
             .font(.subheadline.weight(.semibold))
-            .foregroundStyle(style.map { AnyShapeStyle($0.color) } ?? AnyShapeStyle(.primary))
+            .foregroundStyle(Color.primary)
             .padding(.horizontal, 16)
             .frame(height: 44)
             .contentShape(.capsule)
         }
         .menuIndicator(.hidden)
-        .glassEffect(style.map { .regular.tint($0.color.opacity(0.22)).interactive() } ?? .regular.interactive(), in: .capsule)
+        .glassEffect(.regular.interactive(), in: .capsule)
         .glassEffectID("topic", in: glass)
         .accessibilityLabel(Text("Topic"))
     }

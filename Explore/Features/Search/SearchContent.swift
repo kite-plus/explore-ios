@@ -123,7 +123,7 @@ struct SectionTitle: View {
     }
 }
 
-/// A colorful tile for a topic; it zooms into the topic's posts.
+/// A tile for a topic; it zooms into the topic's posts.
 struct TopicTile: View {
     let topic: Topic
 
@@ -132,20 +132,18 @@ struct TopicTile: View {
     private var zoomID: String { "topic-tile-\(topic.slug)" }
 
     var body: some View {
-        let style = TopicStyle.of(topic.slug)
         NavigationLink(value: Route.topic(topic.slug, zoomID: zoomID)) {
             ZStack(alignment: .topLeading) {
-                style.gradient
-                Image(systemName: style.symbol)
+                Color(.secondarySystemGroupedBackground)
+                Image(systemName: TopicStyle.symbol(for: topic.slug))
                     .font(.system(size: 50, weight: .semibold))
-                    .foregroundStyle(.white.opacity(0.3))
+                    .foregroundStyle(Color(.quaternaryLabel))
                     .rotationEffect(.degrees(-12))
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
                     .offset(x: 10, y: 12)
                 Text(topic.name(in: .current))
                     .font(.headline)
-                    .foregroundStyle(.white)
-                    .shadow(color: .black.opacity(0.15), radius: 2, y: 1)
+                    .foregroundStyle(Color.primary)
                     .padding(14)
             }
             .frame(height: 92)

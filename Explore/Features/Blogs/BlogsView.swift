@@ -165,7 +165,7 @@ struct BlogsView: View {
                     Text("Blogs show up here once they are listed.")
                 } actions: {
                     Button("Submit a Blog") { app.sheet = .submit }
-                        .buttonStyle(.glassProminent)
+                        .buttonStyle(.primaryAction)
                 }
                 .padding(.vertical, 40)
             } else {
@@ -282,7 +282,7 @@ struct FollowButton: View {
                     .buttonStyle(.glass)
             } else {
                 Button(action: toggle) { label(following: false) }
-                    .buttonStyle(.glassProminent)
+                    .buttonStyle(.primaryAction)
             }
         }
         .controlSize(compact ? .regular : .large)

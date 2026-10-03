@@ -119,7 +119,7 @@ struct SubmissionsView: View {
                     Text("Blogs you submit from this device show up here with their review status.")
                 } actions: {
                     Button("Submit a Blog") { app.sheet = .submit }
-                        .buttonStyle(.glassProminent)
+                        .buttonStyle(.primaryAction)
                 }
                 .listRowBackground(Color.clear)
             } else {

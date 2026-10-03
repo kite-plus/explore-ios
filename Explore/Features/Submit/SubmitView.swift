@@ -107,14 +107,13 @@ struct SubmitView: View {
                     HStack(spacing: 8) {
                         if work == .checking {
                             ProgressView()
-                                .tint(.white)
                         }
                         Text(work == .checking ? "Checking the Feed…" : "Check Blog")
                             .font(.headline)
                     }
                     .frame(maxWidth: .infinity)
                 }
-                .buttonStyle(.glassProminent)
+                .buttonStyle(.primaryAction)
                 .controlSize(.extraLarge)
                 .disabled(work != nil || siteAddress.trimmingCharacters(in: .whitespaces).isEmpty || note.count > 500)
                 Text("The check can take up to 30 seconds.")
@@ -212,14 +211,13 @@ struct SubmitView: View {
                         HStack(spacing: 8) {
                             if work == .submitting {
                                 ProgressView()
-                                    .tint(.white)
                             }
                             Text(work == .submitting ? "Submitting…" : "Confirm and Submit")
                                 .font(.headline)
                         }
                         .frame(maxWidth: .infinity)
                     }
-                    .buttonStyle(.glassProminent)
+                    .buttonStyle(.primaryAction)
                     .disabled(work != nil || name.trimmingCharacters(in: .whitespaces).isEmpty)
                 }
                 .controlSize(.extraLarge)
@@ -263,7 +261,7 @@ struct SubmitView: View {
                             .font(.headline)
                             .frame(maxWidth: .infinity)
                     }
-                    .buttonStyle(.glassProminent)
+                    .buttonStyle(.primaryAction)
                 }
                 .controlSize(.extraLarge)
             }

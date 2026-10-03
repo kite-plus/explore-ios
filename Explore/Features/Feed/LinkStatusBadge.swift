@@ -117,7 +117,7 @@ private struct LinkStatusDetails: View {
                     }
                     .frame(maxWidth: .infinity)
                 }
-                .buttonStyle(.glassProminent)
+                .buttonStyle(.primaryAction)
                 .disabled(checking)
             }
         }
