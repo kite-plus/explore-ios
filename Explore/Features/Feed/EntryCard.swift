@@ -147,7 +147,7 @@ struct EntryActions: View {
                 Label("Read on the Author's Site", systemImage: "safari")
             }
             Button {
-                UIApplication.shared.open(SourceTag.tagged(url, source: app.sourceTag))
+                LinkOpener.openInSafari(url, source: app.sourceTag)
             } label: {
                 Label("Open in Safari", systemImage: "arrow.up.forward.app")
             }

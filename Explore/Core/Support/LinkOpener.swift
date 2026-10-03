@@ -11,9 +11,11 @@ enum Preferences {
 /// prefers Safari itself; the app never sees what happens there.
 enum LinkOpener {
     static func open(_ url: URL, source: String? = nil) {
+        // Only web pages: a server could list other schemes, which would
+        // hand the tap to whatever app claims them.
+        guard isWeb(url) else { return }
         let target = source.map { SourceTag.tagged(url, source: $0) } ?? url
-        let isWeb = ["http", "https"].contains(target.scheme?.lowercased() ?? "")
-        if !isWeb || UserDefaults.standard.bool(forKey: Preferences.openInSafari) {
+        if UserDefaults.standard.bool(forKey: Preferences.openInSafari) {
             UIApplication.shared.open(target)
             return
         }
@@ -27,6 +29,15 @@ enum LinkOpener {
             return
         }
         presenter.present(safari, animated: true)
+    }
+
+    static func openInSafari(_ url: URL, source: String? = nil) {
+        guard isWeb(url) else { return }
+        UIApplication.shared.open(source.map { SourceTag.tagged(url, source: $0) } ?? url)
+    }
+
+    private static func isWeb(_ url: URL) -> Bool {
+        ["http", "https"].contains(url.scheme?.lowercased() ?? "")
     }
 
     private static func topViewController() -> UIViewController? {
