@@ -54,11 +54,13 @@ App 没有任何统计，也不向第三方发出请求：文章缩略图和博�
 
 ## 测试
 
-单元测试使用 Swift Testing，覆盖数据解码、时间解析、链接标记、头像颜色、OPML 导出和深度链接：
+单元测试使用 Swift Testing，覆盖数据解码、时间解析、按天分组、链接标记、头像颜色、OPML 导出和深度链接：
 
 ```bash
 xcodebuild test -project Explore.xcodeproj -scheme Explore -destination 'platform=iOS Simulator,name=iPhone 17 Pro'
 ```
+
+每次推送和拉取请求，CI 都会运行这些测试，同时检查 swift-format 的规则和注释（`sh scripts/lint.sh`）、所有文案是否都有翻译，并构建一次 Release 版本。检查项和发版方法（包括上传到 TestFlight）见 [RELEASE.md](RELEASE.md)。
 
 ## 深度链接
 

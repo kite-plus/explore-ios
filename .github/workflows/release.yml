@@ -1,0 +1,93 @@
+# Pushing a tag such as v0.1.1 releases the app: CI's checks, a Release
+# archive, and a GitHub Release with notes from the changelogs. Once the
+# Apple developer account's key is in the repository's secrets, the archive
+# is signed and uploaded to App Store Connect for TestFlight as well. A
+# manual run archives without publishing. RELEASE.md has the steps.
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  # A tag is not a promise that the code works, so CI's checks run first.
+  verify:
+    name: Verify
+    uses: ./.github/workflows/ci.yml
+
+  # Before anything is built: a tag with no changelog section stops here.
+  notes:
+    name: Release notes
+    if: github.event_name == 'push'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Build the notes
+        run: |
+          previous=$(git describe --tags --abbrev=0 "$GITHUB_REF_NAME^" 2>/dev/null || true)
+          PREVIOUS_TAG="$previous" sh scripts/release-notes.sh "$GITHUB_REF_NAME" > release-notes.md
+          cat release-notes.md
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: release-notes
+          path: release-notes.md
+
+  archive:
+    name: Archive
+    needs: [verify, notes]
+    # A manual run skips the notes and still archives.
+    if: ${{ !cancelled() && needs.verify.result == 'success' && contains(fromJSON('["success", "skipped"]'), needs.notes.result) }}
+    runs-on: macos-26
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Select Xcode
+        run: sh scripts/select-xcode.sh
+
+      # Uploads only for a tag; a manual run keeps what it builds.
+      - name: Archive
+        env:
+          APPLE_TEAM_ID: ${{ github.event_name == 'push' && vars.APPLE_TEAM_ID || '' }}
+          APP_BUNDLE_ID: ${{ vars.APP_BUNDLE_ID || 'plus.kite.explore' }}
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
+        run: sh scripts/archive.sh
+
+  publish:
+    name: GitHub Release
+    needs: [notes, archive]
+    if: github.event_name == 'push'
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: release-notes
+          path: release
+
+      # A re-run updates the release it made the first time.
+      - name: Publish the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -eu
+          title="Explore for iOS $GITHUB_REF_NAME"
+          if gh release view "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
+            gh release edit "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" --title "$title" --notes-file release/release-notes.md
+          else
+            prerelease=""
+            case "$GITHUB_REF_NAME" in *-*) prerelease=--prerelease ;; esac
+            gh release create "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" --verify-tag $prerelease \
+              --title "$title" --notes-file release/release-notes.md
+          fi

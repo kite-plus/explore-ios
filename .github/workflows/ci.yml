@@ -1,0 +1,66 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+  # release.yml runs these checks before it builds anything to ship.
+  workflow_call:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Check
+    # Pinned: a runner image that changes underneath turns CI red with no
+    # commit to blame.
+    runs-on: macos-26
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Select Xcode
+        run: sh scripts/select-xcode.sh
+
+      - name: Review
+        run: sh scripts/lint.sh
+
+      - name: Build
+        run: |
+          xcodebuild build-for-testing -project Explore.xcodeproj -scheme Explore \
+            -destination 'generic/platform=iOS Simulator' -derivedDataPath DerivedData \
+            SWIFT_TREAT_WARNINGS_AS_ERRORS=YES GCC_TREAT_WARNINGS_AS_ERRORS=YES
+
+      # Reads the strings the build found in the code.
+      - name: Strings
+        run: python3 scripts/check-strings.py DerivedData
+
+      - name: Test
+        run: |
+          simulator=$(sh scripts/simulator.sh)
+          xcodebuild test-without-building -project Explore.xcodeproj -scheme Explore \
+            -destination "id=$simulator" -derivedDataPath DerivedData
+
+  release:
+    name: Release build
+    # The checks above build for the simulator in Debug; this catches what
+    # breaks only in Release or on a device.
+    runs-on: macos-26
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Select Xcode
+        run: sh scripts/select-xcode.sh
+
+      - name: Build
+        run: |
+          xcodebuild build -project Explore.xcodeproj -scheme Explore -configuration Release \
+            -destination 'generic/platform=iOS' -derivedDataPath DerivedData \
+            CODE_SIGNING_ALLOWED=NO SWIFT_TREAT_WARNINGS_AS_ERRORS=YES GCC_TREAT_WARNINGS_AS_ERRORS=YES

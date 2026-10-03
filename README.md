@@ -54,11 +54,13 @@ The client follows the API described in Explore's [docs/design/api.md](https://g
 
 ## Tests
 
-The unit tests use Swift Testing and cover decoding, timestamps, link tagging, avatar colors, OPML export and deep links:
+The unit tests use Swift Testing and cover decoding, timestamps, day grouping, link tagging, avatar colors, OPML export and deep links:
 
 ```bash
 xcodebuild test -project Explore.xcodeproj -scheme Explore -destination 'platform=iOS Simulator,name=iPhone 17 Pro'
 ```
+
+CI runs them on every push and pull request, along with swift-format's rules and the comment check (`sh scripts/lint.sh`), a check that every string is translated, and a Release build. [RELEASE.md](RELEASE.md) describes the checks and how releases are made, including uploads to TestFlight.
 
 ## Links into the app
 
