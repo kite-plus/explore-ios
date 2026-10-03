@@ -8,6 +8,10 @@
 
 ## [未发布]
 
+### 新增
+
+- 和网站一样，点开文章时先显示一个不到一秒的过渡页，写着博客名和文章标题，进度条走完后再打开 Safari 视图（或你偏好的 Safari）。
+
 ## [0.1.0] - 2026-10-04
 
 Explore iOS 客户端的第一个版本：[Explore](https://github.com/kite-plus/explore) 在 iPhone 和 iPad 上的原生客户端，用 SwiftUI 编写，面向 iOS 26，围绕液态玻璃设计。默认读取 explore.kite.plus，也可以连接其他运行 0.1.6 或更新版本的 Explore 服务器。目前还没有上架 App Store 或 TestFlight，用 Xcode 构建的方法见 README。

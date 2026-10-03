@@ -8,6 +8,10 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ## [Unreleased]
 
+### Added
+
+- Opening a post first shows a short page, as the website does, naming the blog and the post while a bar fills; then Safari's view opens, or Safari itself if you prefer.
+
 ## [0.1.0] - 2026-10-04
 
 The first release of Explore for iOS: a native client for [Explore](https://github.com/kite-plus/explore) on iPhone and iPad, written in SwiftUI for iOS 26 and built around Liquid Glass. It reads explore.kite.plus by default and can connect to any other Explore server running 0.1.6 or later. It is not on the App Store or TestFlight yet; the README explains how to build it with Xcode.

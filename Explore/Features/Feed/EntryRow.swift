@@ -165,8 +165,7 @@ struct EntryRow: View {
     }
 
     private func open() {
-        guard let url = URL(string: entry.url) else { return }
-        LinkOpener.open(url, source: app.sourceTag)
+        app.openPost(entry, blog: blog)
     }
 }
 
@@ -181,7 +180,7 @@ struct EntryActions: View {
     var body: some View {
         if let url = URL(string: entry.url) {
             Button {
-                LinkOpener.open(url, source: app.sourceTag)
+                app.openPost(entry, blog: blog)
             } label: {
                 Label("Read on the Author's Site", systemImage: "safari")
             }

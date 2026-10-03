@@ -10,13 +10,19 @@ enum Preferences {
 /// author's own site, in Safari's view inside the app unless the reader
 /// prefers Safari itself; the app never sees what happens there.
 enum LinkOpener {
-    static func open(_ url: URL, source: String? = nil) {
+    /// Opens a link that leaves Explore. done runs once it is open, with
+    /// Safari's view covering the app or Safari in front, or at once when
+    /// it cannot be opened.
+    static func open(_ url: URL, source: String? = nil, done: (@MainActor @Sendable () -> Void)? = nil) {
         // Only web pages: a server could list other schemes, which would
         // hand the tap to whatever app claims them.
-        guard isWeb(url) else { return }
+        guard isWeb(url) else {
+            done?()
+            return
+        }
         let target = source.map { SourceTag.tagged(url, source: $0) } ?? url
         if UserDefaults.standard.bool(forKey: Preferences.openInSafari) {
-            UIApplication.shared.open(target)
+            UIApplication.shared.open(target) { _ in done?() }
             return
         }
         let configuration = SFSafariViewController.Configuration()
@@ -25,10 +31,10 @@ enum LinkOpener {
         let safari = SFSafariViewController(url: target, configuration: configuration)
         safari.dismissButtonStyle = .close
         guard let presenter = topViewController() else {
-            UIApplication.shared.open(target)
+            UIApplication.shared.open(target) { _ in done?() }
             return
         }
-        presenter.present(safari, animated: true)
+        presenter.present(safari, animated: true) { done?() }
     }
 
     static func openInSafari(_ url: URL, source: String? = nil) {

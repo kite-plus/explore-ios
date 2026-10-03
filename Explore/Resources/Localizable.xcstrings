@@ -2151,6 +2151,16 @@
         }
       }
     },
+    "Taking you to the author's site" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在前往作者的网站"
+          }
+        }
+      }
+    },
     "That's every listed blog" : {
       "localizations" : {
         "zh-Hans" : {

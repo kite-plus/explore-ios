@@ -70,6 +70,8 @@ final class AppModel {
     private(set) var pendingRoute: (tab: AppTab, route: Route)?
     /// A post the widget asked to open on the author's site.
     private(set) var pendingPost: URL?
+    /// A post about to open, which RootView names for a moment first.
+    private(set) var handoff: Handoff?
     /// Set when a link asks for search; Discover opens its search field.
     private(set) var searchRequested = false
     /// Every blog, for searching; loaded the first time someone searches.
@@ -413,6 +415,18 @@ final class AppModel {
     func takeSearchRequest() -> Bool {
         defer { searchRequested = false }
         return searchRequested
+    }
+
+    /// Opens a post on the author's site by way of a moment that names it,
+    /// as the website's transition page does.
+    func openPost(_ entry: Entry, blog: BlogRef?) {
+        guard handoff == nil, let url = URL(string: entry.url),
+              ["http", "https"].contains(url.scheme?.lowercased() ?? "") else { return }
+        handoff = Handoff(url: url, title: entry.title, blog: blog)
+    }
+
+    func endHandoff(_ id: UUID) {
+        if handoff?.id == id { handoff = nil }
     }
 
     func takePendingPost() -> URL? {

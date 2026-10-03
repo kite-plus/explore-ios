@@ -34,6 +34,21 @@ struct RootView: View {
                     .id(toast.id)
             }
         }
+        .overlay {
+            if let handoff = app.handoff {
+                HandoffView(handoff: handoff)
+                    .transition(.opacity)
+                    .task(id: handoff.id) {
+                        guard (try? await Task.sleep(for: .seconds(HandoffView.duration))) != nil else { return }
+                        // The page goes once Safari's view covers it. Not on a
+                        // timer here: a covered view loses its tasks and would
+                        // start this one again when Safari's view closes.
+                        let id = handoff.id
+                        LinkOpener.open(handoff.url, source: app.sourceTag) { app.endHandoff(id) }
+                    }
+            }
+        }
+        .animation(.smooth(duration: 0.2), value: app.handoff)
         .sheet(item: $app.sheet) { sheet in
             switch sheet {
             case let .signIn(mode):
