@@ -1,3 +1,4 @@
-// Copy to Local.xcconfig to sign with your own team.
+// Copy to Local.xcconfig to sign with your own team. The team ID is the
+// OU of your Apple Development certificate, not the ID in its name.
 DEVELOPMENT_TEAM = ABCDE12345
 APP_BUNDLE_ID = com.example.explore
