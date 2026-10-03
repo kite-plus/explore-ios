@@ -1,0 +1,140 @@
+import SwiftUI
+
+/// New posts from the blogs the reader follows. Following needs an account;
+/// everything else in the app works without one.
+struct FollowingView: View {
+    @Environment(AppModel.self) private var app
+    @AppStorage("following.language") private var language: LanguageFilter = .all
+    @State private var tag: String?
+    @State private var feed = FeedModel(source: .following)
+
+    var body: some View {
+        ExploreStack(tab: .following) {
+            Group {
+                if app.isSignedIn {
+                    stream
+                } else if app.isRestoringSession {
+                    ProgressView()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .background(Color(.systemGroupedBackground))
+                } else {
+                    FollowingWelcome()
+                }
+            }
+            .navigationTitle("Following")
+            .navigationSubtitle(app.isSignedIn ? Text("Posts from the blogs you follow") : Text(verbatim: ""))
+        }
+    }
+
+    private var stream: some View {
+        EntryList(feed: feed, endText: "That's everything from the blogs you follow") {
+            EmptyView()
+        } pinned: {
+            FeedFilterBar(language: $language, tag: $tag)
+        } empty: {
+            if app.followedHosts.isEmpty {
+                ContentUnavailableView {
+                    Label("Not Following Any Blogs", systemImage: "heart.text.square")
+                } description: {
+                    Text("Follow blogs from the directory and their new posts gather here.")
+                } actions: {
+                    Button("Browse Blogs") { app.tab = .blogs }
+                        .buttonStyle(.glassProminent)
+                }
+                .padding(.vertical, 40)
+            } else {
+                ContentUnavailableView {
+                    Label("No Posts", systemImage: "tray")
+                } description: {
+                    Text("The blogs you follow have no posts that match.")
+                }
+                .padding(.vertical, 40)
+            }
+        }
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                NavigationLink(value: Route.subscriptions) {
+                    Label("Manage", systemImage: "list.bullet")
+                }
+            }
+        }
+        .refreshable {
+            await app.loadFollows()
+            await feed.load(using: app.client, fresh: true)
+        }
+        .task(id: "\(language.rawValue)|\(tag ?? "")|\(app.generation)") {
+            feed.language = language
+            feed.tag = tag
+            await feed.load(using: app.client)
+            if let error = feed.lastError {
+                app.handleAuthError(error)
+            }
+        }
+    }
+}
+
+/// The Following tab before signing in.
+private struct FollowingWelcome: View {
+    @Environment(AppModel.self) private var app
+
+    var body: some View {
+        ZStack {
+            MeshBackdrop(colors: [.kite, Color(hex: 0x7C3AED), Color(hex: 0x0D9488)])
+                .opacity(0.75)
+                .ignoresSafeArea()
+
+            ScrollView {
+                VStack(spacing: 24) {
+                    Image(systemName: "heart.text.square.fill")
+                        .font(.system(size: 50, weight: .medium))
+                        .foregroundStyle(.white)
+                        .symbolRenderingMode(.hierarchical)
+                        .frame(width: 112, height: 112)
+                        .glassEffect(.regular.tint(Color.kite.opacity(0.35)), in: .circle)
+
+                    VStack(spacing: 10) {
+                        Text("Follow the Blogs You Love")
+                            .font(.title.bold())
+                        Text("Sign in to follow blogs and read their new posts in one stream. Reading everything else needs no account.")
+                            .font(.body)
+                            .foregroundStyle(.secondary)
+                    }
+                    .multilineTextAlignment(.center)
+
+                    GlassEffectContainer(spacing: 12) {
+                        VStack(spacing: 12) {
+                            Button {
+                                app.sheet = .signIn(.signIn)
+                            } label: {
+                                Text("Sign In")
+                                    .font(.headline)
+                                    .frame(maxWidth: .infinity)
+                            }
+                            .buttonStyle(.glassProminent)
+                            .controlSize(.extraLarge)
+
+                            if app.registrationEnabled {
+                                Button {
+                                    app.sheet = .signIn(.register)
+                                } label: {
+                                    Text("Create Account")
+                                        .font(.headline)
+                                        .frame(maxWidth: .infinity)
+                                }
+                                .buttonStyle(.borderless)
+                                .controlSize(.large)
+                            }
+                        }
+                    }
+                }
+                .padding(28)
+                .glassEffect(.regular, in: .rect(cornerRadius: 36, style: .continuous))
+                .padding(20)
+                .frame(maxWidth: 480)
+                .frame(maxWidth: .infinity)
+                .padding(.top, 40)
+            }
+            .scrollBounceBehavior(.basedOnSize)
+        }
+    }
+}

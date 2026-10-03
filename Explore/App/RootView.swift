@@ -1,0 +1,68 @@
+import SwiftUI
+
+/// The tab bar: Discover, Following, Blogs and Me, with Search as its own
+/// Liquid Glass tab. The bar shrinks while reading and grows back when
+/// scrolling up.
+struct RootView: View {
+    @Environment(AppModel.self) private var app
+
+    var body: some View {
+        @Bindable var app = app
+        TabView(selection: $app.tab) {
+            Tab("Discover", systemImage: "binoculars", value: AppTab.discover) {
+                DiscoverView()
+            }
+            Tab("Following", systemImage: "heart.text.square", value: AppTab.following) {
+                FollowingView()
+            }
+            Tab("Blogs", systemImage: "books.vertical", value: AppTab.blogs) {
+                BlogsView()
+            }
+            Tab("Me", systemImage: "person.crop.circle", value: AppTab.me) {
+                MeView()
+            }
+            Tab(value: AppTab.search, role: .search) {
+                SearchView()
+            }
+        }
+        .tabBarMinimizeBehavior(.onScrollDown)
+        .tabViewStyle(.sidebarAdaptable)
+        .overlay(alignment: .top) {
+            if let toast = app.toast {
+                ToastView(toast: toast)
+                    .padding(.top, 6)
+                    .transition(.move(edge: .top).combined(with: .opacity).combined(with: .scale(scale: 0.9)))
+                    .onTapGesture { app.dismissToast() }
+                    .onAppear {
+                        AccessibilityNotification.Announcement(toast.message).post()
+                    }
+                    .id(toast.id)
+            }
+        }
+        .sheet(item: $app.sheet) { sheet in
+            switch sheet {
+            case let .signIn(mode):
+                SignInView(mode: mode)
+            case .submit:
+                SubmitView()
+            case let .report(target):
+                ReportView(target: target)
+            case let .claim(blog):
+                ClaimBlogView(blog: blog)
+            }
+        }
+        .onOpenURL { url in
+            app.open(url)
+        }
+        .task {
+            #if DEBUG
+            // Lets screenshots and manual checks start on any screen:
+            // launch with -deeplink explore://blogs/example.com
+            if let link = UserDefaults.standard.string(forKey: "deeplink"), let url = URL(string: link) {
+                app.open(url)
+            }
+            #endif
+            await app.bootstrap()
+        }
+    }
+}

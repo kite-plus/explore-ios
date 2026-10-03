@@ -1,0 +1,2663 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "%@ is now linked to your account. You can remove the DNS record." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ 已关联到你的账号，现在可以删除这条 DNS 记录了。"
+          }
+        }
+      }
+    },
+    "%@ · %@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ · %2$@"
+          }
+        }
+      }
+    },
+    "A maintainer will review %@. Check its status any time under My Submissions." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "维护者会审核 %@。随时可以在“我的提交”里查看进度。"
+          }
+        }
+      }
+    },
+    "A post opens at its original address, with no page in between. Explore adds only utm_source, so the author can tell the visit came from Explore; nothing in it identifies you." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "文章直接打开原始地址，中间没有跳转页。Explore 只加上 utm_source，让作者知道访问来自 Explore；其中没有任何能识别你的信息。"
+          }
+        }
+      }
+    },
+    "About" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "关于"
+          }
+        }
+      }
+    },
+    "About Explore" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "关于 Explore"
+          }
+        }
+      }
+    },
+    "About the Crawler" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "关于抓取器"
+          }
+        }
+      }
+    },
+    "Account" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "账号"
+          }
+        }
+      }
+    },
+    "Account deleted" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "账号已删除"
+          }
+        }
+      }
+    },
+    "Add This DNS Record" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "添加这条 DNS 记录"
+          }
+        }
+      }
+    },
+    "Admin" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "管理员"
+          }
+        }
+      }
+    },
+    "All" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "全部"
+          }
+        }
+      }
+    },
+    "All Topics" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "全部主题"
+          }
+        }
+      }
+    },
+    "Always read on the author's site" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "始终在作者的网站阅读"
+          }
+        }
+      }
+    },
+    "An account with this email already exists. Sign in instead." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "这个邮箱已经注册过账号，请直接登录。"
+          }
+        }
+      }
+    },
+    "Authors can leave at any time: answer Explore's crawler with 410 Gone, disallow KiteExplore in robots.txt, or open an issue." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "作者随时可以退出：让网站对 Explore 的抓取器返回 410 Gone，在 robots.txt 中禁止 KiteExplore，或者提交一个 issue。"
+          }
+        }
+      }
+    },
+    "Authors submit their blog and its feed is checked on the spot. A maintainer reviews blogs that pass: personal and independent blogs, updated within the last 12 months." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "作者提交博客后，订阅源会当场检查。通过检查的博客由维护者审核：收录近 12 个月内有更新的个人独立博客。"
+          }
+        }
+      }
+    },
+    "Awaiting check" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "待检测"
+          }
+        }
+      }
+    },
+    "Blocked by robots.txt" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "robots.txt 禁止抓取"
+          }
+        }
+      }
+    },
+    "Blog" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "博客"
+          }
+        }
+      }
+    },
+    "Blog Address" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "博客地址"
+          }
+        }
+      }
+    },
+    "Blog Claimed" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "认领成功"
+          }
+        }
+      }
+    },
+    "Blog Preview" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "博客信息预览"
+          }
+        }
+      }
+    },
+    "Blog System" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "博客系统"
+          }
+        }
+      }
+    },
+    "Blog language" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "博客语言"
+          }
+        }
+      }
+    },
+    "Blog name" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "博客名称"
+          }
+        }
+      }
+    },
+    "Blog: %@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "博客：%@"
+          }
+        }
+      }
+    },
+    "Blogs" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "博客"
+          }
+        }
+      }
+    },
+    "Blogs I follow on Explore" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "我在 Explore 订阅的博客"
+          }
+        }
+      }
+    },
+    "Blogs and topics" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "博客与主题"
+          }
+        }
+      }
+    },
+    "Blogs show up here once they are listed." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "博客收录后会出现在这里。"
+          }
+        }
+      }
+    },
+    "Blogs you submit from this device show up here with their review status." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在这台设备上提交的博客会显示在这里，附带审核进度。"
+          }
+        }
+      }
+    },
+    "Browse Blogs" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "浏览博客"
+          }
+        }
+      }
+    },
+    "Browse Topics" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "浏览主题"
+          }
+        }
+      }
+    },
+    "Can't reach Explore right now." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "暂时无法连接 Explore。"
+          }
+        }
+      }
+    },
+    "Change Name" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "修改名称"
+          }
+        }
+      }
+    },
+    "Change Password" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "修改密码"
+          }
+        }
+      }
+    },
+    "Check Blog" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "检查博客"
+          }
+        }
+      }
+    },
+    "Check Link" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "检测链接"
+          }
+        }
+      }
+    },
+    "Check Now" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "立即检测"
+          }
+        }
+      }
+    },
+    "Check Results" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "检查结果"
+          }
+        }
+      }
+    },
+    "Check the name, email and password, then try again." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请检查名称、邮箱和密码后重试。"
+          }
+        }
+      }
+    },
+    "Checked %@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@检测"
+          }
+        }
+      }
+    },
+    "Checked by Explore; your visit may get a different result." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "由 Explore 检测；实际访问结果可能不同。"
+          }
+        }
+      }
+    },
+    "Checking the Feed…" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在检查订阅源…"
+          }
+        }
+      }
+    },
+    "Checking…" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "检测中…"
+          }
+        }
+      }
+    },
+    "Chinese" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "中文"
+          }
+        }
+      }
+    },
+    "Claim Blog" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "认领博客"
+          }
+        }
+      }
+    },
+    "Claim This Blog" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "认领这个博客"
+          }
+        }
+      }
+    },
+    "Confirm and Submit" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "确认并提交"
+          }
+        }
+      }
+    },
+    "Confirm new password" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "确认新密码"
+          }
+        }
+      }
+    },
+    "Confirm password" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "确认密码"
+          }
+        }
+      }
+    },
+    "Connect" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "连接"
+          }
+        }
+      }
+    },
+    "Connected to %@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已连接到 %@"
+          }
+        }
+      }
+    },
+    "Contribute" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "参与"
+          }
+        }
+      }
+    },
+    "Copied" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已复制"
+          }
+        }
+      }
+    },
+    "Copy" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "复制"
+          }
+        }
+      }
+    },
+    "Copy Feed Address" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "复制订阅地址"
+          }
+        }
+      }
+    },
+    "Copy Link" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "复制链接"
+          }
+        }
+      }
+    },
+    "Couldn't Load" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "加载失败"
+          }
+        }
+      }
+    },
+    "Create Account" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "创建账号"
+          }
+        }
+      }
+    },
+    "Create Verification Record" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "生成验证记录"
+          }
+        }
+      }
+    },
+    "Create Your Account" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "创建账号"
+          }
+        }
+      }
+    },
+    "Create a New Record" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重新生成记录"
+          }
+        }
+      }
+    },
+    "Current password" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "当前密码"
+          }
+        }
+      }
+    },
+    "Date unknown" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "日期未知"
+          }
+        }
+      }
+    },
+    "Delete Account" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "删除账号"
+          }
+        }
+      }
+    },
+    "Description" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "博客简介"
+          }
+        }
+      }
+    },
+    "Discover" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "发现"
+          }
+        }
+      }
+    },
+    "Discover what people publish." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "发现大家在写什么。"
+          }
+        }
+      }
+    },
+    "Dismiss" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "关闭"
+          }
+        }
+      }
+    },
+    "Done" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "完成"
+          }
+        }
+      }
+    },
+    "Edit" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "修改"
+          }
+        }
+      }
+    },
+    "Email" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "邮箱"
+          }
+        }
+      }
+    },
+    "English" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "英文"
+          }
+        }
+      }
+    },
+    "Enter a name of up to 80 characters." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请输入不超过 80 个字的名称。"
+          }
+        }
+      }
+    },
+    "Enter a valid email address." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请输入有效的邮箱地址。"
+          }
+        }
+      }
+    },
+    "Enter a valid http or https address." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请填写有效的 http 或 https 地址。"
+          }
+        }
+      }
+    },
+    "Enter your blog's address and Explore checks its feed right away. A maintainer reviews blogs that pass, and approved blogs are listed." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "填写博客地址，Explore 会立即检查它的订阅源。检查通过后由维护者审核，审核通过就开始收录。"
+          }
+        }
+      }
+    },
+    "Enter your password." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请输入密码。"
+          }
+        }
+      }
+    },
+    "Error" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "错误"
+          }
+        }
+      }
+    },
+    "Explain why this needs review" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请说明需要审核的原因"
+          }
+        }
+      }
+    },
+    "Explore" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Explore"
+          }
+        }
+      }
+    },
+    "Explore %@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Explore %@"
+          }
+        }
+      }
+    },
+    "Explore could not handle the request." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Explore 无法处理这个请求。"
+          }
+        }
+      }
+    },
+    "Explore gathers the public feeds of independent blogs and shows their latest posts, newest first. Any blog with RSS, Atom or JSON Feed can join." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Explore 汇集独立博客公开的订阅源，按发布时间展示最新文章。任何提供 RSS、Atom 或 JSON Feed 的博客都可以加入。"
+          }
+        }
+      }
+    },
+    "Explore hasn't checked this link yet." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Explore 还没有检测过这个链接。"
+          }
+        }
+      }
+    },
+    "Explore is having trouble right now. Try again later." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Explore 服务暂时出了问题，请稍后再试。"
+          }
+        }
+      }
+    },
+    "Explore is the discovery side of Kite Plus." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Explore 是 Kite Plus 负责“发现”的部分。"
+          }
+        }
+      }
+    },
+    "Explore keeps neither post content nor images. What you see is a cache of what each feed says right now; when an author edits or deletes a post, Explore follows." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Explore 不保存文章正文和图片。你看到的只是各个订阅源当前内容的缓存；作者修改或删除文章后，Explore 会随之更新。"
+          }
+        }
+      }
+    },
+    "Explore keeps no post content and does not track readers." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Explore 不保存文章正文，也不追踪读者。"
+          }
+        }
+      }
+    },
+    "Explore keeps your email, your name and a hash of your password, plus the blogs you follow. It never records what you read." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Explore 只保存你的邮箱、名称、密码的哈希值，以及你订阅的博客，从不记录你读了什么。"
+          }
+        }
+      }
+    },
+    "Explore lists personal and independent blogs with a working RSS, Atom or JSON Feed, updated within the last 12 months." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Explore 收录有可用 RSS、Atom 或 JSON Feed、近 12 个月内有更新的个人独立博客。"
+          }
+        }
+      }
+    },
+    "Explore on the Web" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Explore 网站"
+          }
+        }
+      }
+    },
+    "Explore read these from the blog. Adjust the name or description if needed." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "以下信息读取自博客，如有需要可以修改名称和简介。"
+          }
+        }
+      }
+    },
+    "Explore sent a response the app doesn't understand." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Explore 返回了无法识别的内容。"
+          }
+        }
+      }
+    },
+    "Explore took too long to answer. Try again." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Explore 响应超时，请重试。"
+          }
+        }
+      }
+    },
+    "Explore's RSS Feed" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Explore 的 RSS 订阅"
+          }
+        }
+      }
+    },
+    "Export Every Blog as OPML" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导出全部博客（OPML）"
+          }
+        }
+      }
+    },
+    "Export OPML" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导出 OPML"
+          }
+        }
+      }
+    },
+    "Export the list as OPML to take these blogs to any feed reader." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导出为 OPML，就能把这些博客带到任何 RSS 阅读器。"
+          }
+        }
+      }
+    },
+    "Feed" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "订阅源"
+          }
+        }
+      }
+    },
+    "Feed Address" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "订阅地址"
+          }
+        }
+      }
+    },
+    "Feed Address (Optional)" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "订阅地址（可选）"
+          }
+        }
+      }
+    },
+    "Feed address copied" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已复制订阅地址"
+          }
+        }
+      }
+    },
+    "Follow" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "订阅"
+          }
+        }
+      }
+    },
+    "Follow blogs and read their new posts in one stream." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "订阅喜欢的博客，在一条信息流里追更。"
+          }
+        }
+      }
+    },
+    "Follow blogs from the directory and their new posts gather here." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在博客目录里订阅博客，它们的新文章会汇集到这里。"
+          }
+        }
+      }
+    },
+    "Follow the Blogs You Love" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "订阅你喜欢的博客"
+          }
+        }
+      }
+    },
+    "Following" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "订阅"
+          }
+        }
+      }
+    },
+    "Following %@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已订阅 %@"
+          }
+        }
+      }
+    },
+    "Found automatically when left empty." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不填时自动查找。"
+          }
+        }
+      }
+    },
+    "Go to Blog" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "查看博客"
+          }
+        }
+      }
+    },
+    "Hide Password" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "隐藏密码"
+          }
+        }
+      }
+    },
+    "How blogs are listed" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "如何收录"
+          }
+        }
+      }
+    },
+    "Independent blogs listed on Explore" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Explore 收录的独立博客"
+          }
+        }
+      }
+    },
+    "Language" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "语言"
+          }
+        }
+      }
+    },
+    "Last check succeeded" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最近检测正常"
+          }
+        }
+      }
+    },
+    "Latest Post" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最新文章"
+          }
+        }
+      }
+    },
+    "Leaving is easy" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "随时可以退出"
+          }
+        }
+      }
+    },
+    "Link copied" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已复制链接"
+          }
+        }
+      }
+    },
+    "Listed" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已收录"
+          }
+        }
+      }
+    },
+    "Maintainers review every report. It is kept with your account so they can follow up." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "维护者会审核每一份报告。报告会与你的账号一起保存，方便维护者跟进。"
+          }
+        }
+      }
+    },
+    "Manage" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "管理"
+          }
+        }
+      }
+    },
+    "Me" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "我的"
+          }
+        }
+      }
+    },
+    "Mode" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "模式"
+          }
+        }
+      }
+    },
+    "More" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "更多"
+          }
+        }
+      }
+    },
+    "My Blogs" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "我认领的博客"
+          }
+        }
+      }
+    },
+    "My Submissions" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "我的提交"
+          }
+        }
+      }
+    },
+    "Name" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "名称"
+          }
+        }
+      }
+    },
+    "Name updated" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "名称已更新"
+          }
+        }
+      }
+    },
+    "New password" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新密码"
+          }
+        }
+      }
+    },
+    "New posts from independent blogs" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "独立博客的最新文章"
+          }
+        }
+      }
+    },
+    "No Blogs Yet" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "还没有收录博客"
+          }
+        }
+      }
+    },
+    "No Claimed Blogs" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "尚未认领博客"
+          }
+        }
+      }
+    },
+    "No Posts" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "没有文章"
+          }
+        }
+      }
+    },
+    "No Posts Yet" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "暂时还没有文章"
+          }
+        }
+      }
+    },
+    "No Posts to Show" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "暂无可展示的文章"
+          }
+        }
+      }
+    },
+    "No Submissions" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "还没有提交"
+          }
+        }
+      }
+    },
+    "No conditional requests" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不支持条件请求"
+          }
+        }
+      }
+    },
+    "No feed found" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "没有找到订阅源"
+          }
+        }
+      }
+    },
+    "No post content kept" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不保存文章正文"
+          }
+        }
+      }
+    },
+    "No posts in the last 12 months" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "近 12 个月没有新文章"
+          }
+        }
+      }
+    },
+    "No posts under this topic yet." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "这个主题下暂时还没有文章。"
+          }
+        }
+      }
+    },
+    "No usable posts" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "没有可用的文章"
+          }
+        }
+      }
+    },
+    "Not Following Any Blogs" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "还没有订阅博客"
+          }
+        }
+      }
+    },
+    "Not accepted" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未通过"
+          }
+        }
+      }
+    },
+    "Not found." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "没有找到。"
+          }
+        }
+      }
+    },
+    "Note" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "提示"
+          }
+        }
+      }
+    },
+    "Note (Optional)" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "备注（可选）"
+          }
+        }
+      }
+    },
+    "One stream of independent blogs" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "独立博客汇成一条信息流"
+          }
+        }
+      }
+    },
+    "Open Links in Safari" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在 Safari 中打开链接"
+          }
+        }
+      }
+    },
+    "Open in Safari" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在 Safari 中打开"
+          }
+        }
+      }
+    },
+    "Opens the post on the author's site" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在作者的网站打开文章"
+          }
+        }
+      }
+    },
+    "Other" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "其他"
+          }
+        }
+      }
+    },
+    "Password" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "密码"
+          }
+        }
+      }
+    },
+    "Password changed" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "密码已修改"
+          }
+        }
+      }
+    },
+    "Possibly unavailable" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "疑似失效"
+          }
+        }
+      }
+    },
+    "Post" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "文章"
+          }
+        }
+      }
+    },
+    "Post dates look unreliable" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "文章日期不可信"
+          }
+        }
+      }
+    },
+    "Post links point to another domain" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "文章链接指向其他域名"
+          }
+        }
+      }
+    },
+    "Posts Explore filed under this topic, newest first." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Explore 归入这个主题的文章，按发布时间排列。"
+          }
+        }
+      }
+    },
+    "Posts always open on the author's own site. Explore adds only utm_source, so authors can tell the visit came from Explore." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "文章总是在作者自己的网站打开。Explore 只加上 utm_source，让作者知道访问来自 Explore。"
+          }
+        }
+      }
+    },
+    "Posts from listed blogs show up here." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已收录博客的文章会出现在这里。"
+          }
+        }
+      }
+    },
+    "Posts from the blogs you follow" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你订阅的博客的新文章"
+          }
+        }
+      }
+    },
+    "Posts link to other sites" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "文章都链接到其他网站"
+          }
+        }
+      }
+    },
+    "Private by design" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "隐私优先"
+          }
+        }
+      }
+    },
+    "Prove you run this blog by adding a TXT record to its domain. Explore checks the record once, then you can remove it." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在博客域名上添加一条 TXT 记录，证明你是博客的作者。Explore 检查一次后，你就可以删除这条记录。"
+          }
+        }
+      }
+    },
+    "Read everything without an account. Sign in to follow blogs and claim your own." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不登录也能阅读全部内容。登录后可以订阅博客，认领你自己的博客。"
+          }
+        }
+      }
+    },
+    "Read on the Author's Site" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在作者的网站阅读"
+          }
+        }
+      }
+    },
+    "Reading" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "阅读"
+          }
+        }
+      }
+    },
+    "Reading needs no account and this app has no analytics. Thumbnails and icons come from Explore's own server, never from third parties. With an account, Explore keeps your email, your name, a hash of your password and the blogs you follow, and never what you read." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "阅读不需要账号，这个 App 也没有任何统计。缩略图和图标都由 Explore 自己的服务器提供，不经过第三方。登录后，Explore 只保存你的邮箱、名称、密码的哈希值和你订阅的博客，从不记录你读了什么。"
+          }
+        }
+      }
+    },
+    "Recent Posts" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最近的文章"
+          }
+        }
+      }
+    },
+    "Recently Updated" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最近更新"
+          }
+        }
+      }
+    },
+    "Registration is closed on this server right now." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "这个服务器目前暂未开放注册。"
+          }
+        }
+      }
+    },
+    "Remove" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "移除"
+          }
+        }
+      }
+    },
+    "Report a Problem" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "报告问题"
+          }
+        }
+      }
+    },
+    "Report sent for review" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "报告已提交，等待审核"
+          }
+        }
+      }
+    },
+    "Review Note" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "审核说明"
+          }
+        }
+      }
+    },
+    "Reviewed" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "审核于"
+          }
+        }
+      }
+    },
+    "Run a blog listed on Explore? Open its page, tap the ··· button and choose Claim This Blog. You prove it with a DNS record." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你的博客已被 Explore 收录？打开博客页面，点 ··· 按钮，选择“认领这个博客”，再用一条 DNS 记录证明归属。"
+          }
+        }
+      }
+    },
+    "Search" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "搜索"
+          }
+        }
+      }
+    },
+    "Server" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "服务器"
+          }
+        }
+      }
+    },
+    "Server Address" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "服务器地址"
+          }
+        }
+      }
+    },
+    "Share" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "分享"
+          }
+        }
+      }
+    },
+    "Show All Topics" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "显示全部主题"
+          }
+        }
+      }
+    },
+    "Show Password" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "显示密码"
+          }
+        }
+      }
+    },
+    "Shown on your account. Up to 80 characters." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "显示在你的账号上，不超过 80 个字。"
+          }
+        }
+      }
+    },
+    "Sign In" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登录"
+          }
+        }
+      }
+    },
+    "Sign Out" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "退出登录"
+          }
+        }
+      }
+    },
+    "Sign in first." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请先登录。"
+          }
+        }
+      }
+    },
+    "Sign in to follow blogs and read their new posts in one stream. Reading everything else needs no account." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登录后可以订阅博客，在一条信息流里追更。阅读其他内容不需要账号。"
+          }
+        }
+      }
+    },
+    "Sign out of Explore?" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "要退出 Explore 吗？"
+          }
+        }
+      }
+    },
+    "Signed in" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已登录"
+          }
+        }
+      }
+    },
+    "Signed out" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已退出登录"
+          }
+        }
+      }
+    },
+    "Some links point to another domain" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "部分链接指向其他域名"
+          }
+        }
+      }
+    },
+    "Some posts have no date" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "部分文章没有日期"
+          }
+        }
+      }
+    },
+    "Someone has already claimed this blog." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "这个博客已经被其他人认领了。"
+          }
+        }
+      }
+    },
+    "Source Code" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "源代码"
+          }
+        }
+      }
+    },
+    "Status uncertain" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "状态待确认"
+          }
+        }
+      }
+    },
+    "Submission" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "提交进度"
+          }
+        }
+      }
+    },
+    "Submissions are closed on this server right now." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "这个服务器目前暂停接受提交。"
+          }
+        }
+      }
+    },
+    "Submit a Blog" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "提交博客"
+          }
+        }
+      }
+    },
+    "Submitted" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "提交于"
+          }
+        }
+      }
+    },
+    "Submitted for Review" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已提交，等待审核"
+          }
+        }
+      }
+    },
+    "Submitting…" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在提交…"
+          }
+        }
+      }
+    },
+    "That's every listed blog" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已经是全部收录的博客"
+          }
+        }
+      }
+    },
+    "That's everything from the blogs you follow" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已经看完订阅博客的全部文章"
+          }
+        }
+      }
+    },
+    "The app reads from explore.kite.plus unless you choose another Explore server here." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App 默认读取 explore.kite.plus，也可以在这里换成其他 Explore 服务器。"
+          }
+        }
+      }
+    },
+    "The blog did not pass the check. Fix the problems below and try again." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "博客没有通过检查，请按下面的提示修改后再试。"
+          }
+        }
+      }
+    },
+    "The blogs you follow have no posts that match." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你订阅的博客里没有符合条件的文章。"
+          }
+        }
+      }
+    },
+    "The check can take up to 30 seconds." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "检查最长需要 30 秒，请耐心等待。"
+          }
+        }
+      }
+    },
+    "The check found no problems." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "检查没有发现问题。"
+          }
+        }
+      }
+    },
+    "The current password is incorrect." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "当前密码不正确。"
+          }
+        }
+      }
+    },
+    "The feed address redirects" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "订阅地址已重定向"
+          }
+        }
+      }
+    },
+    "The feed can't be read" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "订阅源无法解析"
+          }
+        }
+      }
+    },
+    "The feed has no posts to show right now." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "订阅源里暂时没有可展示的文章。"
+          }
+        }
+      }
+    },
+    "The feed is too large" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "订阅源太大"
+          }
+        }
+      }
+    },
+    "The feed lists pages that aren't posts" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "订阅源里混有非文章页面"
+          }
+        }
+      }
+    },
+    "The password is too long." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "密码太长了。"
+          }
+        }
+      }
+    },
+    "The passwords don't match." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "两次输入的密码不一致。"
+          }
+        }
+      }
+    },
+    "The record is valid for %lld:%@. DNS changes can take a few minutes to appear." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "记录在 %1$lld:%2$@ 内有效。DNS 修改可能需要几分钟才能生效。"
+          }
+        }
+      }
+    },
+    "The record wasn't found yet. DNS changes can take a few minutes; try again shortly." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "还没有找到这条记录。DNS 修改可能需要几分钟生效，请稍后再试。"
+          }
+        }
+      }
+    },
+    "The site answered Explore with 404 or 410. The original link stays here, since readers may get a different result." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "网站对 Explore 返回了 404 或 410。读者的访问结果可能不同，所以原文链接仍然保留。"
+          }
+        }
+      }
+    },
+    "The site has moved" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "网站已经搬家"
+          }
+        }
+      }
+    },
+    "The site returned an error" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "网站返回错误"
+          }
+        }
+      }
+    },
+    "The verification record expired. Create a new one." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "验证记录已过期，请重新生成。"
+          }
+        }
+      }
+    },
+    "This address doesn't answer like an Explore server." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "这个地址不像是 Explore 服务器。"
+          }
+        }
+      }
+    },
+    "This blog has left Explore or was blocked. Contact a maintainer to join again." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "这个博客已退出 Explore 或被屏蔽。如需重新加入，请联系维护者。"
+          }
+        }
+      }
+    },
+    "This blog is already listed." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "这个博客已经收录了。"
+          }
+        }
+      }
+    },
+    "This record has expired. Create a new one." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "这条记录已过期，请重新生成。"
+          }
+        }
+      }
+    },
+    "Too many requests. Try again in a moment." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请求太频繁，请稍后再试。"
+          }
+        }
+      }
+    },
+    "Too many submissions; try again in a while." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "提交太频繁，请过一会儿再试。"
+          }
+        }
+      }
+    },
+    "Topic" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "主题"
+          }
+        }
+      }
+    },
+    "Topics" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "主题"
+          }
+        }
+      }
+    },
+    "Try Again" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重试"
+          }
+        }
+      }
+    },
+    "Type" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "类型"
+          }
+        }
+      }
+    },
+    "Type your email to confirm" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "输入你的邮箱以确认"
+          }
+        }
+      }
+    },
+    "Unfollow" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取消订阅"
+          }
+        }
+      }
+    },
+    "Unfollowed %@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已取消订阅 %@"
+          }
+        }
+      }
+    },
+    "Updated %@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@更新"
+          }
+        }
+      }
+    },
+    "Usable Posts" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "有效文章数"
+          }
+        }
+      }
+    },
+    "Use 12 to 72 characters." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "密码长度为 12 到 72 个字符。"
+          }
+        }
+      }
+    },
+    "Use 12 to 72 characters. Your other devices will be signed out; this one stays signed in." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "密码长度为 12 到 72 个字符。其他设备会退出登录，这台设备保持登录。"
+          }
+        }
+      }
+    },
+    "Use Reader When Available" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "可用时使用阅读器"
+          }
+        }
+      }
+    },
+    "Use at least 12 characters for the password." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "密码至少需要 12 个字符。"
+          }
+        }
+      }
+    },
+    "Use explore.kite.plus" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用 explore.kite.plus"
+          }
+        }
+      }
+    },
+    "Value" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "记录值"
+          }
+        }
+      }
+    },
+    "Verify Record" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "验证记录"
+          }
+        }
+      }
+    },
+    "View Status" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "查看进度"
+          }
+        }
+      }
+    },
+    "View the Blog" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "查看博客"
+          }
+        }
+      }
+    },
+    "View the Submission" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "查看那条提交"
+          }
+        }
+      }
+    },
+    "Visit Blog" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "访问博客"
+          }
+        }
+      }
+    },
+    "Waiting for review" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "等待审核"
+          }
+        }
+      }
+    },
+    "Warning" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "警告"
+          }
+        }
+      }
+    },
+    "Welcome Back" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "欢迎回来"
+          }
+        }
+      }
+    },
+    "Welcome to Explore, %@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "欢迎来到 Explore，%@"
+          }
+        }
+      }
+    },
+    "What happened?" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "问题说明"
+          }
+        }
+      }
+    },
+    "What the blog is about" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "例如博客写些什么"
+          }
+        }
+      }
+    },
+    "You're all caught up" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已经看完了所有最新文章"
+          }
+        }
+      }
+    },
+    "You're offline. Check your connection and try again." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "网络未连接，请检查网络后重试。"
+          }
+        }
+      }
+    },
+    "Your account, its sign-ins, the blogs you follow and the blogs you claimed are deleted right away. Reports you filed stay, no longer linked to you." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "账号、登录状态、订阅和认领的博客会立即删除，无法恢复。你提交过的报告会保留，但不再关联到你的账号。"
+          }
+        }
+      }
+    },
+    "Your name or nickname" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你的名字或昵称"
+          }
+        }
+      }
+    },
+    "follow.state.following" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Following"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已订阅"
+          }
+        }
+      }
+    },
+    "just now" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "刚刚"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}
