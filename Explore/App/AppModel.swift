@@ -74,6 +74,9 @@ final class AppModel {
     private(set) var handoff: Handoff?
     /// Set when a link asks for search; Discover opens its search field.
     private(set) var searchRequested = false
+    /// Counts taps on Discover's tab while it shows. The streams sit in a
+    /// pager the system cannot scroll to the top, so Discover does it.
+    private(set) var discoverRetaps = 0
     /// Every blog, for searching; loaded the first time someone searches.
     let blogIndex = BlogIndex()
     private(set) var toast: Toast?
@@ -410,6 +413,14 @@ final class AppModel {
     private func show(_ stream: DiscoverStream) {
         tab = .discover
         self.stream = stream
+    }
+
+    /// The tab bar's choice, which also tells a tap on the current tab.
+    func select(_ tab: AppTab) {
+        if tab == self.tab, tab == .discover {
+            discoverRetaps += 1
+        }
+        self.tab = tab
     }
 
     func takeSearchRequest() -> Bool {

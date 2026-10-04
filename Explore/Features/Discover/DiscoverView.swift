@@ -2,8 +2,9 @@ import SwiftUI
 
 /// Explore's streams in one place, as on the website: the latest posts,
 /// the recommended ones and the reader's follows, as tabs over the same
-/// filters. Each stream keeps its pages, so switching back is instant.
-/// Search for blogs and tags sits at the top.
+/// filters. The streams sit side by side, so a swipe moves between them as
+/// a tap on a tab does, and each keeps its place for when the reader comes
+/// back. Search for blogs and tags sits at the top.
 struct DiscoverView: View {
     @Environment(AppModel.self) private var app
     @AppStorage("discover.language") private var language: LanguageFilter = .all
@@ -14,6 +15,13 @@ struct DiscoverView: View {
     @State private var query = ""
     @State private var searching = false
     @State private var showsFilters = false
+    @State private var page: DiscoverStream?
+    /// How far the pager has scrolled, in pages: 0.5 is halfway from
+    /// Latest to Recommended.
+    @State private var position: CGFloat = 0
+    @State private var topRequests: [DiscoverStream: Int] = [:]
+    /// Whether the streams show, rather than a screen pushed over them.
+    @State private var showsStreams = false
 
     private var filtered: Bool { language != .all || tag != nil }
 
@@ -23,10 +31,10 @@ struct DiscoverView: View {
     var body: some View {
         @Bindable var app = app
         ExploreStack(tab: .discover) {
-            stream
+            pager
                 .safeAreaBar(edge: .top) {
                     if !searching {
-                        StreamBar(stream: $app.stream, filtered: filtered) {
+                        StreamBar(stream: $app.stream, position: position, filtered: filtered) {
                             showsFilters = true
                         }
                     }
@@ -70,11 +78,53 @@ struct DiscoverView: View {
         }
     }
 
+    private var pager: some View {
+        ScrollView(.horizontal) {
+            HStack(spacing: 0) {
+                ForEach(DiscoverStream.allCases, id: \.self) { option in
+                    stream(option)
+                        .containerRelativeFrame(.horizontal)
+                        .accessibilityHidden(option != app.stream)
+                }
+            }
+            .scrollTargetLayout()
+        }
+        .scrollTargetBehavior(.paging)
+        .scrollPosition(id: $page)
+        .scrollIndicators(.hidden)
+        .onScrollGeometryChange(for: CGFloat.self) { geometry in
+            geometry.contentOffset.x / max(geometry.containerSize.width, 1)
+        } action: { _, offset in
+            position = offset
+        }
+        .onChange(of: page) {
+            if let page, page != app.stream {
+                app.stream = page
+            }
+        }
+        .onAppear { showsStreams = true }
+        .onDisappear { showsStreams = false }
+        // A tap on the tab over a pushed screen only goes back to the streams.
+        .onChange(of: app.discoverRetaps) {
+            if showsStreams, !searching {
+                topRequests[app.stream, default: 0] += 1
+            }
+        }
+        .onChange(of: app.stream, initial: true) {
+            guard page != app.stream else { return }
+            if page == nil {
+                page = app.stream
+            } else {
+                withAnimation(.snappy(duration: 0.3)) { page = app.stream }
+            }
+        }
+    }
+
     @ViewBuilder
-    private var stream: some View {
-        switch app.stream {
+    private func stream(_ option: DiscoverStream) -> some View {
+        switch option {
         case .latest:
-            EntryList(feed: latest) {
+            EntryList(feed: latest, topRequest: topRequests[.latest] ?? 0) {
                 if !app.notice.isEmpty {
                     NoticeBanner(text: app.notice)
                         .padding(.top, 8)
@@ -94,7 +144,7 @@ struct DiscoverView: View {
                 await refresh(latest)
             }
         case .recommended:
-            EntryList(feed: recommended, endText: "That's every recommended post") {
+            EntryList(feed: recommended, endText: "That's every recommended post", topRequest: topRequests[.recommended] ?? 0) {
                 EmptyView()
             } empty: {
                 if filtered {
@@ -128,7 +178,7 @@ struct DiscoverView: View {
                 await refresh(recommended)
             }
         case .following:
-            FollowingStream(feed: following, language: language, tag: tag)
+            FollowingStream(feed: following, language: language, tag: tag, topRequest: topRequests[.following] ?? 0)
         }
     }
 

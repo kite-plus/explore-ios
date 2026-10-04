@@ -10,10 +10,13 @@ struct EntryList<Header: View, Empty: View>: View {
     var contextBlog: BlogRef?
     var endText: LocalizedStringKey? = "You're all caught up"
     var onScroll: ((CGFloat) -> Void)?
+    /// Scrolls the list back to the top whenever it changes.
+    var topRequest = 0
     @ViewBuilder var header: Header
     @ViewBuilder var empty: Empty
 
     @Environment(AppModel.self) private var app
+    @State private var position = ScrollPosition(edge: .top)
 
     var body: some View {
         ScrollView {
@@ -26,7 +29,11 @@ struct EntryList<Header: View, Empty: View>: View {
             .frame(maxWidth: .infinity)
             .padding(.bottom, 32)
         }
+        .scrollPosition($position)
         .scrollDismissesKeyboard(.immediately)
+        .onChange(of: topRequest) {
+            withAnimation(.smooth) { position.scrollTo(edge: .top) }
+        }
         .onScrollGeometryChange(for: CGFloat.self) { geometry in
             geometry.contentOffset.y + geometry.contentInsets.top
         } action: { _, offset in

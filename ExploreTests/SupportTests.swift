@@ -152,6 +152,17 @@ struct DeepLinkTests {
         #expect(app.tab == .discover)
     }
 
+    @Test func countsTapsOnTheCurrentDiscoverTab() {
+        let app = AppModel()
+        app.select(.discover)
+        #expect(app.discoverRetaps == 1)
+        app.select(.blogs)
+        app.select(.blogs)
+        #expect(app.tab == .blogs && app.discoverRetaps == 1)
+        app.select(.discover)
+        #expect(app.tab == .discover && app.discoverRetaps == 1)
+    }
+
     @Test func opensPostsFromTheWidget() {
         let app = AppModel()
         app.open(URL(string: "explore://open?url=https%3A%2F%2Fblog.example.com%2Fp%3Fid%3D1")!)

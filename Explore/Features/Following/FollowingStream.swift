@@ -7,6 +7,7 @@ struct FollowingStream: View {
     let feed: FeedModel
     let language: LanguageFilter
     let tag: String?
+    var topRequest = 0
 
     @Environment(AppModel.self) private var app
 
@@ -23,7 +24,7 @@ struct FollowingStream: View {
     }
 
     private var list: some View {
-        EntryList(feed: feed, endText: "That's everything from the blogs you follow") {
+        EntryList(feed: feed, endText: "That's everything from the blogs you follow", topRequest: topRequest) {
             EmptyView()
         } empty: {
             if app.followedHosts.isEmpty {

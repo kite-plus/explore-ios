@@ -8,6 +8,10 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ## [Unreleased]
 
+### Added
+
+- Swipe left or right on Discover to move between Latest, Recommended and Following. The line under the tabs follows your finger, each stream keeps your place, and tapping Discover again still takes the stream you are on back to the top.
+
 ## [0.1.1] - 2026-10-04
 
 A small update: posts now open the way they do on the website, by way of a short page that says where you are going.

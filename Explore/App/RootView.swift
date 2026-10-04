@@ -9,7 +9,7 @@ struct RootView: View {
 
     var body: some View {
         @Bindable var app = app
-        TabView(selection: $app.tab) {
+        TabView(selection: Binding { app.tab } set: { app.select($0) }) {
             Tab("Discover", systemImage: "binoculars", value: AppTab.discover) {
                 DiscoverView()
             }
