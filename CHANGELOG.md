@@ -8,6 +8,10 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-10-04
+
+A small update: posts now open the way they do on the website, by way of a short page that says where you are going.
+
 ### Added
 
 - Opening a post first shows a short page, as the website does, naming the blog and the post while a bar fills; then Safari's view opens, or Safari itself if you prefer. Turn off Show Transition Page under Me to open posts straight away.
