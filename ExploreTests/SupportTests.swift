@@ -31,6 +31,18 @@ struct SourceTagTests {
     }
 }
 
+struct PreferencesTests {
+    @Test func showsTheTransitionPageUntilTurnedOff() {
+        let defaults = UserDefaults.standard
+        let saved = defaults.object(forKey: Preferences.handoff)
+        defer { defaults.set(saved, forKey: Preferences.handoff) }
+        defaults.removeObject(forKey: Preferences.handoff)
+        #expect(Preferences.showsHandoff)
+        defaults.set(false, forKey: Preferences.handoff)
+        #expect(!Preferences.showsHandoff)
+    }
+}
+
 struct PaletteTests {
     // Expected values come from the website's avatarColor in lib/avatar.ts.
     @Test(arguments: [

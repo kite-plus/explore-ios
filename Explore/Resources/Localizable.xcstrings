@@ -1951,6 +1951,16 @@
         }
       }
     },
+    "Show Transition Page" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "显示过渡页"
+          }
+        }
+      }
+    },
     "Shown on your account. Up to 80 characters." : {
       "localizations" : {
         "zh-Hans" : {

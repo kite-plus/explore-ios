@@ -6,6 +6,7 @@ struct MeView: View {
     @Environment(AppModel.self) private var app
     @AppStorage(Preferences.openInSafari) private var openInSafari = false
     @AppStorage(Preferences.readerMode) private var readerMode = false
+    @AppStorage(Preferences.handoff) private var showsHandoff = true
     @State private var editingName = false
     @State private var changingPassword = false
     @State private var deletingAccount = false
@@ -66,6 +67,9 @@ struct MeView: View {
                         SettingsLabel("Use Reader When Available", symbol: "doc.plaintext.fill")
                     }
                     .disabled(openInSafari)
+                    Toggle(isOn: $showsHandoff) {
+                        SettingsLabel("Show Transition Page", symbol: "arrow.up.forward")
+                    }
                 } header: {
                     Text("Reading")
                 } footer: {

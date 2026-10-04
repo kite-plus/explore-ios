@@ -10,7 +10,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ### Added
 
-- Opening a post first shows a short page, as the website does, naming the blog and the post while a bar fills; then Safari's view opens, or Safari itself if you prefer.
+- Opening a post first shows a short page, as the website does, naming the blog and the post while a bar fills; then Safari's view opens, or Safari itself if you prefer. Turn off Show Transition Page under Me to open posts straight away.
 
 ## [0.1.0] - 2026-10-04
 

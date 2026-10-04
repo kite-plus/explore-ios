@@ -418,10 +418,15 @@ final class AppModel {
     }
 
     /// Opens a post on the author's site by way of a moment that names it,
-    /// as the website's transition page does.
+    /// as the website's transition page does, unless the reader turned that
+    /// off.
     func openPost(_ entry: Entry, blog: BlogRef?) {
         guard handoff == nil, let url = URL(string: entry.url),
               ["http", "https"].contains(url.scheme?.lowercased() ?? "") else { return }
+        guard Preferences.showsHandoff else {
+            LinkOpener.open(url, source: sourceTag)
+            return
+        }
         handoff = Handoff(url: url, title: entry.title, blog: blog)
     }
 

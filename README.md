@@ -15,7 +15,7 @@ A native client for [Explore](https://github.com/kite-plus/explore), the stream 
 - **Blogs**: the directory, most recently updated first, and a page for every blog with its feed, its posts and its language and blog system.
 - **Search**: the field at the top of Discover browses Explore's tags and finds blogs by name, address or description as you type; the directory has its own at the top of Blogs.
 - **Me**: sign in or create an account, change your name or password, delete your account, claim your blog with a DNS record, submit a blog and follow its review, and point the app at another Explore server.
-- **Reading**: as on the website, a post first shows a short page naming the blog and the post, then opens in Safari's view inside the app, or in Safari itself if you prefer, with an optional Reader view. Links get `utm_source` as on the website; nothing else is added.
+- **Reading**: as on the website, a post first shows a short page naming the blog and the post, which you can turn off, then opens in Safari's view inside the app, or in Safari itself if you prefer, with an optional Reader view. Links get `utm_source` as on the website; nothing else is added.
 - **Widget**: the latest posts on the Home Screen in three sizes and on the Lock Screen, optionally narrowed to Chinese or English blogs. Tapping a post opens it on the author's site.
 - **Languages**: English and Simplified Chinese. Titles and excerpts always stay in the language the author wrote them in.
 

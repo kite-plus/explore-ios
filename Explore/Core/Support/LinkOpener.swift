@@ -4,6 +4,13 @@ import UIKit
 enum Preferences {
     static let openInSafari = "links.openInSafari"
     static let readerMode = "links.readerMode"
+    static let handoff = "links.handoff"
+
+    /// Whether a post opens by way of the transition page: on until the
+    /// reader turns it off.
+    static var showsHandoff: Bool {
+        UserDefaults.standard.object(forKey: handoff) as? Bool ?? true
+    }
 }
 
 /// Opens links that leave Explore. Posts and blog homepages are read on the
