@@ -25,7 +25,9 @@ struct FollowingStream: View {
 
     private var list: some View {
         EntryList(feed: feed, endText: "That's everything from the blogs you follow", topRequest: topRequest) {
-            EmptyView()
+            if !app.followedHosts.isEmpty {
+                FollowingHeader(count: app.followedHosts.count)
+            }
         } empty: {
             if app.followedHosts.isEmpty {
                 ContentUnavailableView {
@@ -63,6 +65,29 @@ struct FollowingStream: View {
                 app.handleAuthError(error)
             }
         }
+    }
+}
+
+/// How many blogs the reader follows, with the way to manage them.
+private struct FollowingHeader: View {
+    let count: Int
+
+    var body: some View {
+        HStack {
+            HStack(spacing: 6) {
+                Text("Blogs You Follow")
+                Text(count, format: .number)
+                    .monospacedDigit()
+            }
+            .foregroundStyle(.secondary)
+            Spacer()
+            NavigationLink(value: Route.subscriptions) {
+                Text("Manage")
+                    .fontWeight(.medium)
+            }
+        }
+        .font(.subheadline)
+        .padding(.top, 12)
     }
 }
 

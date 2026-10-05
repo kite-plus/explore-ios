@@ -4,7 +4,8 @@ import SwiftUI
 /// the recommended ones and the reader's follows, as tabs over the same
 /// filters. The streams sit side by side, so a swipe moves between them as
 /// a tap on a tab does, and each keeps its place for when the reader comes
-/// back. Search for blogs and tags sits at the top.
+/// back. The bar holds only the tabs, with the filter and search at either
+/// end, so the posts start high on the screen.
 struct DiscoverView: View {
     @Environment(AppModel.self) private var app
     @AppStorage("discover.language") private var language: LanguageFilter = .all
@@ -12,8 +13,6 @@ struct DiscoverView: View {
     @State private var latest = FeedModel(source: .latest)
     @State private var recommended = FeedModel(source: .recommended)
     @State private var following = FeedModel(source: .following)
-    @State private var query = ""
-    @State private var searching = false
     @State private var showsFilters = false
     @State private var page: DiscoverStream?
     /// How far the pager has scrolled, in pages: 0.5 is halfway from
@@ -32,48 +31,25 @@ struct DiscoverView: View {
         @Bindable var app = app
         ExploreStack(tab: .discover) {
             pager
-                .safeAreaBar(edge: .top) {
-                    if !searching {
-                        StreamBar(stream: $app.stream, position: position, filtered: filtered) {
-                            showsFilters = true
-                        }
-                    }
-                }
                 .navigationTitle("Discover")
                 .toolbarTitleDisplayMode(.inline)
                 .toolbar {
-                    ToolbarItem(placement: .principal) {
-                        BrandTitle()
+                    ToolbarItem(placement: .topBarLeading) {
+                        FilterButton(filtered: filtered) {
+                            showsFilters = true
+                        }
                     }
-                    if app.stream == .following, app.isSignedIn {
-                        ToolbarItem(placement: .topBarTrailing) {
-                            NavigationLink(value: Route.subscriptions) {
-                                Label("Manage", systemImage: "list.bullet")
-                            }
+                    ToolbarItem(placement: .principal) {
+                        StreamTabs(stream: $app.stream, position: position)
+                    }
+                    ToolbarItem(placement: .topBarTrailing) {
+                        NavigationLink(value: Route.search) {
+                            Label("Search", systemImage: "magnifyingglass")
                         }
                     }
                 }
-                // Search covers the streams instead of replacing them, so
-                // they keep their place for when search is cancelled.
-                .overlay {
-                    if searching {
-                        SearchContent(query: query)
-                            .transition(.opacity)
-                    }
-                }
-                .animation(.smooth(duration: 0.25), value: searching)
-                .searchable(
-                    text: $query, isPresented: $searching,
-                    placement: .navigationBarDrawer(displayMode: .always),
-                    prompt: Text("Search blogs and tags")
-                )
                 .sheet(isPresented: $showsFilters) {
                     FilterSheet(language: $language, tag: $tag)
-                }
-                .onChange(of: app.searchRequested, initial: true) {
-                    if app.takeSearchRequest() {
-                        searching = true
-                    }
                 }
         }
     }
@@ -106,7 +82,7 @@ struct DiscoverView: View {
         .onDisappear { showsStreams = false }
         // A tap on the tab over a pushed screen only goes back to the streams.
         .onChange(of: app.discoverRetaps) {
-            if showsStreams, !searching {
+            if showsStreams {
                 topRequests[app.stream, default: 0] += 1
             }
         }

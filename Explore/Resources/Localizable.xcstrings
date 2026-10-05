@@ -281,6 +281,16 @@
         }
       }
     },
+    "Blogs You Follow" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "我订阅的博客"
+          }
+        }
+      }
+    },
     "Blogs show up here once they are listed." : {
       "localizations" : {
         "zh-Hans" : {
@@ -467,6 +477,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "认领这个博客"
+          }
+        }
+      }
+    },
+    "Clear" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "清除"
           }
         }
       }
@@ -1877,6 +1897,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "你的博客已被 Explore 收录？打开博客页面，点 ··· 按钮，选择“认领这个博客”，再用一条 DNS 记录证明归属。"
+          }
+        }
+      }
+    },
+    "Search" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "搜索"
           }
         }
       }

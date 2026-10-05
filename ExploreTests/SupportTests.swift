@@ -134,8 +134,7 @@ struct DeepLinkTests {
         let app = AppModel()
         app.open(URL(string: "explore://search")!)
         #expect(app.tab == .discover)
-        #expect(app.takeSearchRequest())
-        #expect(!app.takeSearchRequest())
+        #expect(app.takePendingRoute(for: .discover) == .search)
     }
 
     @Test func opensSheetsAndTabs() {

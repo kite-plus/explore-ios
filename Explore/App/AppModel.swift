@@ -72,8 +72,6 @@ final class AppModel {
     private(set) var pendingPost: URL?
     /// A post about to open, which RootView names for a moment first.
     private(set) var handoff: Handoff?
-    /// Set when a link asks for search; Discover opens its search field.
-    private(set) var searchRequested = false
     /// Counts taps on Discover's tab while it shows. The streams sit in a
     /// pager the system cannot scroll to the top, so Discover does it.
     private(set) var discoverRetaps = 0
@@ -396,8 +394,7 @@ final class AppModel {
         case ("me", _), ("account", _):
             tab = .me
         case ("search", _):
-            tab = .discover
-            searchRequested = true
+            show(.search, in: .discover)
         case ("about", _):
             show(.about, in: .me)
         default:
@@ -421,11 +418,6 @@ final class AppModel {
             discoverRetaps += 1
         }
         self.tab = tab
-    }
-
-    func takeSearchRequest() -> Bool {
-        defer { searchRequested = false }
-        return searchRequested
     }
 
     /// Opens a post on the author's site by way of a moment that names it,

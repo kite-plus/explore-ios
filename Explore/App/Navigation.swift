@@ -58,6 +58,8 @@ private struct RouteDestination: View {
         case let .topic(slug, zoomID):
             TopicView(slug: slug)
                 .zoomTransition(from: zoomID, in: zoomNamespace)
+        case .search:
+            SearchScreen()
         case let .submission(id):
             SubmissionView(id: id)
         case .submissions:
