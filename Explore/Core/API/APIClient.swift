@@ -55,11 +55,13 @@ final class APIClient {
 
     // MARK: Reading
 
-    /// The latest posts, or with order "recommended" the posts rated solid
-    /// or standout.
+    /// The latest posts, or with order "recommended" the posts that score
+    /// high enough, each day's best first. Their days follow the device's
+    /// time zone, which the feed groups posts by.
     func entries(cursor: String?, language: String?, tag: String?, order: String? = nil, fresh: Bool = false) async throws -> Page<Entry> {
         var query = listQuery(cursor, language, tag)
         if let order { query.append(URLQueryItem(name: "order", value: order)) }
+        if order == "recommended" { query.append(URLQueryItem(name: "tz", value: TimeZone.current.identifier)) }
         return try await get("api/v1/entries", query: query, fresh: fresh)
     }
 

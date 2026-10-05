@@ -22,6 +22,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ### Fixed
 
+- Recommended groups its posts by the device's own days. Explore 0.1.11 orders each day's posts best first, so the app now tells it which time zone those days are in; until then a post near midnight could land under the wrong day.
 - A blog's page shows the blog's own icon as its large avatar, as the website does, instead of the first letter with the icon tucked into a corner. An icon too small to fill the circle sits in its middle rather than being blown up.
 
 ## [0.1.2] - 2026-10-05
