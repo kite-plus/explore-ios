@@ -6,6 +6,7 @@ struct Handoff: Identifiable, Equatable {
     let url: URL
     let title: String
     let blog: BlogRef?
+    let entry: Entry
 }
 
 /// What the app shows for a moment before a post opens, as the website's

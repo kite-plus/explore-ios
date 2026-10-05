@@ -1081,6 +1081,16 @@
         }
       }
     },
+    "Follow %@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "订阅「%@」"
+          }
+        }
+      }
+    },
     "Follow blogs and read their new posts in one stream." : {
       "localizations" : {
         "zh-Hans" : {
@@ -2041,6 +2051,16 @@
         }
       }
     },
+    "Share as Card" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "分享卡片"
+          }
+        }
+      }
+    },
     "Show Password" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2601,6 +2621,16 @@
         }
       }
     },
+    "Unfollow %@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取消订阅「%@」"
+          }
+        }
+      }
+    },
     "Unfollowed %@" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2697,6 +2727,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "验证记录"
+          }
+        }
+      }
+    },
+    "View Blog in Kite" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在 Kite 中查看博客"
           }
         }
       }

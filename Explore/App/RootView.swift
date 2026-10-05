@@ -44,7 +44,8 @@ struct RootView: View {
                         // timer here: a covered view loses its tasks and would
                         // start this one again when Safari's view closes.
                         let id = handoff.id
-                        LinkOpener.open(handoff.url, source: app.sourceTag) { app.endHandoff(id) }
+                        let actions = PostActions(entry: handoff.entry, blog: handoff.blog, app: app)
+                        LinkOpener.open(handoff.url, source: app.sourceTag, actions: actions) { app.endHandoff(id) }
                     }
             }
         }

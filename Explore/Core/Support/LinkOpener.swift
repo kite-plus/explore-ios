@@ -19,8 +19,11 @@ enum Preferences {
 enum LinkOpener {
     /// Opens a link that leaves Explore. done runs once it is open, with
     /// Safari's view covering the app or Safari in front, or at once when
-    /// it cannot be opened.
-    static func open(_ url: URL, source: String? = nil, done: (@MainActor @Sendable () -> Void)? = nil) {
+    /// it cannot be opened. actions add the app's items to the share menu
+    /// of Safari's view.
+    static func open(
+        _ url: URL, source: String? = nil, actions: PostActions? = nil, done: (@MainActor @Sendable () -> Void)? = nil
+    ) {
         // Only web pages: a server could list other schemes, which would
         // hand the tap to whatever app claims them.
         guard isWeb(url) else {
@@ -41,6 +44,7 @@ enum LinkOpener {
             UIApplication.shared.open(target) { _ in done?() }
             return
         }
+        actions?.attach(to: safari)
         presenter.present(safari, animated: true) { done?() }
     }
 

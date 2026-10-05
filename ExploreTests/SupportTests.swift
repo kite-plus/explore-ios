@@ -33,6 +33,25 @@ struct SourceTagTests {
     }
 }
 
+struct PostActionsTests {
+    private let post = URL(string: "https://www.ixiqin.com/2026/09/%E4%BB%A5%E6%A3%8B/")!
+
+    @Test func samePageAfterTheVisit() {
+        let opened = URL(string: "http://ixiqin.com/2026/09/以棋?utm_source=explore.kite.plus#comments")!
+        #expect(PostActions.samePage(opened, post))
+    }
+
+    @Test func anotherPageIsNot() {
+        #expect(!PostActions.samePage(URL(string: "https://www.ixiqin.com/2026/08/other/")!, post))
+        #expect(!PostActions.samePage(URL(string: "https://example.com/2026/09/%E4%BB%A5%E6%A3%8B/")!, post))
+    }
+
+    @Test func sameSiteWithOrWithoutWWW() {
+        #expect(PostActions.sameSite(URL(string: "https://ixiqin.com/about/")!, host: "www.ixiqin.com"))
+        #expect(!PostActions.sameSite(URL(string: "https://github.com/ixiqin")!, host: "www.ixiqin.com"))
+    }
+}
+
 struct PreferencesTests {
     @Test func showsTheTransitionPageUntilTurnedOff() {
         let defaults = UserDefaults.standard

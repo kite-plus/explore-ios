@@ -5,6 +5,8 @@ import SwiftUI
 /// save it, send it on, or copy the plain link instead.
 struct ShareSheet: View {
     let subject: ShareSubject
+    /// Closes the sheet when UIKit presented it, out of SwiftUI's reach.
+    var onClose: (() -> Void)?
 
     @Environment(AppModel.self) private var app
     @Environment(\.dismiss) private var dismiss
@@ -60,7 +62,7 @@ struct ShareSheet: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(role: .close) {
-                        dismiss()
+                        if let onClose { onClose() } else { dismiss() }
                     }
                 }
             }

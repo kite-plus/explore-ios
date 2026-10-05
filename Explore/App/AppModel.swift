@@ -429,10 +429,15 @@ final class AppModel {
         guard handoff == nil, let url = URL(string: entry.url),
               ["http", "https"].contains(url.scheme?.lowercased() ?? "") else { return }
         guard Preferences.showsHandoff else {
-            LinkOpener.open(url, source: sourceTag)
+            LinkOpener.open(url, source: sourceTag, actions: PostActions(entry: entry, blog: blog, app: self))
             return
         }
-        handoff = Handoff(url: url, title: entry.title, blog: blog)
+        handoff = Handoff(url: url, title: entry.title, blog: blog, entry: entry)
+    }
+
+    /// Shows a blog's page on the current tab.
+    func showBlog(_ blog: BlogRef) {
+        show(.blog(blog), in: tab)
     }
 
     func endHandoff(_ id: UUID) {

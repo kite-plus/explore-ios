@@ -8,6 +8,10 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ## [Unreleased]
 
+### Added
+
+- While a post is open, the share button of Safari's view offers Share as Card, Follow (or Unfollow) the blog, and View Blog in Kite. Share as Card brings up the post's card with its QR code, where before only the article's address could be shared; the other ways to share still send the article's link. Once you follow a link elsewhere, only the items that still fit the page stay.
+
 ### Changed
 
 - The app is now called Kite, after the Kite Plus family it belongs to. Its name on the Home Screen, the mark in screenshots, share cards and the widget, and the version under Me say Kite. Explore stays the name of the service it reads: the blog directory, accounts, servers and the website.
