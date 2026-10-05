@@ -1651,6 +1651,16 @@
         }
       }
     },
+    "Open the Link" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "打开链接"
+          }
+        }
+      }
+    },
     "Opens the link" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2141,6 +2151,16 @@
         }
       }
     },
+    "Shows the notice" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "查看这条公告"
+          }
+        }
+      }
+    },
     "Sign In" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2587,6 +2607,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "这个博客已经收录了。"
+          }
+        }
+      }
+    },
+    "This is an ad, written by the advertiser." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "这是一条广告，内容由推广方提供。"
+          }
+        }
+      }
+    },
+    "This notice is no longer showing." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "这条公告已经不再显示。"
           }
         }
       }

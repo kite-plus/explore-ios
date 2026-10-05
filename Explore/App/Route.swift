@@ -6,6 +6,8 @@ nonisolated enum Route: Hashable, Sendable {
     case blog(BlogRef, zoomID: String? = nil)
     case topic(String, zoomID: String? = nil)
     case search
+    /// A notice's page; preview is what the list showed, for while it loads.
+    case notice(String, preview: Notice? = nil)
     case submission(String)
     case submissions
     case subscriptions

@@ -96,6 +96,11 @@ final class APIClient {
         return list.data
     }
 
+    /// One notice that is showing, with its text.
+    func notice(id: String) async throws -> Notice {
+        try await get("api/v1/notices/\(id)", fresh: true)
+    }
+
     func siteConfig() async throws -> SiteConfig {
         try await get("api/v1/site-config", fresh: true)
     }

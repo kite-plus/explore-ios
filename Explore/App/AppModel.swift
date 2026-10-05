@@ -358,7 +358,7 @@ final class AppModel {
     // MARK: Links into the app
 
     /// Opens explore:// links, and website addresses with the same paths:
-    /// /blogs/{host}, /topics/{slug}, /submissions/{id}, /submit, /sign-in,
+    /// /blogs/{host}, /topics/{slug}, /submissions/{id}, /notices/{id}, /submit, /sign-in,
     /// the streams /recommended and /following, and the tab names.
     func open(_ url: URL) {
         var parts = url.pathComponents.filter { $0 != "/" }
@@ -399,6 +399,8 @@ final class AppModel {
             show(.search, in: .discover)
         case ("about", _):
             show(.about, in: .me)
+        case let ("notices", id?):
+            show(.notice(id), in: .discover)
         default:
             tab = .discover
         }

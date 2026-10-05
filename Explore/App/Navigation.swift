@@ -60,6 +60,8 @@ private struct RouteDestination: View {
                 .zoomTransition(from: zoomID, in: zoomNamespace)
         case .search:
             SearchScreen()
+        case let .notice(id, preview):
+            NoticeDetailView(id: id, preview: preview)
         case let .submission(id):
             SubmissionView(id: id)
         case .submissions:

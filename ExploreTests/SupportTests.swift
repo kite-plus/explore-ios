@@ -72,6 +72,11 @@ struct StreamItemTests {
         #expect(items.map(\.id) == ["notice-pinned", "post-a", "notice-first", "post-b", "notice-late"])
     }
 
+    @Test func splitsNoticeTextIntoParagraphs() {
+        let text = "第一段。\r\n\r\n第二段\n同一段。\n  \n\n第三段。\n"
+        #expect(NoticeDetailView.paragraphs(of: text) == ["第一段。", "第二段\n同一段。", "第三段。"])
+    }
+
     @Test func noNoticesLeavesThePosts() {
         #expect(StreamItem.items(entries: [entry("a")], notices: []).map(\.id) == ["post-a"])
     }
@@ -174,6 +179,13 @@ struct DeepLinkTests {
         app.open(URL(string: "https://explore.kite.plus/en/topics/ai")!)
         #expect(app.tab == .discover)
         #expect(app.takePendingRoute(for: .discover) == .topic("ai"))
+    }
+
+    @Test func opensNoticesOnDiscover() {
+        let app = AppModel()
+        app.open(URL(string: "https://explore.kite.plus/notices/1")!)
+        #expect(app.tab == .discover)
+        #expect(app.takePendingRoute(for: .discover) == .notice("1"))
     }
 
     @Test func opensSearchOnDiscover() {

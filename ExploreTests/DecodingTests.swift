@@ -67,6 +67,10 @@ struct DecodingTests {
         // A kind the app does not know shows as an ad, never unmarked.
         #expect(!list.data[1].isNotice && !list.data[1].isPinned)
         #expect(list.data[1].sourceName == "Acme")
+        #expect(list.data[0].body == nil)
+
+        let one = try decoder.decode(Notice.self, from: Data(#"{"id": "7", "kind": "notice", "title": "x", "summary": "", "url": "", "source_name": "Kite Plus", "position": 0, "published_at": "2026-10-06T00:00:00Z", "body": "a\n\nb"}"#.utf8))
+        #expect(one.body == "a\n\nb")
     }
 
     @Test func entryWithoutExcerptOrBlog() throws {

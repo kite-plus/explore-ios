@@ -385,12 +385,14 @@ nonisolated struct Notice: Codable, Hashable, Identifiable, Sendable {
     /// 0 before the first post, N after the Nth.
     let position: Int
     let publishedAt: Date?
+    /// Plain text, only on a single notice.
+    var body: String? = nil
 
     var isNotice: Bool { kind == "notice" }
     var isPinned: Bool { position == 0 }
 
     enum CodingKeys: String, CodingKey {
-        case id, kind, title, summary, url, position
+        case id, kind, title, summary, url, position, body
         case sourceName = "source_name"
         case publishedAt = "published_at"
     }

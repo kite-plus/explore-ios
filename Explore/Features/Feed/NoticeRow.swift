@@ -7,6 +7,7 @@ struct NoticeRow: View {
     let notice: Notice
 
     @Environment(AppModel.self) private var app
+    @Environment(\.navigate) private var navigate
 
     var body: some View {
         Button(action: open) {
@@ -31,7 +32,7 @@ struct NoticeRow: View {
         }
         .buttonStyle(PressableStyle())
         .padding(.vertical, 14)
-        .accessibilityHint(Text("Opens the link"))
+        .accessibilityHint(notice.url.isEmpty ? Text("Shows the notice") : Text("Opens the link"))
     }
 
     private var byline: some View {
@@ -67,12 +68,12 @@ struct NoticeRow: View {
     }
 
     /// A link opens as posts do; an ad's carries utm_source, as the website
-    /// adds it. One without a link opens its page on Explore.
+    /// adds it. One without a link is Explore's own text, shown in the app.
     private func open() {
         if !notice.url.isEmpty, let url = URL(string: notice.url) {
             LinkOpener.open(url, source: notice.isNotice ? nil : app.sourceTag)
         } else {
-            LinkOpener.open(app.client.webURL(notice: notice.id))
+            navigate(.notice(notice.id, preview: notice))
         }
     }
 }
