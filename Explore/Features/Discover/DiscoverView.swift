@@ -107,7 +107,7 @@ struct DiscoverView: View {
                 }
             } empty: {
                 ContentUnavailableView {
-                    Label(filtered ? "No Matching Posts" : "No Posts Yet", systemImage: "binoculars")
+                    Label(filtered ? "No Matching Posts" : "No Posts Yet", systemImage: "safari")
                 } description: {
                     Text(filtered ? "No posts match these filters." : "Posts from listed blogs show up here.")
                 }

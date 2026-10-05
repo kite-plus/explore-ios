@@ -92,19 +92,37 @@ struct BlogsView: View {
             .navigationSubtitle("Independent blogs listed on Explore")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Menu {
-                        Picker(selection: $language) {
+                    // The same filter button as Discover's, filled while in use.
+                    let menu = Menu {
+                        // Toggles rather than an inline picker, whose own
+                        // section would hide this one's title.
+                        Section("Blog language") {
                             ForEach(LanguageFilter.allCases) { option in
-                                Label(option.title, systemImage: option.symbol).tag(option)
+                                Toggle(isOn: Binding {
+                                    language == option
+                                } set: { isOn in
+                                    if isOn { language = option }
+                                }) {
+                                    Label(option.title, systemImage: option.symbol)
+                                }
                             }
-                        } label: {
-                            Text("Blog language")
                         }
-                        .pickerStyle(.inline)
                     } label: {
-                        Label("Blog language", systemImage: language == .all ? "globe" : "globe.badge.chevron.backward")
+                        Label("Filter", systemImage: "line.3.horizontal.decrease")
+                    }
+                    .menuStyle(.button)
+                    .accessibilityValue(language == .all ? Text(verbatim: "") : Text("In use"))
+                    if language == .all {
+                        menu
+                    } else {
+                        menu
+                            .buttonStyle(.glassProminent)
+                            .buttonBorderShape(.circle)
+                            .controlSize(.large)
                     }
                 }
+                // The filled button brings its own glass; the bar's would sit behind it.
+                .sharedBackgroundVisibility(language == .all ? .automatic : .hidden)
                 ToolbarSpacer(.fixed, placement: .topBarTrailing)
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
@@ -160,7 +178,7 @@ struct BlogsView: View {
         case .loaded:
             if model.blogs.isEmpty {
                 ContentUnavailableView {
-                    Label("No Blogs Yet", systemImage: "books.vertical")
+                    Label("No Blogs Yet", systemImage: "square.grid.2x2")
                 } description: {
                     Text("Blogs show up here once they are listed.")
                 } actions: {
@@ -319,7 +337,7 @@ struct BlogActions: View {
             Button {
                 LinkOpener.open(url, source: app.sourceTag)
             } label: {
-                Label("Visit Blog", systemImage: "safari")
+                Label("Visit Blog", systemImage: "arrow.up.forward.square")
             }
         }
         Button {

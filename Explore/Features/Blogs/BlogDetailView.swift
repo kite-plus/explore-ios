@@ -135,7 +135,7 @@ private struct BlogHeader: View {
                         LinkOpener.open(url, source: app.sourceTag)
                     }
                 } label: {
-                    Label("Visit Blog", systemImage: "safari")
+                    Label("Visit Blog", systemImage: "arrow.up.forward.square")
                         .font(.body.weight(.semibold))
                 }
                 .buttonStyle(.primaryAction)

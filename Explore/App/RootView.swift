@@ -10,10 +10,10 @@ struct RootView: View {
     var body: some View {
         @Bindable var app = app
         TabView(selection: Binding { app.tab } set: { app.select($0) }) {
-            Tab("Discover", systemImage: "binoculars", value: AppTab.discover) {
+            Tab("Discover", systemImage: "safari", value: AppTab.discover) {
                 DiscoverView()
             }
-            Tab("Blogs", systemImage: "books.vertical", value: AppTab.blogs) {
+            Tab("Blogs", systemImage: "square.grid.2x2", value: AppTab.blogs) {
                 BlogsView()
             }
             Tab("Me", systemImage: "person.crop.circle", value: AppTab.me) {

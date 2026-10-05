@@ -12,6 +12,8 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 - Discover's bar is now a single row, as feed apps have it: Filter on the left, the stream tabs in the middle and Search on the right, so posts start much higher on the screen. Filter turns solid while a language or tag is on.
 - Search opens its own page with the field ready to type in. Following now shows how many blogs you follow above its posts, with the way to manage them.
+- Clearer tab icons: a compass for Discover and a grid for Blogs. Buttons that take you to the author's site now show an outward arrow instead of the compass.
+- Blogs' language menu opens from a filter button like Discover's, in place of the globe, and the button fills while a language is chosen.
 
 ### Fixed
 

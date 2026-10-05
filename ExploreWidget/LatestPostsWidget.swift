@@ -157,7 +157,7 @@ struct LatestPostsLayout: View {
 
     private var empty: some View {
         VStack(spacing: 6) {
-            Image(systemName: posts.failed ? "wifi.exclamationmark" : "binoculars")
+            Image(systemName: posts.failed ? "wifi.exclamationmark" : "safari")
                 .font(.title3)
                 .widgetAccentable()
             Text(posts.failed ? "Couldn't load posts" : "No posts yet")
@@ -209,7 +209,7 @@ struct LatestPostsLayout: View {
     private func list(limit: Int) -> some View {
         VStack(alignment: .leading, spacing: family == .systemLarge ? 12 : 9) {
             HStack(spacing: 6) {
-                Image(systemName: "binoculars.fill")
+                Image(systemName: "safari.fill")
                     .font(.caption.weight(.bold))
                     .foregroundStyle(.tint)
                     .widgetAccentable()

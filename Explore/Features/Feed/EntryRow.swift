@@ -182,7 +182,7 @@ struct EntryActions: View {
             Button {
                 app.openPost(entry, blog: blog)
             } label: {
-                Label("Read on the Author's Site", systemImage: "safari")
+                Label("Read on the Author's Site", systemImage: "arrow.up.forward.square")
             }
             Button {
                 LinkOpener.openInSafari(url, source: app.sourceTag)
