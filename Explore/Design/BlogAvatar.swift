@@ -1,8 +1,9 @@
 import SwiftUI
 
 /// A blog's icon: its first letter on its color, covered by the site's
-/// favicon once Explore has fetched it. Explore answers a 1x1 transparent
-/// image when a blog has no icon, which leaves the letter showing.
+/// favicon once Explore has fetched it, as the website shows it. Explore
+/// answers a 1x1 transparent image when a blog has no icon, which leaves
+/// the letter showing.
 struct BlogAvatar: View {
     let host: String
     let name: String
@@ -20,12 +21,13 @@ struct BlogAvatar: View {
                 .font(.system(size: size * 0.46, weight: .semibold, design: .rounded))
                 .foregroundStyle(.white)
                 .minimumScaleFactor(0.5)
-            if let favicon, !isLarge {
+            if let favicon {
+                let side = iconSide(favicon)
                 Image(uiImage: favicon)
                     .resizable()
                     .interpolation(.high)
                     .scaledToFit()
-                    .padding(size * 0.12)
+                    .frame(width: side, height: side)
                     .frame(width: size, height: size)
                     .background(.white)
                     .transition(.opacity)
@@ -33,27 +35,16 @@ struct BlogAvatar: View {
         }
         .frame(width: size, height: size)
         .clipShape(.circle)
-        .overlay(alignment: .bottomTrailing) {
-            // Favicons are small; on a large avatar they sit in a badge
-            // rather than being blown up.
-            if let favicon, isLarge {
-                Image(uiImage: favicon)
-                    .resizable()
-                    .interpolation(.high)
-                    .scaledToFit()
-                    .padding(5)
-                    .frame(width: size * 0.36, height: size * 0.36)
-                    .background(.white, in: .circle)
-                    .overlay(Circle().strokeBorder(.black.opacity(0.06)))
-                    .shadow(color: .black.opacity(0.15), radius: 3, y: 1)
-                    .offset(x: 2, y: 2)
-                    .transition(.scale.combined(with: .opacity))
+        .overlay {
+            // A large white disc needs an edge against a white page.
+            if favicon != nil, isLarge {
+                Circle().strokeBorder(.black.opacity(0.06))
             }
         }
         .accessibilityHidden(true)
         .task(id: "\(app.server.absoluteString)|\(host)") {
             let url = app.client.faviconURL(host: host)
-            let pixels = (isLarge ? size * 0.36 : size) * displayScale
+            let pixels = size * displayScale
             if let cached = ImageCache.shared.cached(url, pixels: pixels) {
                 favicon = Self.usable(cached)
                 return
@@ -64,6 +55,16 @@ struct BlogAvatar: View {
     }
 
     private var isLarge: Bool { size >= 64 }
+
+    /// How wide the favicon is drawn: nearly the whole circle, unless the
+    /// avatar is large and the favicon too small to fill it without blurring;
+    /// then it sits in the middle, enlarged at most three times.
+    private func iconSide(_ image: UIImage) -> CGFloat {
+        let full = size * 0.76
+        guard isLarge, let width = image.cgImage.map({ CGFloat($0.width) }) else { return full }
+        if width >= full * displayScale * 0.6 { return full }
+        return min(max(width / displayScale * 3, size * 0.34), size * 0.5)
+    }
 
     private static func usable(_ image: UIImage?) -> UIImage? {
         guard let image, let cg = image.cgImage, cg.width > 1 else { return nil }

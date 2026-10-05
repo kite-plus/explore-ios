@@ -13,6 +13,10 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 - Discover's bar is now a single row, as feed apps have it: Filter on the left, the stream tabs in the middle and Search on the right, so posts start much higher on the screen. Filter turns solid while a language or tag is on.
 - Search opens its own page with the field ready to type in. Following now shows how many blogs you follow above its posts, with the way to manage them.
 
+### Fixed
+
+- A blog's page shows the blog's own icon as its large avatar, as the website does, instead of the first letter with the icon tucked into a corner. An icon too small to fill the circle sits in its middle rather than being blown up.
+
 ## [0.1.2] - 2026-10-05
 
 A small update: Discover's streams now follow a swipe, the way most reading apps do.
