@@ -65,6 +65,7 @@ struct RootView: View {
             app.open(url)
         }
         .onChange(of: scenePhase) { _, phase in
+            IslandMark.setVisible(phase == .active)
             if phase == .active {
                 Task { await app.catchUp() }
             }
@@ -75,6 +76,7 @@ struct RootView: View {
             }
         }
         .task {
+            IslandMark.install()
             #if DEBUG
             // Lets screenshots and manual checks start on any screen:
             // launch with -deeplink explore://blogs/example.com

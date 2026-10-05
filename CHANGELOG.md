@@ -8,6 +8,10 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ## [Unreleased]
 
+### Added
+
+- Screenshots and screen recordings carry the Explore mark between the time and the battery. It sits where the Dynamic Island or the notch covers the screen, so it never shows while you use the app.
+
 ### Changed
 
 - Discover's bar is now a single row, as feed apps have it: Filter on the left, the stream tabs in the middle and Search on the right, so posts start much higher on the screen. Filter turns solid while a language or tag is on.
