@@ -10,6 +10,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ### Added
 
+- Notices and ads that Explore publishes show on Latest, between the posts, in the same row as a post: where a post gives its time, a notice has a warm "Notice" capsule and an ad an outlined "Ad" one, with a pin when it leads the list. One with a link opens it as a post does, an ad's with `utm_source`; one without opens its page on the Explore website. On a server of your own this needs the Explore release after 0.1.13; older servers simply show none.
 - While a post is open, the share button of Safari's view offers Share as Card, Follow (or Unfollow) the blog, and View Blog in Kite. Share as Card brings up the post's card with its QR code, where before only the article's address could be shared; the other ways to share still send the article's link. Once you follow a link elsewhere, only the items that still fit the page stay.
 
 ### Changed

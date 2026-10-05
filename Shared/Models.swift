@@ -369,3 +369,29 @@ nonisolated struct ErrorEnvelope: Decodable, Sendable {
         case checkReport = "check_report"
     }
 }
+
+/// A notice or ad Explore publishes itself, shown between the latest posts;
+/// see docs/design/notices.md in the explore repo.
+nonisolated struct Notice: Codable, Hashable, Identifiable, Sendable {
+    let id: String
+    /// "notice" or "ad". Anything but a notice shows as an ad, so a kind
+    /// added later is never left unmarked.
+    let kind: String
+    let title: String
+    let summary: String
+    /// Where it opens; empty for one that opens its page on Explore.
+    let url: String
+    let sourceName: String
+    /// 0 before the first post, N after the Nth.
+    let position: Int
+    let publishedAt: Date?
+
+    var isNotice: Bool { kind == "notice" }
+    var isPinned: Bool { position == 0 }
+
+    enum CodingKeys: String, CodingKey {
+        case id, kind, title, summary, url, position
+        case sourceName = "source_name"
+        case publishedAt = "published_at"
+    }
+}

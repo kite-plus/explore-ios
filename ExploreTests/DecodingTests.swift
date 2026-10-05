@@ -54,6 +54,21 @@ struct DecodingTests {
         #expect(page.nextCursor == "MTc4NTcyNDkxMjAwMDAwMDAwMDoxMw")
     }
 
+    @Test func notices() throws {
+        let json = """
+        {"data": [
+          {"id": "7", "kind": "notice", "title": "Kite for iOS", "summary": "", "url": "", "source_name": "Kite Plus", "position": 0, "published_at": "2026-10-06T00:00:00Z"},
+          {"id": "8", "kind": "sponsored", "title": "Hosting", "summary": "Cheap.", "url": "https://ads.example.com/", "source_name": "Acme", "position": 4, "published_at": "2026-10-06T00:00:00Z"}
+        ]}
+        """
+        let list = try decoder.decode(DataList<Notice>.self, from: Data(json.utf8))
+        #expect(list.data.map(\.id) == ["7", "8"])
+        #expect(list.data[0].isNotice && list.data[0].isPinned)
+        // A kind the app does not know shows as an ad, never unmarked.
+        #expect(!list.data[1].isNotice && !list.data[1].isPinned)
+        #expect(list.data[1].sourceName == "Acme")
+    }
+
     @Test func entryWithoutExcerptOrBlog() throws {
         // A blog page's posts carry no blog, and authors may hide excerpts.
         let json = """

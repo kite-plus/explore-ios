@@ -48,6 +48,11 @@ final class APIClient {
         server.appending(path: "\(AppLanguage.current.webPrefix)/p/\(id)")
     }
 
+    /// A notice's own page on the Explore website.
+    func webURL(notice id: String) -> URL {
+        server.appending(path: "\(AppLanguage.current.webPrefix)/notices/\(id)")
+    }
+
     var feedURL: URL { server.appending(path: "feed.xml") }
     var opmlURL: URL { server.appending(path: "blogs.opml") }
     var aboutURL: URL { server.appending(path: "\(AppLanguage.current.webPrefix)/about") }
@@ -81,6 +86,13 @@ final class APIClient {
 
     func topics() async throws -> [Topic] {
         let list: DataList<Topic> = try await get("api/v1/tags")
+        return list.data
+    }
+
+    /// The notices and ads showing now for the interface language.
+    func notices(fresh: Bool = false) async throws -> [Notice] {
+        let query = [URLQueryItem(name: "audience", value: AppLanguage.current.rawValue)]
+        let list: DataList<Notice> = try await get("api/v1/notices", query: query, fresh: fresh)
         return list.data
     }
 

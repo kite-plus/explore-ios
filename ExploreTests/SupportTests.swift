@@ -52,6 +52,31 @@ struct PostActionsTests {
     }
 }
 
+struct StreamItemTests {
+    private func entry(_ id: String) -> Entry {
+        Entry(
+            id: id, title: id, url: "https://blog.example.com/\(id)", excerpt: nil, imagePath: nil,
+            publishedAt: nil, tags: [], linkStatus: .unknown, linkCheckedAt: nil, blog: nil
+        )
+    }
+
+    private func notice(_ id: String, at position: Int) -> Notice {
+        Notice(id: id, kind: "notice", title: id, summary: "", url: "", sourceName: "Kite Plus", position: position, publishedAt: nil)
+    }
+
+    @Test func placesNoticesByPosition() {
+        let items = StreamItem.items(
+            entries: [entry("a"), entry("b")],
+            notices: [notice("pinned", at: 0), notice("first", at: 1), notice("late", at: 9)]
+        )
+        #expect(items.map(\.id) == ["notice-pinned", "post-a", "notice-first", "post-b", "notice-late"])
+    }
+
+    @Test func noNoticesLeavesThePosts() {
+        #expect(StreamItem.items(entries: [entry("a")], notices: []).map(\.id) == ["post-a"])
+    }
+}
+
 struct PreferencesTests {
     @Test func showsTheTransitionPageUntilTurnedOff() {
         let defaults = UserDefaults.standard

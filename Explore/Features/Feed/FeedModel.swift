@@ -50,6 +50,9 @@ final class FeedModel {
     var version = 0
 
     private(set) var entries: [Entry] = []
+    /// What Explore itself shows between the posts: only on the latest
+    /// stream without a tag, as on the website.
+    private(set) var notices: [Notice] = []
     private(set) var blog: Blog?
     private(set) var nextCursor: String?
     private(set) var phase: Phase = .idle
@@ -66,6 +69,14 @@ final class FeedModel {
     }
 
     var hasMore: Bool { nextCursor != nil }
+
+    private var showsNotices: Bool { source == .latest && tag == nil }
+
+    /// Notices are extra: when they cannot be had, the ones shown stay.
+    private func fetchNotices(_ client: APIClient, fresh: Bool) async -> [Notice] {
+        guard showsNotices else { return [] }
+        return (try? await client.notices(fresh: fresh)) ?? notices
+    }
 
     var showsPlaceholders: Bool {
         (phase == .idle || phase == .loading) && entries.isEmpty
@@ -85,6 +96,7 @@ final class FeedModel {
         }
         guard Date.now.timeIntervalSince(loadedAt) > 600 else { return }
         do {
+            async let pendingNotices = fetchNotices(client, fresh: true)
             let page = try await fetch(client, cursor: nil, fresh: true)
             try Task.checkCancellation()
             let known = Set(entries.map(\.id))
@@ -98,6 +110,7 @@ final class FeedModel {
                 entries.insert(contentsOf: newer, at: 0)
             }
             if let blog = page.blog { self.blog = blog }
+            notices = await pendingNotices
             self.loadedAt = .now
         } catch {
             // The list on screen is still right for its filters.
@@ -110,6 +123,7 @@ final class FeedModel {
         let requestKey = key(for: client)
         if loadedKey != requestKey {
             entries = []
+            notices = []
             blog = nil
             nextCursor = nil
             phase = .loading
@@ -117,9 +131,11 @@ final class FeedModel {
             phase = .loading
         }
         do {
+            async let pendingNotices = fetchNotices(client, fresh: fresh)
             let page = try await fetch(client, cursor: nil, fresh: fresh)
             try Task.checkCancellation()
             entries = Self.unique(page.entries)
+            notices = await pendingNotices
             nextCursor = page.next
             if let blog = page.blog { self.blog = blog }
             loadedKey = requestKey

@@ -91,6 +91,16 @@
         }
       }
     },
+    "Ad" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "广告"
+          }
+        }
+      }
+    },
     "Add This DNS Record" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1591,6 +1601,16 @@
         }
       }
     },
+    "Notice" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "公告"
+          }
+        }
+      }
+    },
     "One stream of independent blogs" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1631,6 +1651,16 @@
         }
       }
     },
+    "Opens the link" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "打开链接"
+          }
+        }
+      }
+    },
     "Opens the post on the author's site" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1667,6 +1697,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "密码已修改"
+          }
+        }
+      }
+    },
+    "Pinned ad" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "置顶广告"
+          }
+        }
+      }
+    },
+    "Pinned notice" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "置顶公告"
           }
         }
       }
