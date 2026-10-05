@@ -49,7 +49,7 @@ A manual run of the workflow archives without signing or publishing.
 Once the Apple Developer Program membership is active, this is done once. Uploads use an App Store Connect API key, so no certificate or profile is kept in the repository: Xcode creates what it needs with the key, and Apple keeps the distribution certificate.
 
 1. In [Certificates, Identifiers & Profiles](https://developer.apple.com/account/resources/identifiers/list), check that `plus.kite.explore` and `plus.kite.explore.widget` can be yours. If another team has them, pick other identifiers and set the `APP_BUNDLE_ID` variable below; the widget's follows as `<APP_BUNDLE_ID>.widget`.
-2. In [App Store Connect](https://appstoreconnect.apple.com), create the app under Apps with that bundle identifier. Uploads need the app to exist.
+2. In [App Store Connect](https://appstoreconnect.apple.com), create the app under Apps with that bundle identifier, named Kite Explore. Uploads need the app to exist. The store name differs from the Home Screen name, Kite, because Kite alone is taken on the App Store; the two only need to be recognizably the same app.
 3. Under Users and Access, Integrations, App Store Connect API, create a team key with the Admin role, which signing needs to create certificates and profiles. Download the key file; Apple offers it once. Note the key ID and the issuer ID shown above the list of keys.
 4. In the GitHub repository, under Settings, Secrets and variables, Actions, add:
 
