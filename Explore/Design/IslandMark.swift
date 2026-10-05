@@ -29,7 +29,7 @@ struct IslandMark: View {
                 .resizable()
                 .scaledToFit()
                 .frame(height: 13)
-            Text(verbatim: "Explore")
+            Text(verbatim: "Kite")
                 .font(.system(size: 13, weight: .semibold))
                 .foregroundStyle(.primary)
         }

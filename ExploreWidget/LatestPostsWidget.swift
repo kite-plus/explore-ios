@@ -194,7 +194,7 @@ struct LatestPostsLayout: View {
 
     private func rectangular(_ post: Entry) -> some View {
         VStack(alignment: .leading, spacing: 2) {
-            Text(post.blog?.name ?? "Explore")
+            Text(post.blog?.name ?? "Kite")
                 .font(.caption2.weight(.semibold))
                 .widgetAccentable()
                 .lineLimit(1)
@@ -213,7 +213,7 @@ struct LatestPostsLayout: View {
                     .font(.caption.weight(.bold))
                     .foregroundStyle(.tint)
                     .widgetAccentable()
-                Text(verbatim: "Explore")
+                Text(verbatim: "Kite")
                     .font(.caption.weight(.bold))
                 Spacer()
                 Text("Latest")

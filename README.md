@@ -1,4 +1,4 @@
-<h1 align="center">Explore for iOS</h1>
+<h1 align="center">Kite for iOS</h1>
 
 <p align="center">Discover what people publish, on iPhone and iPad.</p>
 
@@ -6,7 +6,7 @@
   <strong>English</strong> · <a href="README.zh-CN.md">简体中文</a>
 </p>
 
-A native client for [Explore](https://github.com/kite-plus/explore), the stream of new posts from independent blogs. It is written in Swift with SwiftUI for iOS 26 and built around Liquid Glass. Like the website, it shows titles, dates, short excerpts and thumbnails, and every post opens on the author's own site.
+Kite is the native iOS client for [Explore](https://github.com/kite-plus/explore), the stream of new posts from independent blogs. It is written in Swift with SwiftUI for iOS 26 and built around Liquid Glass. Like the website, it shows titles, dates, short excerpts and thumbnails, and every post opens on the author's own site.
 
 ## Features
 
@@ -16,7 +16,7 @@ A native client for [Explore](https://github.com/kite-plus/explore), the stream 
 - **Search**: the search button at the top right of Discover opens a page that browses Explore's tags and finds blogs by name, address or description as you type; the directory has its own field at the top of Blogs.
 - **Me**: sign in or create an account, change your name or password, delete your account, claim your blog with a DNS record, submit a blog and follow its review, and point the app at another Explore server.
 - **Reading**: as on the website, a post first shows a short page naming the blog and the post, which you can turn off, then opens in Safari's view inside the app, or in Safari itself if you prefer, with an optional Reader view. Links get `utm_source` as on the website; nothing else is added.
-- **Sharing**: a post or a blog shares as a card with Explore's mark and a QR code, to save to Photos or send on. The code opens a post through the website's transition page and a blog on its page on Explore.
+- **Sharing**: a post or a blog shares as a card with the Kite mark and a QR code, to save to Photos or send on. The code opens a post on its share page on Explore and a blog on its page there.
 - **Widget**: the latest posts on the Home Screen in three sizes and on the Lock Screen, optionally narrowed to Chinese or English blogs. Tapping a post opens it on the author's site.
 - **Languages**: English and Simplified Chinese. Titles and excerpts always stay in the language the author wrote them in.
 
@@ -69,4 +69,4 @@ CI runs them on every push and pull request, along with swift-format's rules and
 
 ## License
 
-Explore for iOS is licensed under the [Apache License 2.0](LICENSE).
+Kite for iOS is licensed under the [Apache License 2.0](LICENSE).

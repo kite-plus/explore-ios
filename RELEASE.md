@@ -40,7 +40,7 @@ Pushing the tag starts `.github/workflows/release.yml`:
 1. CI's checks, as above.
 2. The release notes, from the changelogs.
 3. An archive of the Release configuration. With signing set up (below), Xcode signs it with cloud-managed certificates and uploads it to App Store Connect, where it appears in TestFlight once Apple has processed it. Without signing, the archive is built unsigned to prove the release builds, and nothing is uploaded; the run's summary says so.
-4. The GitHub Release `Explore for iOS v<version>` with the notes. Re-running the workflow updates it instead of failing.
+4. The GitHub Release `Kite for iOS v<version>` with the notes. Re-running the workflow updates it instead of failing.
 
 A manual run of the workflow archives without signing or publishing.
 

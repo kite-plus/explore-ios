@@ -121,12 +121,12 @@
         }
       }
     },
-    "Allow Explore to add photos in Settings, then try again." : {
+    "Allow Kite to add photos in Settings, then try again." : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "请在设置中允许 Explore 添加照片，然后再试一次。"
+            "value" : "请在设置中允许 Kite 添加照片，然后再试一次。"
           }
         }
       }
@@ -847,16 +847,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Explore"
-          }
-        }
-      }
-    },
-    "Explore %@" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Explore %@"
           }
         }
       }

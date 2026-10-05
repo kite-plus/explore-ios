@@ -109,7 +109,7 @@ struct MeView: View {
 
                 Section {
                     VStack(spacing: 6) {
-                        Text("Explore \(Bundle.main.marketingVersion)")
+                        Text(verbatim: "Kite \(Bundle.main.marketingVersion)")
                             .font(.footnote.weight(.semibold))
                         Text("Explore keeps no post content and does not track readers.")
                             .font(.footnote)
@@ -181,7 +181,7 @@ private struct ProfileHeader: View {
             } else {
                 GlassMark(size: 76)
                 VStack(spacing: 6) {
-                    Text("Explore")
+                    Text(verbatim: "Kite")
                         .font(.title2.bold())
                     Text("Read everything without an account. Sign in to follow blogs and claim your own.")
                         .font(.subheadline)

@@ -138,7 +138,7 @@ private struct ShareCardFrame<Content: View>: View {
                     .resizable()
                     .scaledToFit()
                     .frame(height: 20)
-                Text(verbatim: "Explore")
+                Text(verbatim: "Kite")
                     .font(.system(size: 17, weight: .semibold))
             }
             .padding(.bottom, 20)

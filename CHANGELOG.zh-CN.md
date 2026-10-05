@@ -1,12 +1,16 @@
 # 更新日志
 
-本文件记录 Explore iOS 客户端的所有重要变更。
+本文件记录 Kite（Explore 的 iOS 客户端）的所有重要变更。0.1.3 及之前的版本名为 Explore for iOS。
 
 格式遵循 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)，版本号遵循 [语义化版本](https://semver.org/lang/zh-CN/spec/v2.0.0.html)。
 
 [English](CHANGELOG.md)
 
 ## [未发布]
+
+### 变更
+
+- App 改名为 Kite，和它所属的 Kite Plus 一致。主屏幕上的名字，截屏、分享卡片和小组件上的标志文字，以及「我的」底部的版本号都改为 Kite。Explore 仍是它读取的服务的名字：博客目录、账号、服务器和网站都还叫 Explore。
 
 ## [0.1.3] - 2026-10-06
 

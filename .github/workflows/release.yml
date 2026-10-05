@@ -82,7 +82,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -eu
-          title="Explore for iOS $GITHUB_REF_NAME"
+          title="Kite for iOS $GITHUB_REF_NAME"
           if gh release view "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
             gh release edit "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" --title "$title" --notes-file release/release-notes.md
           else

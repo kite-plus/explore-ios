@@ -1,4 +1,4 @@
-<h1 align="center">Explore for iOS</h1>
+<h1 align="center">Kite for iOS</h1>
 
 <p align="center">在 iPhone 和 iPad 上发现大家在写什么。</p>
 
@@ -6,7 +6,7 @@
   <a href="README.md">English</a> · <strong>简体中文</strong>
 </p>
 
-[Explore](https://github.com/kite-plus/explore) 的原生客户端：独立博客的最新文章汇成一条信息流。用 Swift 和 SwiftUI 编写，面向 iOS 26，围绕 Liquid Glass（液态玻璃）设计。和网站一样，App 只展示标题、日期、简短摘要和缩略图，每篇文章都在作者自己的网站打开。
+Kite 是 [Explore](https://github.com/kite-plus/explore) 的原生 iOS 客户端：独立博客的最新文章汇成一条信息流。用 Swift 和 SwiftUI 编写，面向 iOS 26，围绕 Liquid Glass（液态玻璃）设计。和网站一样，App 只展示标题、日期、简短摘要和缩略图，每篇文章都在作者自己的网站打开。
 
 ## 功能
 
@@ -16,7 +16,7 @@
 - **搜索**：点发现页右上角的搜索按钮进入搜索页，可以浏览 Explore 的标签，并按名称、地址、简介即时搜索博客；博客目录顶部也有自己的搜索框。
 - **我的**：登录或创建账号，修改名称和密码，删除账号，用 DNS 记录认领自己的博客，提交博客并跟踪审核进度，还可以连接其他 Explore 服务器。
 - **阅读**：和网站一样，点开文章先显示一个不到一秒的过渡页（可以关掉），写着博客名和文章标题，然后默认在 App 内的 Safari 视图中打开，也可以改为直接用 Safari 打开，并可开启阅读器视图。链接和网站一样只加上 `utm_source`，不添加任何其他内容。
-- **分享**：文章和博客可以生成带 Explore 标志和二维码的卡片，存到相册或发给别人。扫码后，文章经网站的过渡页打开，博客打开它在 Explore 上的页面。
+- **分享**：文章和博客可以生成带 Kite 标志和二维码的卡片，存到相册或发给别人。扫码后，文章打开它在 Explore 上的分享页，博客打开它在 Explore 上的页面。
 - **小组件**：在主屏幕（三种尺寸）和锁定屏幕上显示最新文章，可以只看中文或英文博客。点一下文章，就在作者的网站打开。
 - **语言**：英文和简体中文。文章标题和摘要始终保持作者原文的语言。
 
@@ -69,4 +69,4 @@ xcodebuild test -project Explore.xcodeproj -scheme Explore -destination 'platfor
 
 ## 许可证
 
-Explore for iOS 采用 [Apache License 2.0](LICENSE) 授权。
+Kite for iOS 采用 [Apache License 2.0](LICENSE) 授权。

@@ -1,12 +1,16 @@
 # Changelog
 
-All notable changes to Explore for iOS are documented in this file.
+All notable changes to Kite for iOS, the iOS client for Explore, are documented in this file. Releases up to 0.1.3 were named Explore for iOS.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 [简体中文](CHANGELOG.zh-CN.md)
 
 ## [Unreleased]
+
+### Changed
+
+- The app is now called Kite, after the Kite Plus family it belongs to. Its name on the Home Screen, the mark in screenshots, share cards and the widget, and the version under Me say Kite. Explore stays the name of the service it reads: the blog directory, accounts, servers and the website.
 
 ## [0.1.3] - 2026-10-06
 

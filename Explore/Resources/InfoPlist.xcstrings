@@ -8,13 +8,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Explore saves share cards to your photo library when you ask it to."
+            "value" : "Kite saves share cards to your photo library when you ask it to."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "保存分享卡片时，Explore 需要把图片存入你的相册。"
+            "value" : "保存分享卡片时，Kite 需要把图片存入你的相册。"
           }
         }
       }

@@ -72,7 +72,7 @@ struct ShareSheet: View {
                 }
                 Button("Done", role: .cancel) {}
             } message: {
-                Text("Allow Explore to add photos in Settings, then try again.")
+                Text("Allow Kite to add photos in Settings, then try again.")
             }
         }
         .task {
