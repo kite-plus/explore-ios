@@ -20,11 +20,11 @@ struct ShareSheet: View {
         }
     }
 
-    /// Where the card's code leads, and what Copy Link copies: the post
-    /// through the website's transition page, or the blog's page on Explore.
+    /// Where the card's code leads, and what Copy Link copies: the post's
+    /// share page, or the blog's page on Explore.
     private var link: URL {
         switch subject {
-        case let .post(entry, blog): app.client.webURL(post: entry, blog: blog, source: app.sourceTag)
+        case let .post(entry, _): app.client.webURL(post: entry.id)
         case let .blog(blog): app.client.webURL(blog: blog.host)
         }
     }

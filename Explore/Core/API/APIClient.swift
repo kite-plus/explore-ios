@@ -42,27 +42,10 @@ final class APIClient {
         server.appending(path: "\(AppLanguage.current.webPrefix)/blogs/\(host)")
     }
 
-    /// A post's address through the website's transition page, which names
-    /// the blog and the post before going on to the author's site. The page
-    /// reads everything from the fragment, as the website writes it.
-    func webURL(post entry: Entry, blog: BlogRef?, source: String) -> URL {
-        let page = server.appending(path: "\(AppLanguage.current.webPrefix)/go")
-        guard let target = URL(string: entry.url),
-            var components = URLComponents(url: page, resolvingAgainstBaseURL: false)
-        else { return page }
-        // A long title makes a dense QR code; the page only shows it.
-        let title = entry.title.count > 48 ? String(entry.title.prefix(47)) + "\u{2026}" : entry.title
-        let fields = [
-            ("to", SourceTag.tagged(target, source: source).absoluteString),
-            ("site", blog?.host ?? ""),
-            ("blog", blog?.name ?? ""),
-            ("title", title),
-        ]
-        let unreserved = CharacterSet(charactersIn: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~")
-        components.percentEncodedFragment = fields.map { name, value in
-            "\(name)=\(value.addingPercentEncoding(withAllowedCharacters: unreserved) ?? "")"
-        }.joined(separator: "&")
-        return components.url ?? page
+    /// A post's share page on the Explore website, which names the blog and
+    /// the post and leads on to the author's site.
+    func webURL(post id: String) -> URL {
+        server.appending(path: "\(AppLanguage.current.webPrefix)/p/\(id)")
     }
 
     var feedURL: URL { server.appending(path: "feed.xml") }
