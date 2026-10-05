@@ -77,6 +77,12 @@ struct StreamItemTests {
         #expect(NoticeDetailView.paragraphs(of: text) == ["第一段。", "第二段\n同一段。", "第三段。"])
     }
 
+    @Test func linksAddressesInNoticeText() {
+        let text = NoticeDetailView.linked("了解更多：www.kite.plus 或 https://explore.kite.plus/about。")
+        let links = text.runs.compactMap(\.link).map(\.absoluteString)
+        #expect(links == ["http://www.kite.plus", "https://explore.kite.plus/about"])
+    }
+
     @Test func noNoticesLeavesThePosts() {
         #expect(StreamItem.items(entries: [entry("a")], notices: []).map(\.id) == ["post-a"])
     }

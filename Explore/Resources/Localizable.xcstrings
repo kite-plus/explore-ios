@@ -1211,6 +1211,26 @@
         }
       }
     },
+    "Keep Exploring" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "继续发现"
+          }
+        }
+      }
+    },
+    "Kite, a blog engine, and Explore, for finding independent blogs, are both part of Kite Plus." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "博客引擎 Kite 和发现独立博客的 Explore，都是 Kite Plus 的一部分。"
+          }
+        }
+      }
+    },
     "Language" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2057,6 +2077,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "搜索博客和标签"
+          }
+        }
+      }
+    },
+    "See All the Latest Posts" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "看全部最新文章"
           }
         }
       }

@@ -50,21 +50,8 @@ struct NoticeRow: View {
         .foregroundStyle(.secondary)
     }
 
-    @ViewBuilder
     private var avatar: some View {
-        if notice.isNotice {
-            Image("Logo")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 11, height: 11)
-                .frame(width: 18, height: 18)
-                .background(.white, in: .circle)
-                .overlay(Circle().strokeBorder(.quaternary))
-                .accessibilityHidden(true)
-        } else {
-            BlogAvatarFace(host: notice.sourceName, name: notice.sourceName, size: 18, favicon: nil)
-                .accessibilityHidden(true)
-        }
+        NoticeAvatar(notice: notice, size: 18)
     }
 
     /// A link opens as posts do; an ad's carries utm_source, as the website
