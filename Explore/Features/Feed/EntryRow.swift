@@ -187,7 +187,7 @@ struct EntryActions: View {
             Button {
                 LinkOpener.openInSafari(url, source: app.sourceTag)
             } label: {
-                Label("Open in Safari", systemImage: "arrow.up.forward.app")
+                Label("Open in Safari", systemImage: "safari")
             }
             Button {
                 app.sheet = .share(.post(entry, blog))
