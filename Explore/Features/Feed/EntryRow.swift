@@ -206,7 +206,7 @@ struct EntryActions: View {
                 Button {
                     navigate(.blog(blog))
                 } label: {
-                    Label("Go to Blog", systemImage: "books.vertical")
+                    Label("Go to Blog", systemImage: "square.grid.2x2")
                 }
                 Button {
                     Task { await app.toggleFollow(blog) }
