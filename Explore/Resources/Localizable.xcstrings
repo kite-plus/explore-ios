@@ -2551,16 +2551,6 @@
         }
       }
     },
-    "Today" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "今天"
-          }
-        }
-      }
-    },
     "Too many requests. Try again in a moment." : {
       "localizations" : {
         "zh-Hans" : {
@@ -2837,16 +2827,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "例如博客写些什么"
-          }
-        }
-      }
-    },
-    "Yesterday" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "昨天"
           }
         }
       }

@@ -10,9 +10,6 @@ struct EntryRow: View {
     var showsBlog = true
     /// The blog the list belongs to, for posts that do not carry one.
     var contextBlog: BlogRef?
-    /// Under a heading that names an earlier day, the time of day rather
-    /// than how long ago.
-    var clockTime = false
 
     @Environment(AppModel.self) private var app
     @Environment(\.navigate) private var navigate
@@ -32,7 +29,7 @@ struct EntryRow: View {
 
     private var time: String {
         guard let date = entry.publishedAt else { return String(localized: "Date unknown") }
-        return clockTime ? date.formatted(date: .omitted, time: .shortened) : Formatting.relative(date)
+        return Formatting.relative(date)
     }
 
     var body: some View {

@@ -1,9 +1,8 @@
 import SwiftUI
 
-/// A stream of posts under the days they came out on, as the website lists
-/// them: a heading for each day, then flat rows split by hairlines. It
-/// brings placeholders, errors, an empty state and paging; the header
-/// scrolls with the posts.
+/// A stream of posts in one run, newest first, as flat rows split by
+/// hairlines; each row says when its post came out. It brings placeholders,
+/// errors, an empty state and paging; the header scrolls with the posts.
 struct EntryList<Header: View, Empty: View>: View {
     let feed: FeedModel
     var showsBlog = true
@@ -56,21 +55,11 @@ struct EntryList<Header: View, Empty: View>: View {
         } else if feed.entries.isEmpty {
             empty
         } else {
-            // One flat run of headings and rows: a lazy stack handles that
-            // better than a list nested in a list.
-            ForEach(ListItem.items(DayGroup.groups(of: feed.entries), now: .now)) { item in
-                switch item {
-                case let .heading(group, first, now):
-                    DayHeading(group: group, now: now, first: first)
-                case let .entry(entry, clockTime, last):
-                    VStack(spacing: 0) {
-                        EntryRow(
-                            entry: entry, showsBlog: showsBlog, contextBlog: contextBlog ?? feed.blog?.ref,
-                            clockTime: clockTime
-                        )
-                        if !last {
-                            Divider()
-                        }
+            ForEach(feed.entries) { entry in
+                VStack(spacing: 0) {
+                    EntryRow(entry: entry, showsBlog: showsBlog, contextBlog: contextBlog ?? feed.blog?.ref)
+                    if entry.id != feed.entries.last?.id {
+                        Divider()
                     }
                 }
             }
@@ -84,51 +73,5 @@ struct EntryList<Header: View, Empty: View>: View {
                 await feed.loadMore(using: app.client)
             }
         }
-    }
-}
-
-/// A day's heading or one of its posts, in the order the list shows them.
-private enum ListItem: Identifiable {
-    case heading(DayGroup, first: Bool, now: Date)
-    case entry(Entry, clockTime: Bool, last: Bool)
-
-    var id: String {
-        switch self {
-        case let .heading(group, _, _): "day-\(group.id)"
-        case let .entry(entry, _, _): "post-\(entry.id)"
-        }
-    }
-
-    static func items(_ groups: [DayGroup], now: Date) -> [ListItem] {
-        groups.enumerated().flatMap { index, group in
-            let clockTime = group.showsClockTime(now: now)
-            return [ListItem.heading(group, first: index == 0, now: now)] + group.entries.map { entry in
-                ListItem.entry(entry, clockTime: clockTime, last: entry.id == group.entries.last?.id)
-            }
-        }
-    }
-}
-
-/// "Today" or "Yesterday" with the date beside it, or the date alone.
-private struct DayHeading: View {
-    let group: DayGroup
-    let now: Date
-    let first: Bool
-
-    var body: some View {
-        let heading = group.heading(now: now)
-        HStack(alignment: .firstTextBaseline, spacing: 8) {
-            Text(heading.name)
-                .font(.headline)
-            if let date = heading.date {
-                Text(date)
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
-            }
-        }
-        .padding(.top, first ? 14 : 30)
-        .padding(.bottom, 2)
-        .accessibilityElement(children: .combine)
-        .accessibilityAddTraits(.isHeader)
     }
 }
