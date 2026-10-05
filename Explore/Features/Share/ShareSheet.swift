@@ -20,11 +20,11 @@ struct ShareSheet: View {
         }
     }
 
-    /// The plain link, as the menus copy it: the post on the author's site,
-    /// or the blog's page on Explore.
-    private var link: URL? {
+    /// Where the card's code leads, and what Copy Link copies: the post
+    /// through the website's transition page, or the blog's page on Explore.
+    private var link: URL {
         switch subject {
-        case let .post(entry, _): URL(string: entry.url)
+        case let .post(entry, blog): app.client.webURL(post: entry, blog: blog, source: app.sourceTag)
         case let .blog(blog): app.client.webURL(blog: blog.host)
         }
     }
@@ -104,7 +104,6 @@ struct ShareSheet: View {
             }
 
             Button {
-                guard let link else { return }
                 UIPasteboard.general.url = link
                 flash(copied: true)
             } label: {
@@ -124,12 +123,12 @@ struct ShareSheet: View {
             if let blog {
                 favicon = await BlogAvatar.favicon(host: blog.host, size: 24, scale: 3, client: app.client)
             }
-            let code = QRCode.image(for: app.client.webURL(post: entry, blog: blog, source: app.sourceTag))
+            let code = QRCode.image(for: link)
             render(PostShareCard(entry: entry, blog: blog, favicon: favicon, code: code, site: site))
         case let .blog(ref):
             let page = try? await app.client.blog(host: ref.host, cursor: nil)
             let favicon = await BlogAvatar.favicon(host: ref.host, size: 64, scale: 3, client: app.client)
-            let code = QRCode.image(for: app.client.webURL(blog: ref.host))
+            let code = QRCode.image(for: link)
             render(
                 BlogShareCard(
                     blog: page?.blog.ref ?? ref, about: page?.blog.about ?? "", recent: page?.entries ?? [],
