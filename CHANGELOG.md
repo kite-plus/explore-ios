@@ -8,10 +8,14 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ## [Unreleased]
 
+## [0.1.3] - 2026-10-06
+
+Discover's bar folds into a single row so posts start higher, and posts and blogs can be shared as cards with a QR code back to Explore.
+
 ### Added
 
 - Screenshots and screen recordings carry the Explore mark between the time and the battery. It sits where the Dynamic Island or the notch covers the screen, so it never shows while you use the app.
-- Share a post or a blog as a card: the post's title and excerpt, or the blog with its latest posts, under Explore's mark and over a QR code that opens it on Explore. Save the card to Photos, send it on, or copy the plain link.
+- Share a post or a blog as a card: the post's title and excerpt, or the blog with its latest posts, under Explore's mark and over a QR code that opens it on Explore. A post opens on its share page there, which names the blog and the post and links straight to the author's site; on a server of your own that needs Explore 0.1.13. Save the card to Photos, send it on, or copy the link the code holds.
 
 ### Changed
 
