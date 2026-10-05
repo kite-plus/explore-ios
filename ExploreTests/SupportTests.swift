@@ -1,5 +1,7 @@
+import CoreImage
 import Foundation
 import Testing
+import UIKit
 @testable import Explore
 
 struct SourceTagTests {
@@ -176,5 +178,51 @@ struct DeepLinkTests {
         app.open(URL(string: "explore://submissions/abc")!)
         #expect(app.takePendingRoute(for: .discover) == nil)
         #expect(app.takePendingRoute(for: .me) == .submission("abc"))
+    }
+}
+
+struct ShareCardTests {
+    private let client = APIClient(server: URL(string: "https://explore.kite.plus")!)
+    private let blog = BlogRef(host: "blog.example.com", name: "粥里有勺糖", siteURL: "https://blog.example.com", language: "zh")
+
+    private func entry(title: String) -> Entry {
+        Entry(
+            id: "12", title: title, url: "https://blog.example.com/posts/hello/?id=1", excerpt: nil, imagePath: nil,
+            publishedAt: nil, tags: [], linkStatus: .unknown, linkCheckedAt: nil, blog: blog
+        )
+    }
+
+    /// The fields as the transition page reads them with URLSearchParams.
+    private func fields(_ url: URL) -> [String: String] {
+        var query = URLComponents()
+        query.percentEncodedQuery = URLComponents(url: url, resolvingAgainstBaseURL: false)?.percentEncodedFragment
+        return Dictionary(uniqueKeysWithValues: (query.queryItems ?? []).map { ($0.name, $0.value ?? "") })
+    }
+
+    @Test func postLinkGoesThroughTheTransitionPage() {
+        let url = client.webURL(post: entry(title: "Tips & tricks: 你好 + 再见"), blog: blog, source: "explore.kite.plus")
+        #expect(url.path().hasSuffix("/go"))
+        let fields = fields(url)
+        #expect(fields["to"] == "https://blog.example.com/posts/hello/?id=1&utm_source=explore.kite.plus")
+        #expect(fields["site"] == "blog.example.com")
+        #expect(fields["blog"] == "粥里有勺糖")
+        #expect(fields["title"] == "Tips & tricks: 你好 + 再见")
+    }
+
+    @Test func longTitlesAreShortened() {
+        let title = String(repeating: "视野修炼", count: 20)
+        let shown = fields(client.webURL(post: entry(title: title), blog: blog, source: "explore.kite.plus"))["title"]
+        #expect(shown?.count == 48)
+        #expect(shown?.hasSuffix("\u{2026}") == true)
+    }
+
+    @Test func codeReadsBackAsTheLink() throws {
+        let url = client.webURL(post: entry(title: String(repeating: "视野修炼", count: 20)), blog: blog, source: "explore.kite.plus")
+        let code = try #require(QRCode.image(for: url)?.cgImage)
+        let image = CIImage(cgImage: code).samplingNearest().transformed(by: CGAffineTransform(scaleX: 6, y: 6))
+        let page = image.composited(over: CIImage(color: .white).cropped(to: image.extent.insetBy(dx: -48, dy: -48)))
+        let detector = CIDetector(ofType: CIDetectorTypeQRCode, context: nil, options: [CIDetectorAccuracy: CIDetectorAccuracyHigh])
+        let message = (detector?.features(in: page).first as? CIQRCodeFeature)?.messageString
+        #expect(message == url.absoluteString)
     }
 }

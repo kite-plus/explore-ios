@@ -25,6 +25,7 @@ enum AppSheet: Identifiable {
     case submit
     case report(ReportTarget)
     case claim(BlogRef)
+    case share(ShareSubject)
 
     var id: String {
         switch self {
@@ -32,6 +33,7 @@ enum AppSheet: Identifiable {
         case .submit: "submit"
         case let .report(target): "report-\(target.id)"
         case let .claim(blog): "claim-\(blog.host)"
+        case let .share(subject): "share-\(subject.id)"
         }
     }
 }

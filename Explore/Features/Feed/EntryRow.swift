@@ -189,7 +189,9 @@ struct EntryActions: View {
             } label: {
                 Label("Open in Safari", systemImage: "arrow.up.forward.app")
             }
-            ShareLink(item: url, subject: Text(entry.title)) {
+            Button {
+                app.sheet = .share(.post(entry, blog))
+            } label: {
                 Label("Share", systemImage: "square.and.arrow.up")
             }
             Button {

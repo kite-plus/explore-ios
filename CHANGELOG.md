@@ -11,6 +11,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 ### Added
 
 - Screenshots and screen recordings carry the Explore mark between the time and the battery. It sits where the Dynamic Island or the notch covers the screen, so it never shows while you use the app.
+- Share a post or a blog as a card: the post's title and excerpt, or the blog with its latest posts, under Explore's mark and over a QR code that opens it on Explore. Save the card to Photos, send it on, or copy the plain link.
 
 ### Changed
 

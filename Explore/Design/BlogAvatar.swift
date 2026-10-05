@@ -14,6 +14,43 @@ struct BlogAvatar: View {
     @State private var favicon: UIImage?
 
     var body: some View {
+        BlogAvatarFace(host: host, name: name, size: size, favicon: favicon)
+            .task(id: "\(app.server.absoluteString)|\(host)") {
+                let url = app.client.faviconURL(host: host)
+                if let cached = ImageCache.shared.cached(url, pixels: size * displayScale) {
+                    favicon = Self.usable(cached)
+                    return
+                }
+                let image = await Self.favicon(host: host, size: size, scale: displayScale, client: app.client)
+                withAnimation(.smooth(duration: 0.25)) { favicon = image }
+            }
+    }
+
+    /// A blog's favicon for an avatar of this size, or nil when it has none.
+    static func favicon(host: String, size: CGFloat, scale: CGFloat, client: APIClient) async -> UIImage? {
+        let image = await ImageCache.shared.load(
+            client.faviconURL(host: host), pixels: size * scale, followsServerCache: true
+        )
+        return usable(image)
+    }
+
+    private static func usable(_ image: UIImage?) -> UIImage? {
+        guard let image, let cg = image.cgImage, cg.width > 1 else { return nil }
+        return image
+    }
+}
+
+/// What a blog avatar draws for a favicon already in hand, so a share card
+/// can render one as an image.
+struct BlogAvatarFace: View {
+    let host: String
+    let name: String
+    let size: CGFloat
+    let favicon: UIImage?
+
+    @Environment(\.displayScale) private var displayScale
+
+    var body: some View {
         ZStack {
             Circle()
                 .fill(Palette.color(for: host).gradient)
@@ -42,16 +79,6 @@ struct BlogAvatar: View {
             }
         }
         .accessibilityHidden(true)
-        .task(id: "\(app.server.absoluteString)|\(host)") {
-            let url = app.client.faviconURL(host: host)
-            let pixels = size * displayScale
-            if let cached = ImageCache.shared.cached(url, pixels: pixels) {
-                favicon = Self.usable(cached)
-                return
-            }
-            let image = await ImageCache.shared.load(url, pixels: pixels, followsServerCache: true)
-            withAnimation(.smooth(duration: 0.25)) { favicon = Self.usable(image) }
-        }
     }
 
     private var isLarge: Bool { size >= 64 }
@@ -64,11 +91,6 @@ struct BlogAvatar: View {
         guard isLarge, let width = image.cgImage.map({ CGFloat($0.width) }) else { return full }
         if width >= full * displayScale * 0.6 { return full }
         return min(max(width / displayScale * 3, size * 0.34), size * 0.5)
-    }
-
-    private static func usable(_ image: UIImage?) -> UIImage? {
-        guard let image, let cg = image.cgImage, cg.width > 1 else { return nil }
-        return image
     }
 }
 

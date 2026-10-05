@@ -121,6 +121,16 @@
         }
       }
     },
+    "Allow Explore to add photos in Settings, then try again." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请在设置中允许 Explore 添加照片，然后再试一次。"
+          }
+        }
+      }
+    },
     "Always read on the author's site" : {
       "localizations" : {
         "zh-Hans" : {
@@ -597,6 +607,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "加载失败"
+          }
+        }
+      }
+    },
+    "Couldn't Save the Image" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法保存图片"
           }
         }
       }
@@ -1591,6 +1611,16 @@
         }
       }
     },
+    "Open Settings" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "打开设置"
+          }
+        }
+      }
+    },
     "Open in Safari" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1901,6 +1931,46 @@
         }
       }
     },
+    "Save Image" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保存图片"
+          }
+        }
+      }
+    },
+    "Saved" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已保存"
+          }
+        }
+      }
+    },
+    "Scan to read the post" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "扫码阅读全文"
+          }
+        }
+      }
+    },
+    "Scan to see the blog" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "扫码查看博客"
+          }
+        }
+      }
+    },
     "Search" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1967,6 +2037,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "分享"
+          }
+        }
+      }
+    },
+    "Share Image" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "分享图片"
           }
         }
       }

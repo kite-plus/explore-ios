@@ -59,6 +59,8 @@ struct RootView: View {
                 ReportView(target: target)
             case let .claim(blog):
                 ClaimBlogView(blog: blog)
+            case let .share(subject):
+                ShareSheet(subject: subject)
             }
         }
         .onOpenURL { url in

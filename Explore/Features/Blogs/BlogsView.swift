@@ -360,7 +360,9 @@ struct BlogActions: View {
             }
         }
         Section {
-            ShareLink(item: app.client.webURL(blog: blog.host), subject: Text(blog.name)) {
+            Button {
+                app.sheet = .share(.blog(blog))
+            } label: {
                 Label("Share", systemImage: "square.and.arrow.up")
             }
             Button {

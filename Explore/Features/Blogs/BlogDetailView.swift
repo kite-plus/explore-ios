@@ -52,7 +52,9 @@ struct BlogDetailView: View {
                     .opacity(titleVisible ? 1 : 0)
             }
             ToolbarItem(placement: .topBarTrailing) {
-                ShareLink(item: app.client.webURL(blog: ref.host), subject: Text(name)) {
+                Button {
+                    app.sheet = .share(.blog(feed.blog?.ref ?? ref))
+                } label: {
                     Label("Share", systemImage: "square.and.arrow.up")
                 }
             }
