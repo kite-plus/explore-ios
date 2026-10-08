@@ -205,6 +205,12 @@ struct DeepLinkTests {
         let app = AppModel()
         app.open(URL(string: "explore://submit")!)
         #expect(app.sheet?.id == "submit")
+        app.open(URL(string: "https://explore.kite.plus/submit?site=https%3A%2F%2Fa.example%2F&feed=https%3A%2F%2Fa.example%2Ffeed.xml")!)
+        guard case let .submitPrefilled(site, feed) = app.sheet else {
+            Issue.record("expected the submit form filled in")
+            return
+        }
+        #expect(site == "https://a.example/" && feed == "https://a.example/feed.xml")
         app.open(URL(string: "explore://following")!)
         #expect(app.tab == .discover && app.stream == .following)
         app.open(URL(string: "https://explore.kite.plus/en/recommended")!)

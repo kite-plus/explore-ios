@@ -182,6 +182,15 @@ final class APIClient {
         try await sendEmpty("DELETE", "api/v1/me/subscriptions/\(host)", json: nil)
     }
 
+    /// Follows the blogs an OPML file lists that Explore lists too.
+    func importSubscriptions(opml: Data) async throws -> OPMLImport {
+        var request = try request("POST", "api/v1/me/subscriptions/import", signed: true, timeout: 60)
+        request.httpBody = opml
+        request.setValue("text/x-opml", forHTTPHeaderField: "Content-Type")
+        let (data, _) = try await perform(request)
+        return try decode(OPMLImport.self, from: data)
+    }
+
     func ownedBlogs() async throws -> [Blog] {
         let list: DataList<Blog> = try await get("api/v1/me/blogs", signed: true)
         return list.data

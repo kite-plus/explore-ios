@@ -210,6 +210,35 @@ nonisolated struct User: Codable, Hashable, Sendable {
     }
 }
 
+/// What an OPML import did: the outlines read, the blogs followed, and the
+/// outlines whose blogs Explore does not list.
+nonisolated struct OPMLImport: Codable, Hashable, Sendable {
+    let outlines: Int
+    let added: Int
+    let alreadyFollowing: Int
+    /// Outlines past the server's limit, which were not read.
+    let ignored: Int
+    let notListed: [Outline]
+
+    struct Outline: Codable, Hashable, Sendable {
+        let title: String
+        let siteURL: String
+        let feedURL: String
+
+        enum CodingKeys: String, CodingKey {
+            case title
+            case siteURL = "site_url"
+            case feedURL = "feed_url"
+        }
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case outlines, added, ignored
+        case alreadyFollowing = "already_following"
+        case notListed = "not_listed"
+    }
+}
+
 nonisolated struct ClaimChallenge: Codable, Hashable, Sendable {
     let record: String
     let value: String

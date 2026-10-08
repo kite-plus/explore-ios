@@ -127,6 +127,18 @@ struct DecodingTests {
         #expect(user.temporaryPassword == true)
     }
 
+    @Test func opmlImport() throws {
+        let json = """
+        {"outlines":4,"added":2,"already_following":1,"ignored":0,
+        "not_listed":[{"title":"Elsewhere","site_url":"","feed_url":"https://elsewhere.example/feed.xml"}]}
+        """
+        let result = try decoder.decode(OPMLImport.self, from: Data(json.utf8))
+        #expect(result.outlines == 4)
+        #expect(result.alreadyFollowing == 1)
+        #expect(result.notListed.first?.feedURL == "https://elsewhere.example/feed.xml")
+        #expect(result.notListed.first?.siteURL == "")
+    }
+
     @Test func submission() throws {
         let json = """
         {"id":"0f6b","status":"pending","host":"blog.example.com","site_url":"https://blog.example.com/",

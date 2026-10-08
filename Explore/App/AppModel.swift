@@ -23,6 +23,8 @@ enum DiscoverStream: String, CaseIterable, Identifiable {
 enum AppSheet: Identifiable {
     case signIn(SignInMode)
     case submit
+    /// The submit form with a blog's addresses filled in.
+    case submitPrefilled(site: String, feed: String)
     case report(ReportTarget)
     case claim(BlogRef)
     case share(ShareSubject)
@@ -31,6 +33,7 @@ enum AppSheet: Identifiable {
         switch self {
         case let .signIn(mode): "sign-in-\(mode)"
         case .submit: "submit"
+        case let .submitPrefilled(site, feed): "submit-\(site)-\(feed)"
         case let .report(target): "report-\(target.id)"
         case let .claim(blog): "claim-\(blog.host)"
         case let .share(subject): "share-\(subject.id)"
@@ -359,7 +362,8 @@ final class AppModel {
     // MARK: Links into the app
 
     /// Opens explore:// links, and website addresses with the same paths:
-    /// /blogs/{host}, /topics/{slug}, /submissions/{id}, /notices/{id}, /submit, /sign-in,
+    /// /blogs/{host}, /topics/{slug}, /submissions/{id}, /notices/{id}, /submit (with the
+    /// website's site and feed query), /sign-in,
     /// the streams /recommended and /following, and the tab names.
     func open(_ url: URL) {
         var parts = url.pathComponents.filter { $0 != "/" }
@@ -385,7 +389,10 @@ final class AppModel {
         case let ("submissions", id?):
             show(.submission(id), in: .me)
         case ("submit", _):
-            sheet = .submit
+            let query = URLComponents(url: url, resolvingAgainstBaseURL: false)?.queryItems ?? []
+            let site = query.first { $0.name == "site" }?.value ?? ""
+            let feed = query.first { $0.name == "feed" }?.value ?? ""
+            sheet = site.isEmpty && feed.isEmpty ? .submit : .submitPrefilled(site: site, feed: feed)
         case ("sign-in", _), ("login", _):
             sheet = isSignedIn ? nil : .signIn(.signIn)
         case (nil, _):

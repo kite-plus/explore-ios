@@ -11,7 +11,7 @@ Kite is the native iOS client for [Explore](https://github.com/kite-plus/explore
 ## Features
 
 - **Discover**: Explore's three streams as tabs, as on the website: the latest posts from every listed blog, the recommended ones, and the blogs you follow. Posts run newest first in one list, each saying when it came out, and filter by blog language and tag, with pull to refresh and endless paging. Each post shows Explore's latest link check; posts that were never checked can be checked on the spot.
-- **Following**: follow blogs and read their new posts in Discover's Following tab; manage the list under Me and export it as OPML for any feed reader.
+- **Following**: follow blogs and read their new posts in Discover's Following tab; manage the list under Me, import an OPML file from another feed reader, and export the list as OPML for any feed reader.
 - **Blogs**: the directory, most recently updated first, and a page for every blog with its feed, its posts and its language and blog system.
 - **Search**: the search button at the top right of Discover opens a page that browses Explore's tags and finds blogs by name, address or description as you type; the directory has its own field at the top of Blogs.
 - **Me**: sign in or create an account, change your name or password, delete your account, claim your blog with a DNS record, submit a blog and follow its review, and point the app at another Explore server.

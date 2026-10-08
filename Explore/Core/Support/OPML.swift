@@ -55,5 +55,6 @@ nonisolated struct OPMLDocument: Transferable, Sendable {
 }
 
 extension UTType {
-    nonisolated static let opml = UTType(filenameExtension: "opml", conformingTo: .xml) ?? .xml
+    /// Declared in Info.plist, so the file picker knows .opml files.
+    nonisolated static let opml = UTType(importedAs: "org.opml.opml", conformingTo: .xml)
 }

@@ -141,6 +141,16 @@
         }
       }
     },
+    "Already followed" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "原本已订阅"
+          }
+        }
+      }
+    },
     "Always read on the author's site" : {
       "localizations" : {
         "zh-Hans" : {
@@ -891,6 +901,16 @@
         }
       }
     },
+    "Explore follows only blogs it lists. Submit these, and you can follow them once a maintainer approves them." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "只能订阅 Explore 已收录的博客。提交这些博客，维护者审核通过后就能订阅。"
+          }
+        }
+      }
+    },
     "Explore gathers the public feeds of independent blogs and shows their latest posts, newest first. Any blog with RSS, Atom or JSON Feed can join." : {
       "localizations" : {
         "zh-Hans" : {
@@ -1037,16 +1057,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "导出 OPML"
-          }
-        }
-      }
-    },
-    "Export the list as OPML to take these blogs to any feed reader." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "导出为 OPML，就能把这些博客带到任何 RSS 阅读器。"
           }
         }
       }
@@ -1207,6 +1217,46 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "如何收录"
+          }
+        }
+      }
+    },
+    "Import" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导入"
+          }
+        }
+      }
+    },
+    "Import OPML" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导入 OPML"
+          }
+        }
+      }
+    },
+    "Import an OPML file from another reader to follow the blogs Explore lists, or export this list to take these blogs anywhere." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导入其他阅读器导出的 OPML，订阅其中 Explore 已收录的博客；也可以导出这份列表，把这些博客带到任何 RSS 阅读器。"
+          }
+        }
+      }
+    },
+    "Import finished" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导入完成"
           }
         }
       }
@@ -1421,6 +1471,16 @@
         }
       }
     },
+    "Newly followed" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新订阅"
+          }
+        }
+      }
+    },
     "No Blogs Yet" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1621,6 +1681,16 @@
         }
       }
     },
+    "Not on Explore Yet" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "尚未收录"
+          }
+        }
+      }
+    },
     "Note" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1647,6 +1717,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "公告"
+          }
+        }
+      }
+    },
+    "OPML" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OPML"
           }
         }
       }
@@ -1747,6 +1827,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "密码已修改"
+          }
+        }
+      }
+    },
+    "Past the limit of 1,000, not read" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "超出 1000 个的上限，未读取"
           }
         }
       }
@@ -1887,6 +1977,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "不登录也能阅读全部内容。登录后可以订阅博客，认领你自己的博客。"
+          }
+        }
+      }
+    },
+    "Read from the file" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "文件中的订阅"
           }
         }
       }
@@ -2351,6 +2451,16 @@
         }
       }
     },
+    "Submit" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "提交"
+          }
+        }
+      }
+    },
     "Submit a Blog" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2557,6 +2667,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "订阅源里混有非文章页面"
+          }
+        }
+      }
+    },
+    "The file is over 2 MB, too large to import." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "文件超过 2 MB，无法导入。"
           }
         }
       }

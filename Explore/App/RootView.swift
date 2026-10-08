@@ -56,6 +56,8 @@ struct RootView: View {
                 SignInView(mode: mode)
             case .submit:
                 SubmitView()
+            case let .submitPrefilled(site, feed):
+                SubmitView(site: site, feed: feed)
             case let .report(target):
                 ReportView(target: target)
             case let .claim(blog):

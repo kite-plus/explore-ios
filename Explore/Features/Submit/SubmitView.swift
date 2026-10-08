@@ -24,8 +24,8 @@ struct SubmitView: View {
     }
 
     @State private var stage: Stage = .form
-    @State private var siteAddress = ""
-    @State private var feedAddress = ""
+    @State private var siteAddress: String
+    @State private var feedAddress: String
     @State private var note = ""
     @State private var name = ""
     @State private var summary = ""
@@ -33,6 +33,11 @@ struct SubmitView: View {
     @State private var failure: Failure?
     @State private var path = NavigationPath()
     @FocusState private var focused: Bool
+
+    init(site: String = "", feed: String = "") {
+        _siteAddress = State(initialValue: site)
+        _feedAddress = State(initialValue: feed)
+    }
 
     var body: some View {
         NavigationStack(path: $path) {
