@@ -37,7 +37,7 @@ struct SignInView: View {
             ScrollView {
                 VStack(spacing: 22) {
                     VStack(spacing: 14) {
-                        GlassMark(size: 84)
+                        MarkTile(size: 84)
                         Text(registering ? "Create Your Account" : "Welcome Back")
                             .font(.title.bold())
                             .contentTransition(.opacity)

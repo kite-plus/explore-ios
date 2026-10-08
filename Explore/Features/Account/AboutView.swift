@@ -8,7 +8,7 @@ struct AboutView: View {
         ScrollView {
             VStack(spacing: 16) {
                 VStack(spacing: 14) {
-                    GlassMark(size: 92)
+                    MarkTile(size: 92)
                     Text("Explore")
                         .font(.largeTitle.bold())
                     Text("Discover what people publish.")

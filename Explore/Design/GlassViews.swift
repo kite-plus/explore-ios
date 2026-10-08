@@ -114,16 +114,26 @@ private extension CGPoint {
     }
 }
 
-/// The app mark on an uncolored glass tile, for sign-in and about screens.
-struct GlassMark: View {
+/// The app icon as a tile, for sign-in and about screens.
+struct MarkTile: View {
     var size: CGFloat = 88
 
     var body: some View {
         KiteMark()
-            .fill(Color.primary)
+            .fill(.white)
             .frame(width: size * 0.5, height: size * 0.5)
             .frame(width: size, height: size)
-            .glassEffect(.regular, in: .rect(cornerRadius: size * 0.26, style: .continuous))
+            .background(
+                LinearGradient(
+                    colors: [
+                        Color(red: 0x5E / 255, green: 0x8B / 255, blue: 0xE6 / 255),
+                        Color(red: 0x3D / 255, green: 0x66 / 255, blue: 0xC2 / 255),
+                    ],
+                    startPoint: .top,
+                    endPoint: .bottom
+                ),
+                in: .rect(cornerRadius: size * 0.26, style: .continuous)
+            )
             .accessibilityHidden(true)
     }
 }
@@ -150,7 +160,7 @@ extension PrimitiveButtonStyle where Self == PrimaryActionStyle {
     ZStack {
         Color(.systemGroupedBackground).ignoresSafeArea()
         VStack(spacing: 24) {
-            GlassMark()
+            MarkTile()
             ToastView(toast: Toast(message: "Following Example Blog", systemImage: "heart.fill", isError: false))
             HStack {
                 Pill(text: "中文", systemImage: "character.bubble")

@@ -208,7 +208,7 @@ private struct ProfileHeader: View {
                     Pill(text: String(localized: "Admin"), systemImage: "shield.lefthalf.filled")
                 }
             } else {
-                GlassMark(size: 76)
+                MarkTile(size: 76)
                 VStack(spacing: 6) {
                     Text(verbatim: "Kite")
                         .font(.title2.bold())
