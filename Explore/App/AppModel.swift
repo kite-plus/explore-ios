@@ -214,6 +214,7 @@ final class AppModel {
 
     func changePassword(current: String, new: String) async throws {
         try await client.changePassword(current: current, new: new)
+        user?.temporaryPassword = false
     }
 
     func deleteAccount() async throws {

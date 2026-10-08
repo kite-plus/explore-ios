@@ -21,6 +21,28 @@ struct MeView: View {
                 .listRowInsets(EdgeInsets())
                 .listRowBackground(Color.clear)
 
+                if app.user?.temporaryPassword == true {
+                    Section {
+                        Button {
+                            changingPassword = true
+                        } label: {
+                            Label {
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text("Change Your Temporary Password")
+                                        .fontWeight(.semibold)
+                                        .foregroundStyle(Color.primary)
+                                    Text("An admin reset your password. Choose a new one only you know.")
+                                        .font(.footnote)
+                                        .foregroundStyle(Color.secondary)
+                                }
+                            } icon: {
+                                Image(systemName: "exclamationmark.lock.fill")
+                                    .foregroundStyle(.orange)
+                            }
+                        }
+                    }
+                }
+
                 if app.isSignedIn {
                     Section("Account") {
                         NavigationLink(value: Route.subscriptions) {

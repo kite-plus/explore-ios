@@ -63,18 +63,41 @@ struct EditNameView: View {
 struct ChangePasswordView: View {
     @Environment(AppModel.self) private var app
     @Environment(\.dismiss) private var dismiss
-    @State private var current = ""
+    /// Right after signing in with a password an admin reset, that password,
+    /// so the reader only chooses the new one.
+    private let signedInWith: String?
+    @State private var current: String
     @State private var new = ""
     @State private var confirmation = ""
     @State private var working = false
     @State private var error: String?
 
+    init(signedInWith: String? = nil) {
+        self.signedInWith = signedInWith
+        _current = State(initialValue: signedInWith ?? "")
+    }
+
+    private var isTemporary: Bool { app.user?.temporaryPassword == true }
+
     var body: some View {
         NavigationStack {
             Form {
-                Section {
-                    SecureField("Current password", text: $current)
-                        .textContentType(.password)
+                if isTemporary {
+                    Section {
+                        Label {
+                            Text("An admin reset your password. Choose a new one only you know.")
+                        } icon: {
+                            Image(systemName: "exclamationmark.lock.fill")
+                                .foregroundStyle(.orange)
+                        }
+                        .font(.subheadline)
+                    }
+                }
+                if signedInWith == nil {
+                    Section {
+                        SecureField(isTemporary ? "Temporary password" : "Current password", text: $current)
+                            .textContentType(.password)
+                    }
                 }
                 Section {
                     SecureField("New password", text: $new)

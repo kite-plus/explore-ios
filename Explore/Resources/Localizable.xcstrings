@@ -161,6 +161,16 @@
         }
       }
     },
+    "An admin reset your password. Choose a new one only you know." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "管理员重置了你的密码，请改成只有你知道的密码。"
+          }
+        }
+      }
+    },
     "Authors can leave at any time: answer Explore's crawler with 410 Gone, disallow KiteExplore in robots.txt, or open an issue." : {
       "localizations" : {
         "zh-Hans" : {
@@ -377,6 +387,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "修改密码"
+          }
+        }
+      }
+    },
+    "Change Your Temporary Password" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "修改临时密码"
           }
         }
       }
@@ -2387,6 +2407,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "正在前往作者的网站"
+          }
+        }
+      }
+    },
+    "Temporary password" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "临时密码"
           }
         }
       }

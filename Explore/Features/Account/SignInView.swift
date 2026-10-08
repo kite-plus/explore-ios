@@ -14,6 +14,8 @@ struct SignInView: View {
     @State private var working = false
     @State private var error: String?
     @State private var showsPassword = false
+    /// Set once a sign-in with a password an admin reset succeeds.
+    @State private var mustChangePassword = false
     @FocusState private var focus: Field?
 
     private enum Field: Hashable {
@@ -23,6 +25,14 @@ struct SignInView: View {
     private var registering: Bool { mode == .register }
 
     var body: some View {
+        if mustChangePassword {
+            ChangePasswordView(signedInWith: password)
+        } else {
+            form
+        }
+    }
+
+    private var form: some View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 22) {
@@ -187,6 +197,10 @@ struct SignInView: View {
                     app.showToast(String(localized: "Welcome to Explore, \(trimmedName)"), systemImage: "party.popper.fill")
                 } else {
                     try await app.signIn(email: trimmedEmail, password: password)
+                    if app.user?.temporaryPassword == true {
+                        withAnimation(.snappy) { mustChangePassword = true }
+                        return
+                    }
                     app.showToast(String(localized: "Signed in"), systemImage: "person.crop.circle.badge.checkmark")
                 }
                 dismiss()

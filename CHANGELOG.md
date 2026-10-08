@@ -18,6 +18,10 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 - Streams no longer split posts under Today, Yesterday and other day headings: posts run in one list, newest first, and each says when it came out, such as "3 hours ago" or "Oct 4". This applies to Discover, topics and blog pages. Recommended still lists each day's best posts first.
 - The app is now called Kite, after the Kite Plus family it belongs to. Its name on the Home Screen, the mark in screenshots, share cards and the widget, and the version under Me say Kite. Explore stays the name of the service it reads: the blog directory, accounts, servers and the website.
 
+### Fixed
+
+- A password an admin reset is no longer kept by signing in on the phone. Signing in with one turns the sign-in sheet into Change Password, with a note on why and only the new password to enter, as the website sends you to your account. Closing it leaves a reminder at the top of Me until the password is changed, and Change Password then asks for the temporary password.
+
 ## [0.1.3] - 2026-10-06
 
 Discover's bar folds into a single row so posts start higher, and posts and blogs can be shared as cards with a QR code back to Explore.

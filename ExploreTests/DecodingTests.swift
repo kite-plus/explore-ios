@@ -115,6 +115,16 @@ struct DecodingTests {
         let user = try decoder.decode(User.self, from: Data(json.utf8))
         #expect(user.displayName == "A")
         #expect(user.csrfToken == "abc")
+        #expect(user.temporaryPassword == nil)
+    }
+
+    @Test func userWithTemporaryPassword() throws {
+        let json = """
+        {"id":"9f1","email":"a@example.com","display_name":"A","is_admin":false,"csrf_token":"abc",
+        "temporary_password":true}
+        """
+        let user = try decoder.decode(User.self, from: Data(json.utf8))
+        #expect(user.temporaryPassword == true)
     }
 
     @Test func submission() throws {

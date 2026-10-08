@@ -197,12 +197,16 @@ nonisolated struct User: Codable, Hashable, Sendable {
     let displayName: String
     let isAdmin: Bool
     let csrfToken: String
+    /// True while the password is one an admin reset; servers before
+    /// Explore 0.1.9 leave it out.
+    var temporaryPassword: Bool?
 
     enum CodingKeys: String, CodingKey {
         case id, email
         case displayName = "display_name"
         case isAdmin = "is_admin"
         case csrfToken = "csrf_token"
+        case temporaryPassword = "temporary_password"
     }
 }
 
