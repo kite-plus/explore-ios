@@ -33,6 +33,7 @@ struct EntryRow: View {
     }
 
     var body: some View {
+        let read = app.isRead(entry)
         VStack(alignment: .leading, spacing: 8) {
             HStack(alignment: .top, spacing: 14) {
                 VStack(alignment: .leading, spacing: 6) {
@@ -41,12 +42,12 @@ struct EntryRow: View {
                         VStack(alignment: .leading, spacing: 4) {
                             Text(entry.title)
                                 .font(.headline)
-                                .foregroundStyle(.primary)
+                                .foregroundStyle(read ? .secondary : .primary)
                                 .lineLimit(3)
                             if let excerpt = entry.excerpt, !excerpt.isEmpty {
                                 Text(excerpt)
                                     .font(.subheadline)
-                                    .foregroundStyle(.secondary)
+                                    .foregroundStyle(read ? .tertiary : .secondary)
                                     .lineLimit(2)
                             }
                         }
@@ -56,6 +57,7 @@ struct EntryRow: View {
                         .contentShape(.rect)
                     }
                     .buttonStyle(PressableStyle())
+                    .accessibilityValue(read ? Text("Read") : Text(verbatim: ""))
                     .accessibilityHint(Text("Opens the post on the author's site"))
                 }
 
@@ -69,6 +71,7 @@ struct EntryRow: View {
                         Button(action: open) {
                             EntryThumbnail(url: url, size: CGSize(width: 96, height: 64), cornerRadius: 10)
                                 .id(url)
+                                .opacity(read ? 0.6 : 1)
                         }
                         .buttonStyle(PressableStyle())
                         .accessibilityHidden(true)
@@ -182,6 +185,7 @@ struct EntryActions: View {
                 Label("Read on the Author's Site", systemImage: "arrow.up.forward.square")
             }
             Button {
+                app.markRead(entry.url)
                 LinkOpener.openInSafari(url, source: app.sourceTag)
             } label: {
                 Label("Open in Safari", systemImage: "safari")

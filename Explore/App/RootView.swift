@@ -77,6 +77,7 @@ struct RootView: View {
         }
         .onChange(of: app.pendingPost) {
             if let post = app.takePendingPost() {
+                app.markRead(post.absoluteString)
                 LinkOpener.open(post, source: app.sourceTag)
             }
         }

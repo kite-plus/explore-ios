@@ -741,6 +741,16 @@
         }
       }
     },
+    "Dim Posts You've Read" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "读过的文章变淡"
+          }
+        }
+      }
+    },
     "Discover" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1921,12 +1931,12 @@
         }
       }
     },
-    "Posts always open on the author's own site. Explore adds only utm_source, so authors can tell the visit came from Explore." : {
+    "Posts always open on the author's own site. Explore adds only utm_source, so authors can tell the visit came from Explore. Which posts you've read is kept only on this device; turning dimming off forgets them." : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "文章总是在作者自己的网站打开。Explore 只加上 utm_source，让作者知道访问来自 Explore。"
+            "value" : "文章总是在作者自己的网站打开。Explore 只加上 utm_source，让作者知道访问来自 Explore。读过哪些文章只记在这台设备上，关掉「读过的文章变淡」会清空这些记录。"
           }
         }
       }
@@ -1967,6 +1977,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "在博客域名上添加一条 TXT 记录，证明你是博客的作者。Explore 检查一次后，你就可以删除这条记录。"
+          }
+        }
+      }
+    },
+    "Read" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已读"
           }
         }
       }

@@ -98,6 +98,29 @@ struct PreferencesTests {
         defaults.set(false, forKey: Preferences.handoff)
         #expect(!Preferences.showsHandoff)
     }
+
+    @Test func remembersReadPostsUntilTurnedOff() {
+        let defaults = UserDefaults.standard
+        let savedPosts = defaults.object(forKey: "read.posts")
+        let savedSetting = defaults.object(forKey: Preferences.dimsRead)
+        defer {
+            defaults.set(savedPosts, forKey: "read.posts")
+            defaults.set(savedSetting, forKey: Preferences.dimsRead)
+        }
+        defaults.removeObject(forKey: Preferences.dimsRead)
+        let app = AppModel()
+        app.forgetReadPosts()
+        let url = "https://blog.example.com/posts/hello/"
+        app.markRead(url)
+        #expect(app.readPosts == [url])
+        #expect(AppModel().readPosts == [url])
+
+        defaults.set(false, forKey: Preferences.dimsRead)
+        app.forgetReadPosts()
+        app.markRead(url)
+        #expect(app.readPosts.isEmpty)
+        #expect(AppModel().readPosts.isEmpty)
+    }
 }
 
 struct PaletteTests {

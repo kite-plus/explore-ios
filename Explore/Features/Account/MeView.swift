@@ -7,6 +7,7 @@ struct MeView: View {
     @AppStorage(Preferences.openInSafari) private var openInSafari = false
     @AppStorage(Preferences.readerMode) private var readerMode = false
     @AppStorage(Preferences.handoff) private var showsHandoff = true
+    @AppStorage(Preferences.dimsRead) private var dimsRead = true
     @State private var editingName = false
     @State private var changingPassword = false
     @State private var deletingAccount = false
@@ -92,10 +93,16 @@ struct MeView: View {
                     Toggle(isOn: $showsHandoff) {
                         SettingsLabel("Show Transition Page", symbol: "arrow.up.forward")
                     }
+                    Toggle(isOn: $dimsRead) {
+                        SettingsLabel("Dim Posts You've Read", symbol: "text.badge.checkmark")
+                    }
+                    .onChange(of: dimsRead) { _, on in
+                        if !on { app.forgetReadPosts() }
+                    }
                 } header: {
                     Text("Reading")
                 } footer: {
-                    Text("Posts always open on the author's own site. Explore adds only utm_source, so authors can tell the visit came from Explore.")
+                    Text("Posts always open on the author's own site. Explore adds only utm_source, so authors can tell the visit came from Explore. Which posts you've read is kept only on this device; turning dimming off forgets them.")
                 }
 
                 Section("Explore") {

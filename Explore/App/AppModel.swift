@@ -96,6 +96,8 @@ final class AppModel {
     private(set) var linkStates: [String: LinkState] = [:]
     private(set) var checkingLinks: Set<String> = []
     private(set) var submissionIDs: [String] = []
+    /// Addresses of the posts opened on this device. They never leave it.
+    private(set) var readPosts: Set<String>
     /// Changes whenever the server or the account changes, so lists reload.
     private(set) var generation = 0
 
@@ -118,6 +120,7 @@ final class AppModel {
         let server = Self.storedServer
         client = APIClient(server: server, sessionToken: Keychain.token(for: Self.key(for: server)))
         submissionIDs = Self.storedSubmissions(for: server)
+        readPosts = Set(UserDefaults.standard.stringArray(forKey: Self.readKey) ?? [])
     }
 
     /// Loads what every screen needs once: the tag list, the site notice and
@@ -342,6 +345,30 @@ final class AppModel {
         Self.storeSubmissions(submissionIDs, for: server)
     }
 
+    // MARK: Posts read on this device
+
+    func isRead(_ entry: Entry) -> Bool {
+        readPosts.contains(entry.url)
+    }
+
+    /// Remembers that a post was opened, unless the reader turned that off.
+    func markRead(_ url: String) {
+        guard Preferences.dimsReadPosts, !readPosts.contains(url) else { return }
+        readPosts.insert(url)
+        var list = UserDefaults.standard.stringArray(forKey: Self.readKey) ?? []
+        list.append(url)
+        if list.count > Self.readLimit {
+            readPosts.subtract(list.prefix(list.count - Self.readLimit))
+            list.removeFirst(list.count - Self.readLimit)
+        }
+        UserDefaults.standard.set(list, forKey: Self.readKey)
+    }
+
+    func forgetReadPosts() {
+        readPosts = []
+        UserDefaults.standard.removeObject(forKey: Self.readKey)
+    }
+
     // MARK: Server
 
     var isDefaultServer: Bool { server == Self.defaultServer }
@@ -438,6 +465,7 @@ final class AppModel {
     func openPost(_ entry: Entry, blog: BlogRef?) {
         guard handoff == nil, let url = URL(string: entry.url),
               ["http", "https"].contains(url.scheme?.lowercased() ?? "") else { return }
+        markRead(entry.url)
         guard Preferences.showsHandoff else {
             LinkOpener.open(url, source: sourceTag, actions: PostActions(entry: entry, blog: blog, app: self))
             return
@@ -493,6 +521,9 @@ final class AppModel {
     // MARK: Storage
 
     private static let serverKey = "server"
+    private static let readKey = "read.posts"
+    /// The oldest reads are forgotten past this many.
+    private static let readLimit = 2000
 
     private static var storedServer: URL {
         if let raw = UserDefaults.standard.string(forKey: serverKey), let url = URL(string: raw) {

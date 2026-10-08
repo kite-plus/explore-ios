@@ -5,11 +5,18 @@ enum Preferences {
     static let openInSafari = "links.openInSafari"
     static let readerMode = "links.readerMode"
     static let handoff = "links.handoff"
+    static let dimsRead = "reading.dimsRead"
 
     /// Whether a post opens by way of the transition page: on until the
     /// reader turns it off.
     static var showsHandoff: Bool {
         UserDefaults.standard.object(forKey: handoff) as? Bool ?? true
+    }
+
+    /// Whether posts the reader opened are remembered and dimmed: on until
+    /// the reader turns it off.
+    static var dimsReadPosts: Bool {
+        UserDefaults.standard.object(forKey: dimsRead) as? Bool ?? true
     }
 }
 
