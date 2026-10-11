@@ -17,6 +17,10 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 - The app now sends its session as an `Authorization: Bearer` header, and password sign-in asks for the token in the response instead of a cookie, as Explore's Kite Plus sign-in introduces. Servers from before it, including explore.kite.plus on 0.1.19, still get the session cookie alongside, and their cookie is read when no token comes back; the cookie goes once every server takes Bearer. Nothing changes for readers.
 
+### Fixed
+
+- System prompts that name the app, such as the one before signing in with Kite Plus, say Kite instead of Explore.
+
 ## [0.1.4] - 2026-10-08
 
 The app is now called Kite. Streams run as one list with Explore's own notices between the posts, posts you have opened are dimmed, and Following imports OPML from other feed readers.
