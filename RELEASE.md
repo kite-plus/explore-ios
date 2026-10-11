@@ -65,4 +65,18 @@ Once the Apple Developer Program membership is active, this is done once. Upload
 
 `Config/Info.plist` already declares that the app uses no non-exempt encryption, so builds do not wait on the export compliance question. Before the first App Store submission, App Store Connect also needs the listing: screenshots, a description, the privacy details and a support address.
 
+## Turning on the https callback for Kite Plus sign-in
+
+Kite Plus sign-in ends with the server sending the sign-in sheet to a callback address with a one-time code. Until the app is signed by a paid team it uses `explore://app/auth/done` and asks for it with `callback=scheme`. Any app can register a scheme, so the official build is meant to claim `https://explore.kite.plus/app/auth/done` instead (Explore's `docs/design/accounts.md`, section 1.1). Once signing is set up as above, turn on all three together:
+
+1. **Entitlement.** On the Explore target only, not the project, the widget or the tests, set `CODE_SIGN_ENTITLEMENTS = Config/Explore.entitlements`; Signing & Capabilities then shows Associated Domains with `applinks:explore.kite.plus` and `webcredentials:explore.kite.plus`. The release workflow signs with `-allowProvisioningUpdates`, which enables Associated Domains on the App ID; to sign by hand, enable it for `plus.kite.explore` in Certificates, Identifiers & Profiles first.
+2. **Flag.** In `Config/Signing.xcconfig`, set `SIGN_IN_HTTPS_CALLBACK = YES`. It reaches the app as `SignInHTTPSCallback` in its Info.plist, and the app then uses `ASWebAuthenticationSession.Callback.https` and leaves out `callback=scheme`, on explore.kite.plus only: other servers keep the scheme, since the app claims no address of theirs. To try it on a device first, set the flag in `Config/Local.xcconfig` and the entitlement in Xcode, and leave the project change uncommitted.
+3. **Server.** On explore.kite.plus, set `EXPLORE_APPLE_APP_IDS=<TEAMID>.plus.kite.explore`, comma separated with `<TEAMID>.plus.kite.explore.dev` added for development builds, and restart. Explore then serves `/.well-known/apple-app-site-association`, whose `webcredentials` and `applinks` entries name the app, and refuses `callback=scheme`.
+
+`webcredentials` is the entry the callback needs: the SDK's header for `ASWebAuthenticationSession.Callback.https(host:path:)` (`AuthenticationServices/ASWebAuthenticationSessionCallback.h`) says its host must be associated with the app as a web credentials domain. `applinks` plays no part in the sign-in itself; it hands the callback page to the app if the page is ever opened outside a sign-in, and the app ignores it.
+
+Step 3 makes explore.kite.plus refuse builds with the flag off: their Kite Plus sign-in stops at an error page, while passwords keep working. Ship a build with steps 1 and 2 no later than step 3. Apple's CDN caches the association file, so a new one can take up to a day to reach devices.
+
+To check, sign in with Kite Plus on a device against explore.kite.plus: the sheet closes on its own and Me shows the account. If the sheet does not open, or stays on the page "Finish signing in in the Kite app", the association has not taken effect.
+
 To keep `main` green, require the Check and Release build jobs in a branch protection rule for `main`.
