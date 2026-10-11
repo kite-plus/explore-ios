@@ -127,7 +127,7 @@ struct SignInView: View {
                         }
                     }
                     .frame(width: 24, height: 20)
-                    Text("Sign In with a \(kitePlus.name)")
+                    Text("Sign In with \(kitePlus.name)")
                         .font(.headline)
                 }
                 .frame(maxWidth: .infinity)

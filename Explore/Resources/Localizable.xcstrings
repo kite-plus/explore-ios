@@ -2411,7 +2411,7 @@
         }
       }
     },
-    "Sign In with a %@" : {
+    "Sign In with %@" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
