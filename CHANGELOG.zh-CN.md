@@ -8,6 +8,10 @@
 
 ## [未发布]
 
+### 变更
+
+- App 改用 `Authorization: Bearer` 头发送会话令牌，密码登录也改为在响应里取令牌而不是 Cookie，这是 Explore 的 Kite Plus 登录带来的做法。对之前版本的服务器（包括运行 0.1.19 的 explore.kite.plus），App 仍同时发送会话 Cookie，响应里没有令牌时读取 Cookie；等所有服务器都支持 Bearer 后再去掉 Cookie。读者感觉不到变化。
+
 ## [0.1.4] - 2026-10-08
 
 App 改名为 Kite。文章流连成一条列表，Explore 自己的公告插在文章之间；读过的文章会变淡，「订阅」可以导入其他阅读器的 OPML。

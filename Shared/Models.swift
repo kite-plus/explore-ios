@@ -200,13 +200,25 @@ nonisolated struct User: Codable, Hashable, Sendable {
     /// True while the password is one an admin reset; servers before
     /// Explore 0.1.9 leave it out.
     var temporaryPassword: Bool?
-
     enum CodingKeys: String, CodingKey {
         case id, email
         case displayName = "display_name"
         case isAdmin = "is_admin"
         case csrfToken = "csrf_token"
         case temporaryPassword = "temporary_password"
+    }
+}
+
+/// A session an app gets from signing in: the token to send as a Bearer
+/// header and the account it belongs to.
+nonisolated struct AppSession: Decodable, Sendable {
+    let token: String
+    let expiresAt: Date?
+    let user: User
+
+    enum CodingKeys: String, CodingKey {
+        case token, user
+        case expiresAt = "expires_at"
     }
 }
 

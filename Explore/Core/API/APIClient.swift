@@ -3,8 +3,9 @@ import Foundation
 /// Talks to one Explore server (docs/design/api.md in the explore repo).
 ///
 /// Anonymous requests carry no cookie at all. Once signed in, account
-/// requests send the session cookie by hand and writes add the CSRF token;
-/// the token lives in the keychain rather than a shared cookie jar.
+/// requests send the session token by hand, as a Bearer header and as the
+/// session cookie older servers read, and writes add the CSRF token; the
+/// token lives in the keychain rather than a shared cookie jar.
 final class APIClient {
     let server: URL
     var sessionToken: String?
@@ -13,10 +14,14 @@ final class APIClient {
     private let session: URLSession
     private let decoder: JSONDecoder
 
-    init(server: URL, sessionToken: String? = nil) {
+    /// protocols intercept requests ahead of the network, for tests.
+    init(server: URL, sessionToken: String? = nil, protocols: [AnyClass] = []) {
         self.server = server
         self.sessionToken = sessionToken
         let config = URLSessionConfiguration.default
+        if !protocols.isEmpty {
+            config.protocolClasses = protocols + (config.protocolClasses ?? [])
+        }
         config.httpShouldSetCookies = false
         config.httpCookieAcceptPolicy = .never
         config.httpCookieStorage = nil
@@ -136,9 +141,10 @@ final class APIClient {
 
     // MARK: Account
 
-    /// Signs in and returns the user with the new session token.
+    /// Signs in and returns the user with the new session token. Naming the
+    /// client gets the token in the body rather than a cookie.
     func signIn(email: String, password: String) async throws -> (User, String) {
-        try await startSession("api/v1/auth/login", json: ["email": email, "password": password])
+        try await startSession("api/v1/auth/login", json: ["email": email, "password": password, "client": "ios"])
     }
 
     func register(email: String, password: String, displayName: String) async throws -> (User, String) {
@@ -226,7 +232,7 @@ final class APIClient {
         return items
     }
 
-    private func request(
+    func request(
         _ method: String, _ path: String, query: [URLQueryItem] = [], json: [String: Any]? = nil,
         signed: Bool = false, fresh: Bool = false, timeout: TimeInterval? = nil
     ) throws -> URLRequest {
@@ -249,6 +255,10 @@ final class APIClient {
                     submissionID: nil, report: nil
                 )
             }
+            // Explore up to 0.1.19 reads only the cookie and ignores the
+            // header; later servers read only the header once it is there.
+            // Both go out until no server the app may meet predates Bearer.
+            request.setValue("Bearer \(sessionToken)", forHTTPHeaderField: "Authorization")
             request.setValue("explore_session=\(sessionToken)", forHTTPHeaderField: "Cookie")
             if method != "GET", let csrfToken {
                 request.setValue(csrfToken, forHTTPHeaderField: "X-CSRF-Token")
@@ -305,6 +315,16 @@ final class APIClient {
 
     private func startSession(_ path: String, json: [String: Any]) async throws -> (User, String) {
         let (data, response) = try await perform(request("POST", path, json: json))
+        return try readSession(data, response)
+    }
+
+    /// Reads the session a sign-in started: the token in the body, as
+    /// servers with app sign-in return it to an app, or else the session
+    /// cookie older servers set.
+    func readSession(_ data: Data, _ response: HTTPURLResponse) throws -> (User, String) {
+        if let session = try? decoder.decode(AppSession.self, from: data) {
+            return (session.user, session.token)
+        }
         let user = try decode(User.self, from: data)
         var fields: [String: String] = [:]
         for case let (key as String, value as String) in response.allHeaderFields {
@@ -312,7 +332,7 @@ final class APIClient {
         }
         let cookies = HTTPCookie.cookies(withResponseHeaderFields: fields, for: response.url ?? server)
         guard let token = cookies.first(where: { $0.name == "explore_session" })?.value else {
-            throw APIError.invalidResponse("no session cookie")
+            throw APIError.invalidResponse("no session token")
         }
         return (user, token)
     }
