@@ -1,18 +1,24 @@
+import AuthenticationServices
 import SwiftUI
 
 /// Sign in with an Explore account, or create one. Explore asks for
-/// nothing beyond an email, a name and a password.
+/// nothing beyond an email, a name and a password. A server with Kite Plus
+/// sign-in leads with it and takes no new password accounts; the password
+/// form stays for accounts made before.
 struct SignInView: View {
     @State var mode: SignInMode
 
     @Environment(AppModel.self) private var app
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.webAuthenticationSession) private var webAuthenticationSession
     @State private var email = ""
     @State private var password = ""
     @State private var confirmation = ""
     @State private var name = ""
     @State private var working = false
     @State private var error: String?
+    @State private var openingKitePlus = false
+    @State private var kitePlusError: String?
     @State private var showsPassword = false
     /// Set once a sign-in with a password an admin reset succeeds.
     @State private var mustChangePassword = false
@@ -22,7 +28,8 @@ struct SignInView: View {
         case name, email, password, confirmation
     }
 
-    private var registering: Bool { mode == .register }
+    private var registering: Bool { mode == .register && app.canRegister }
+    private var offersPassword: Bool { app.authOptions?.password ?? true }
 
     var body: some View {
         if mustChangePassword {
@@ -38,9 +45,17 @@ struct SignInView: View {
                 VStack(spacing: 22) {
                     VStack(spacing: 14) {
                         MarkTile(size: 84)
-                        Text(registering ? "Create Your Account" : "Welcome Back")
-                            .font(.title.bold())
-                            .contentTransition(.opacity)
+                        Group {
+                            if registering {
+                                Text("Create Your Account")
+                            } else if app.kitePlus != nil {
+                                Text("Sign In to Explore")
+                            } else {
+                                Text("Welcome Back")
+                            }
+                        }
+                        .font(.title.bold())
+                        .contentTransition(.opacity)
                         Text("Follow blogs and read their new posts in one stream.")
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
@@ -48,7 +63,11 @@ struct SignInView: View {
                     }
                     .padding(.top, 8)
 
-                    if app.registrationEnabled {
+                    if let kitePlus = app.kitePlus {
+                        kitePlusActions(kitePlus)
+                    }
+
+                    if app.canRegister {
                         Picker("Mode", selection: $mode.animation(.snappy)) {
                             Text("Sign In").tag(SignInMode.signIn)
                             Text("Create Account").tag(SignInMode.register)
@@ -57,103 +76,27 @@ struct SignInView: View {
                         .controlSize(.extraLarge)
                     }
 
-                    VStack(spacing: 12) {
-                        if registering {
-                            field(icon: "person") {
-                                TextField("Your name or nickname", text: $name)
-                                    .textContentType(.nickname)
-                                    .focused($focus, equals: .name)
-                                    .submitLabel(.next)
-                                    .onSubmit { focus = .email }
-                            }
-                            .transition(.move(edge: .top).combined(with: .opacity))
-                        }
-                        field(icon: "envelope") {
-                            TextField("Email", text: $email)
-                                .textContentType(.emailAddress)
-                                .keyboardType(.emailAddress)
-                                .textInputAutocapitalization(.never)
-                                .autocorrectionDisabled()
-                                .focused($focus, equals: .email)
-                                .submitLabel(.next)
-                                .onSubmit { focus = .password }
-                        }
-                        field(icon: "lock") {
-                            HStack {
-                                Group {
-                                    if showsPassword {
-                                        TextField("Password", text: $password)
-                                    } else {
-                                        SecureField("Password", text: $password)
-                                    }
-                                }
-                                .textContentType(registering ? .newPassword : .password)
-                                .textInputAutocapitalization(.never)
-                                .autocorrectionDisabled()
-                                .focused($focus, equals: .password)
-                                .submitLabel(registering ? .next : .go)
-                                .onSubmit {
-                                    if registering { focus = .confirmation } else { submit() }
-                                }
-                                Button {
-                                    showsPassword.toggle()
-                                } label: {
-                                    Image(systemName: showsPassword ? "eye.slash" : "eye")
-                                        .foregroundStyle(.secondary)
-                                }
-                                .buttonStyle(.plain)
-                                .accessibilityLabel(showsPassword ? Text("Hide Password") : Text("Show Password"))
-                            }
-                        }
-                        if registering {
-                            field(icon: "lock.rotation") {
-                                SecureField("Confirm password", text: $confirmation)
-                                    .textContentType(.newPassword)
-                                    .focused($focus, equals: .confirmation)
-                                    .submitLabel(.go)
-                                    .onSubmit(submit)
-                            }
-                            .transition(.move(edge: .top).combined(with: .opacity))
-                            Text("Use 12 to 72 characters.")
-                                .font(.footnote)
-                                .foregroundStyle(.secondary)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .padding(.horizontal, 4)
-                        }
+                    if offersPassword {
+                        passwordForm
                     }
 
-                    if let error {
-                        Label(error, systemImage: "exclamationmark.triangle.fill")
-                            .font(.subheadline)
-                            .foregroundStyle(.red)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .transition(.opacity)
-                    }
-
-                    Button(action: submit) {
-                        HStack(spacing: 8) {
-                            if working {
-                                ProgressView()
-                            }
-                            Text(registering ? "Create Account" : "Sign In")
-                                .font(.headline)
+                    Group {
+                        if app.kitePlus != nil {
+                            Text("Explore keeps your email, your name and the blogs you follow, and never records what you read. With Kite Plus, your password goes only to Kite Plus; neither Explore nor Kite sees it.")
+                        } else {
+                            Text("Explore keeps your email, your name and a hash of your password, plus the blogs you follow. It never records what you read.")
                         }
-                        .frame(maxWidth: .infinity)
                     }
-                    .buttonStyle(.primaryAction)
-                    .controlSize(.extraLarge)
-                    .disabled(working)
-
-                    Text("Explore keeps your email, your name and a hash of your password, plus the blogs you follow. It never records what you read.")
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
-                        .multilineTextAlignment(.center)
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+                    .multilineTextAlignment(.center)
                 }
                 .padding(24)
                 .frame(maxWidth: 460)
                 .frame(maxWidth: .infinity)
                 .animation(.snappy, value: mode)
                 .animation(.snappy, value: error)
+                .animation(.snappy, value: kitePlusError)
             }
             .scrollDismissesKeyboard(.interactively)
             .background(Color(.systemGroupedBackground))
@@ -163,7 +106,158 @@ struct SignInView: View {
                 }
             }
             .onChange(of: mode) { error = nil }
+            .task { await app.loadAuthOptions() }
         }
+    }
+
+    /// Kite Plus sign-in leads, with a way to pick another account than the
+    /// one Safari is signed in to.
+    private func kitePlusActions(_ kitePlus: AuthOptions.KitePlus) -> some View {
+        VStack(spacing: 12) {
+            Button {
+                signInWithKitePlus(switchAccount: false)
+            } label: {
+                HStack(spacing: 8) {
+                    Group {
+                        if openingKitePlus {
+                            ProgressView()
+                                .controlSize(.regular)
+                        } else {
+                            Image(systemName: "person.badge.key.fill")
+                        }
+                    }
+                    .frame(width: 24, height: 20)
+                    Text("Sign In with a \(kitePlus.name)")
+                        .font(.headline)
+                }
+                .frame(maxWidth: .infinity)
+            }
+            .buttonStyle(.primaryAction)
+            .controlSize(.extraLarge)
+            .disabled(working || openingKitePlus)
+
+            Button {
+                signInWithKitePlus(switchAccount: true)
+            } label: {
+                Text("Use Another Account")
+                    .font(.subheadline.weight(.medium))
+                    .foregroundStyle(Color.secondary)
+            }
+            .buttonStyle(.borderless)
+            .disabled(working || openingKitePlus)
+
+            if let kitePlusError {
+                Label(kitePlusError, systemImage: "exclamationmark.triangle.fill")
+                    .font(.subheadline)
+                    .foregroundStyle(.red)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .transition(.opacity)
+            }
+        }
+    }
+
+    @ViewBuilder private var passwordForm: some View {
+        if app.kitePlus != nil {
+            Text("Accounts made on Explore before still sign in with their email and password. To link one to Kite Plus, sign in on the Explore website and open My Account.")
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, 4)
+                .padding(.top, 6)
+        }
+        VStack(spacing: 12) {
+            if registering {
+                field(icon: "person") {
+                    TextField("Your name or nickname", text: $name)
+                        .textContentType(.nickname)
+                        .focused($focus, equals: .name)
+                        .submitLabel(.next)
+                        .onSubmit { focus = .email }
+                }
+                .transition(.move(edge: .top).combined(with: .opacity))
+            }
+            field(icon: "envelope") {
+                TextField("Email", text: $email)
+                    .textContentType(.emailAddress)
+                    .keyboardType(.emailAddress)
+                    .textInputAutocapitalization(.never)
+                    .autocorrectionDisabled()
+                    .focused($focus, equals: .email)
+                    .submitLabel(.next)
+                    .onSubmit { focus = .password }
+            }
+            field(icon: "lock") {
+                HStack {
+                    Group {
+                        if showsPassword {
+                            TextField("Password", text: $password)
+                        } else {
+                            SecureField("Password", text: $password)
+                        }
+                    }
+                    .textContentType(registering ? .newPassword : .password)
+                    .textInputAutocapitalization(.never)
+                    .autocorrectionDisabled()
+                    .focused($focus, equals: .password)
+                    .submitLabel(registering ? .next : .go)
+                    .onSubmit {
+                        if registering { focus = .confirmation } else { submit() }
+                    }
+                    Button {
+                        showsPassword.toggle()
+                    } label: {
+                        Image(systemName: showsPassword ? "eye.slash" : "eye")
+                            .foregroundStyle(.secondary)
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel(showsPassword ? Text("Hide Password") : Text("Show Password"))
+                }
+            }
+            if registering {
+                field(icon: "lock.rotation") {
+                    SecureField("Confirm password", text: $confirmation)
+                        .textContentType(.newPassword)
+                        .focused($focus, equals: .confirmation)
+                        .submitLabel(.go)
+                        .onSubmit(submit)
+                }
+                .transition(.move(edge: .top).combined(with: .opacity))
+                Text("Use 12 to 72 characters.")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal, 4)
+            }
+        }
+
+        if let error {
+            Label(error, systemImage: "exclamationmark.triangle.fill")
+                .font(.subheadline)
+                .foregroundStyle(.red)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .transition(.opacity)
+        }
+
+        let submitButton = Button(action: submit) {
+            HStack(spacing: 8) {
+                if working {
+                    ProgressView()
+                }
+                Text(registering ? "Create Account" : "Sign In")
+                    .font(.headline)
+            }
+            .frame(maxWidth: .infinity)
+        }
+        // Below Kite Plus, the password is the second way in and looks it.
+        Group {
+            if app.kitePlus != nil {
+                submitButton.buttonStyle(.glass)
+            } else {
+                submitButton.buttonStyle(.primaryAction)
+            }
+        }
+        .controlSize(.extraLarge)
+        .disabled(working || openingKitePlus)
     }
 
     private func field<Content: View>(icon: String, @ViewBuilder content: () -> Content) -> some View {
@@ -178,8 +272,27 @@ struct SignInView: View {
         .background(Color(.secondarySystemGroupedBackground).opacity(0.9), in: .rect(cornerRadius: 16, style: .continuous))
     }
 
+    private func signInWithKitePlus(switchAccount: Bool) {
+        guard !working, !openingKitePlus else { return }
+        focus = nil
+        openingKitePlus = true
+        error = nil
+        kitePlusError = nil
+        Task {
+            defer { openingKitePlus = false }
+            do {
+                try await app.signInWithKitePlus(switchAccount: switchAccount, using: webAuthenticationSession)
+                app.showToast(String(localized: "Signed in"), systemImage: "person.crop.circle.badge.checkmark")
+                dismiss()
+            } catch {
+                guard !error.isCancellation else { return }
+                withAnimation { kitePlusError = error.readableMessage }
+            }
+        }
+    }
+
     private func submit() {
-        guard !working else { return }
+        guard !working, !openingKitePlus else { return }
         let trimmedEmail = email.trimmingCharacters(in: .whitespacesAndNewlines)
         let trimmedName = name.trimmingCharacters(in: .whitespacesAndNewlines)
         if let problem = validate(email: trimmedEmail, name: trimmedName) {
@@ -189,6 +302,7 @@ struct SignInView: View {
         focus = nil
         working = true
         error = nil
+        kitePlusError = nil
         Task {
             defer { working = false }
             do {

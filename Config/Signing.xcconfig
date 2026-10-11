@@ -4,4 +4,9 @@
 APP_BUNDLE_ID = plus.kite.explore
 DEVELOPMENT_TEAM =
 
+// YES returns Kite Plus sign-in to https://explore.kite.plus/app/auth/done,
+// which needs Explore.entitlements on the app target, signed by a paid
+// team; see RELEASE.md. NO returns it to explore://app/auth/done.
+SIGN_IN_HTTPS_CALLBACK = NO
+
 #include? "Local.xcconfig"

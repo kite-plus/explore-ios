@@ -14,7 +14,7 @@ Kite is the native iOS client for [Explore](https://github.com/kite-plus/explore
 - **Following**: follow blogs and read their new posts in Discover's Following tab; manage the list under Me, import an OPML file from another feed reader, and export the list as OPML for any feed reader.
 - **Blogs**: the directory, most recently updated first, and a page for every blog with its feed, its posts and its language and blog system.
 - **Search**: the search button at the top right of Discover opens a page that browses Explore's tags and finds blogs by name, address or description as you type; the directory has its own field at the top of Blogs.
-- **Me**: sign in or create an account, change your name or password, delete your account, claim your blog with a DNS record, submit a blog and follow its review, and point the app at another Explore server.
+- **Me**: sign in with a Kite Plus account where the server offers it, or with an email and password, or create an account; change your name or password, delete your account, claim your blog with a DNS record, submit a blog and follow its review, and point the app at another Explore server.
 - **Reading**: as on the website, a post first shows a short page naming the blog and the post, which you can turn off, then opens in Safari's view inside the app, or in Safari itself if you prefer, with an optional Reader view. Links get `utm_source` as on the website; nothing else is added. Posts you have opened are dimmed in the lists; that record stays on the device.
 - **Sharing**: a post or a blog shares as a card with the Kite mark and a QR code, to save to Photos or send on. The code opens a post on its share page on Explore and a blog on its page there. While a post is open, the share button of Safari's view also offers the card, following the blog and the blog's page in the app.
 - **Widget**: the latest posts on the Home Screen in three sizes and on the Lock Screen, optionally narrowed to Chinese or English blogs. Tapping a post opens it on the author's site.
@@ -31,7 +31,7 @@ The app uses the system's Liquid Glass throughout rather than imitating it:
 
 ## Privacy
 
-The app has no analytics and makes no requests to third parties: post thumbnails and blog icons come from the Explore server. Reading needs no account and sends no cookie. Once you sign in, the session token is kept in the keychain and sent only to the server it came from. Links to posts never go through a redirect.
+The app has no analytics and makes no requests to third parties: post thumbnails and blog icons come from the Explore server. Reading needs no account and sends no cookie. Signing in with Kite Plus happens in the system's sign-in sheet, so the app never sees that password. Once you sign in, the session token is kept in the keychain and sent only to the server it came from. Links to posts never go through a redirect.
 
 ## Build
 
@@ -55,7 +55,7 @@ The client follows the API described in Explore's [docs/design/api.md](https://g
 
 ## Tests
 
-The unit tests use Swift Testing and cover decoding, timestamps, day grouping, link tagging, avatar colors, OPML export and deep links:
+The unit tests use Swift Testing and cover decoding, timestamps, day grouping, link tagging, avatar colors, OPML export, deep links and signing in (PKCE, the Kite Plus callback and how the session token is sent and read):
 
 ```bash
 xcodebuild test -project Explore.xcodeproj -scheme Explore -destination 'platform=iOS Simulator,name=iPhone 17 Pro'
@@ -65,7 +65,7 @@ CI runs them on every push and pull request, along with swift-format's rules and
 
 ## Links into the app
 
-`explore://` links open a screen directly, and accept the same paths as the website: `explore://blogs/{host}`, `explore://topics/{slug}`, `explore://submissions/{id}`, `explore://submit`, `explore://sign-in`, `explore://recommended`, `explore://following`, `explore://search` and `explore://about`.
+`explore://` links open a screen directly, and accept the same paths as the website: `explore://blogs/{host}`, `explore://topics/{slug}`, `explore://submissions/{id}`, `explore://submit`, `explore://sign-in`, `explore://recommended`, `explore://following`, `explore://search` and `explore://about`. `explore://app/auth/done` is where Kite Plus sign-in returns to and opens nothing.
 
 ## License
 

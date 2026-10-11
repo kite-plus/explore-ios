@@ -200,12 +200,22 @@ nonisolated struct User: Codable, Hashable, Sendable {
     /// True while the password is one an admin reset; servers before
     /// Explore 0.1.9 leave it out.
     var temporaryPassword: Bool?
+    /// False once the account signs in with Kite Plus only, which leaves it
+    /// no password to change; servers before Kite Plus sign-in leave it out.
+    let passwordLogin: Bool?
+    /// When a Kite Plus account was linked, or nil for none.
+    let identityLinkedAt: Date?
+
+    var isLinkedToKitePlus: Bool { identityLinkedAt != nil }
+
     enum CodingKeys: String, CodingKey {
         case id, email
         case displayName = "display_name"
         case isAdmin = "is_admin"
         case csrfToken = "csrf_token"
         case temporaryPassword = "temporary_password"
+        case passwordLogin = "password_login"
+        case identityLinkedAt = "identity_linked_at"
     }
 }
 
@@ -219,6 +229,44 @@ nonisolated struct AppSession: Decodable, Sendable {
     enum CodingKeys: String, CodingKey {
         case token, user
         case expiresAt = "expires_at"
+    }
+}
+
+/// The ways a server lets readers sign in: its own passwords, a Kite Plus
+/// account, or both.
+nonisolated struct AuthOptions: Codable, Hashable, Sendable {
+    let password: Bool
+    let kitePlus: KitePlus?
+
+    /// What servers from before Kite Plus sign-in offer.
+    static let passwordOnly = AuthOptions(password: true, kitePlus: nil)
+
+    nonisolated struct KitePlus: Codable, Hashable, Sendable {
+        /// The account's name in the interface language, such as "Kite Plus account".
+        let name: String
+        /// Where the reader manages or deletes the Kite Plus account.
+        let accountURL: String
+
+        enum CodingKeys: String, CodingKey {
+            case name
+            case accountURL = "account_url"
+        }
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case password
+        case kitePlus = "oidc"
+    }
+
+    init(password: Bool, kitePlus: KitePlus?) {
+        self.password = password
+        self.kitePlus = kitePlus
+    }
+
+    init(from decoder: any Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        password = try c.decodeIfPresent(Bool.self, forKey: .password) ?? true
+        kitePlus = try c.decodeIfPresent(KitePlus.self, forKey: .kitePlus)
     }
 }
 

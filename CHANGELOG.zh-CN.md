@@ -8,6 +8,11 @@
 
 ## [未发布]
 
+### 新增
+
+- 服务器支持时，可以用 Kite Plus 账号登录，它是 Kite Plus 各个服务共用的账号。这时登录页以「使用 Kite Plus 账号登录」为主，点了在系统的登录页里打开 Kite Plus，回到 Kite 之前 Explore 会请你确认账号。系统登录页和 Safari 共用登录状态，在 Safari 里登录过 Kite Plus 的话只需确认一下，Kite 也看不到 Kite Plus 账号的密码。登录页和「我的」里的「换一个账号」可以选另一个 Kite Plus 账号。以前用邮箱和密码注册的账号，仍在下方用邮箱和密码登录；新账号都来自 Kite Plus，这类服务器上不再有「创建账号」。Kite Plus 账号的邮箱在 Explore 已有账号时，会提示先用密码登录，再到网站的账号页关联。explore.kite.plus 还没有打开 Kite Plus 登录，打开之前登录和以前一样。
+- 用 Kite Plus 账号登录时，「我的」里显示「Kite Plus 账号」标记，没有「修改密码」，并多了「删除 Kite Plus 账号」，打开 Kite Plus 的账号页面；在那里删除后，Explore 的账号也会随之删除。「删除账号」仍只删除 Explore 的账号。
+
 ### 变更
 
 - App 改用 `Authorization: Bearer` 头发送会话令牌，密码登录也改为在响应里取令牌而不是 Cookie，这是 Explore 的 Kite Plus 登录带来的做法。对之前版本的服务器（包括运行 0.1.19 的 explore.kite.plus），App 仍同时发送会话 Cookie，响应里没有令牌时读取 Cookie；等所有服务器都支持 Bearer 后再去掉 Cookie。读者感觉不到变化。

@@ -91,6 +91,16 @@
         }
       }
     },
+    "Accounts made on Explore before still sign in with their email and password. To link one to Kite Plus, sign in on the Explore website and open My Account." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "以前在 Explore 注册的账号，可以继续用邮箱和密码登录。要关联 Kite Plus 账号，请在 Explore 网站登录后打开“我的账号”。"
+          }
+        }
+      }
+    },
     "Ad" : {
       "localizations" : {
         "zh-Hans" : {
@@ -731,6 +741,26 @@
         }
       }
     },
+    "Delete Account deletes your account on Explore. Your Kite Plus account works across Kite Plus services; delete it on its account page and your Explore account goes with it." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "“删除账号”删除的是你在 Explore 的账号。Kite Plus 账号在 Kite Plus 的各个服务通用，到它的账号页面删除后，Explore 的账号也会随之删除。"
+          }
+        }
+      }
+    },
+    "Delete Kite Plus Account" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "删除 Kite Plus 账号"
+          }
+        }
+      }
+    },
     "Description" : {
       "localizations" : {
         "zh-Hans" : {
@@ -987,6 +1017,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Explore 只保存你的邮箱、名称、密码的哈希值，以及你订阅的博客，从不记录你读了什么。"
+          }
+        }
+      }
+    },
+    "Explore keeps your email, your name and the blogs you follow, and never records what you read. With Kite Plus, your password goes only to Kite Plus; neither Explore nor Kite sees it." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Explore 只保存你的邮箱、名称和订阅的博客，从不记录你读了什么。用 Kite Plus 账号登录时，密码只交给 Kite Plus，Explore 和 Kite 都看不到。"
           }
         }
       }
@@ -1297,6 +1337,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "继续发现"
+          }
+        }
+      }
+    },
+    "Kite Plus Account" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kite Plus 账号"
+          }
+        }
+      }
+    },
+    "Kite Plus accounts are unavailable right now. Try again later." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kite Plus 账号暂时无法访问，请稍后再试。"
           }
         }
       }
@@ -2341,6 +2401,26 @@
         }
       }
     },
+    "Sign In to Explore" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登录 Explore"
+          }
+        }
+      }
+    },
+    "Sign In with a %@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用 %@登录"
+          }
+        }
+      }
+    },
     "Sign Out" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2391,12 +2471,42 @@
         }
       }
     },
+    "Signed in as %@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已登录为 %@"
+          }
+        }
+      }
+    },
     "Signed out" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "已退出登录"
+          }
+        }
+      }
+    },
+    "Signing in with Kite Plus didn't work. Try again." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "没能用 Kite Plus 账号登录，请重试。"
+          }
+        }
+      }
+    },
+    "Signing in with Kite Plus was canceled." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kite Plus 账号登录已取消。"
           }
         }
       }
@@ -2741,6 +2851,16 @@
         }
       }
     },
+    "The sign-in expired. Try again." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登录已过期，请重试。"
+          }
+        }
+      }
+    },
     "The site answered Explore with 404 or 410. The original link stays here, since readers may get a different result." : {
       "localizations" : {
         "zh-Hans" : {
@@ -2781,6 +2901,16 @@
         }
       }
     },
+    "This account is disabled." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "这个账号已停用。"
+          }
+        }
+      }
+    },
     "This address doesn't answer like an Explore server." : {
       "localizations" : {
         "zh-Hans" : {
@@ -2807,6 +2937,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "这个博客已经收录了。"
+          }
+        }
+      }
+    },
+    "This email already belongs to an Explore account. Sign in with its password, then link Kite Plus under My Account on the Explore website." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "这个邮箱已经有 Explore 账号。请先用密码登录，再到 Explore 网站的“我的账号”里关联 Kite Plus 账号。"
           }
         }
       }
@@ -2961,6 +3101,16 @@
         }
       }
     },
+    "Use Another Account" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "换一个账号"
+          }
+        }
+      }
+    },
     "Use Reader When Available" : {
       "localizations" : {
         "zh-Hans" : {
@@ -3007,6 +3157,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "验证记录"
+          }
+        }
+      }
+    },
+    "Verify your email in your Kite Plus account first." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请先在 Kite Plus 账号里验证邮箱。"
           }
         }
       }
@@ -3117,6 +3277,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "例如博客写些什么"
+          }
+        }
+      }
+    },
+    "You stay signed in to Kite Plus, so signing in again brings back this account. Use Another Account picks a different one." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你仍登录着 Kite Plus，再次登录会回到这个账号；要换账号，请用“换一个账号”。"
           }
         }
       }

@@ -1,9 +1,11 @@
+import AuthenticationServices
 import SwiftUI
 
 /// The reader's corner: account, contributions, reading preferences and
 /// what Explore offers to take away.
 struct MeView: View {
     @Environment(AppModel.self) private var app
+    @Environment(\.webAuthenticationSession) private var webAuthenticationSession
     @AppStorage(Preferences.openInSafari) private var openInSafari = false
     @AppStorage(Preferences.readerMode) private var readerMode = false
     @AppStorage(Preferences.handoff) private var showsHandoff = true
@@ -12,6 +14,7 @@ struct MeView: View {
     @State private var changingPassword = false
     @State private var deletingAccount = false
     @State private var confirmingSignOut = false
+    @State private var switchingAccount = false
 
     var body: some View {
         ExploreStack(tab: .me) {
@@ -58,10 +61,13 @@ struct MeView: View {
                         } label: {
                             SettingsLabel("Change Name", symbol: "person.text.rectangle")
                         }
-                        Button {
-                            changingPassword = true
-                        } label: {
-                            SettingsLabel("Change Password", symbol: "key.fill")
+                        // An account that signs in with Kite Plus has no password here.
+                        if app.user?.passwordLogin != false {
+                            Button {
+                                changingPassword = true
+                            } label: {
+                                SettingsLabel("Change Password", symbol: "key.fill")
+                            }
                         }
                     }
                 }
@@ -127,11 +133,34 @@ struct MeView: View {
 
                 if app.isSignedIn {
                     Section {
+                        if app.kitePlus != nil {
+                            Button(action: switchAccount) {
+                                HStack {
+                                    Text("Use Another Account")
+                                    if switchingAccount {
+                                        Spacer()
+                                        ProgressView()
+                                    }
+                                }
+                            }
+                            .disabled(switchingAccount)
+                        }
                         Button("Sign Out", role: .destructive) {
                             confirmingSignOut = true
                         }
+                    }
+                    Section {
                         Button("Delete Account", role: .destructive) {
                             deletingAccount = true
+                        }
+                        if let accountURL = kitePlusAccountURL {
+                            Button("Delete Kite Plus Account", role: .destructive) {
+                                LinkOpener.open(accountURL)
+                            }
+                        }
+                    } footer: {
+                        if kitePlusAccountURL != nil {
+                            Text("Delete Account deletes your account on Explore. Your Kite Plus account works across Kite Plus services; delete it on its account page and your Explore account goes with it.")
                         }
                     }
                 }
@@ -157,6 +186,34 @@ struct MeView: View {
                 Button("Sign Out", role: .destructive) {
                     Task { await app.signOut() }
                 }
+            } message: {
+                // Signing out leaves Kite Plus signed in, as on the website.
+                if app.kitePlus != nil, app.user?.isLinkedToKitePlus == true {
+                    Text("You stay signed in to Kite Plus, so signing in again brings back this account. Use Another Account picks a different one.")
+                }
+            }
+        }
+    }
+
+    /// Where a reader signed in with Kite Plus deletes that account, which
+    /// then deletes the one on Explore.
+    private var kitePlusAccountURL: URL? {
+        guard let kitePlus = app.kitePlus, app.user?.isLinkedToKitePlus == true else { return nil }
+        return URL(string: kitePlus.accountURL)
+    }
+
+    private func switchAccount() {
+        guard !switchingAccount else { return }
+        switchingAccount = true
+        Task {
+            defer { switchingAccount = false }
+            do {
+                try await app.signInWithKitePlus(switchAccount: true, using: webAuthenticationSession)
+                if let name = app.user?.displayName {
+                    app.showToast(String(localized: "Signed in as \(name)"), systemImage: "person.crop.circle.badge.checkmark")
+                }
+            } catch {
+                app.showError(error)
             }
         }
     }
@@ -204,8 +261,15 @@ private struct ProfileHeader: View {
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                 }
-                if user.isAdmin {
-                    Pill(text: String(localized: "Admin"), systemImage: "shield.lefthalf.filled")
+                if user.isAdmin || user.isLinkedToKitePlus {
+                    HStack(spacing: 8) {
+                        if user.isLinkedToKitePlus {
+                            Pill(text: String(localized: "Kite Plus Account"), systemImage: "person.badge.key.fill")
+                        }
+                        if user.isAdmin {
+                            Pill(text: String(localized: "Admin"), systemImage: "shield.lefthalf.filled")
+                        }
+                    }
                 }
             } else {
                 MarkTile(size: 76)
@@ -227,7 +291,7 @@ private struct ProfileHeader: View {
                                 .frame(maxWidth: .infinity)
                         }
                         .buttonStyle(.primaryAction)
-                        if app.registrationEnabled {
+                        if app.canRegister {
                             Button {
                                 app.sheet = .signIn(.register)
                             } label: {

@@ -37,6 +37,8 @@
 			</dict>
 		</dict>
 	</array>
+	<key>SignInHTTPSCallback</key>
+	<string>$(SIGN_IN_HTTPS_CALLBACK)</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>NSPhotoLibraryAddUsageDescription</key>

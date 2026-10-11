@@ -1,3 +1,4 @@
+import AuthenticationServices
 import SwiftUI
 
 enum AppTab: Hashable {
@@ -91,6 +92,8 @@ final class AppModel {
     private(set) var topics: [Topic] = []
     private(set) var notice = ""
     private(set) var registrationEnabled = true
+    /// The sign-ins the server offers; nil until it has said.
+    private(set) var authOptions: AuthOptions?
     private(set) var followedHosts: Set<String> = []
     private(set) var pendingFollows: Set<String> = []
     private(set) var linkStates: [String: LinkState] = [:]
@@ -107,6 +110,11 @@ final class AppModel {
 
     var server: URL { client.server }
     var isSignedIn: Bool { user != nil }
+    /// Kite Plus sign-in, when the server offers it.
+    var kitePlus: AuthOptions.KitePlus? { authOptions?.kitePlus }
+    /// Accounts made with a password: none once the server takes Kite Plus,
+    /// where new accounts come from.
+    var canRegister: Bool { registrationEnabled && kitePlus == nil }
 
     /// The utm_source added to links that leave the app: the server's host,
     /// as the website does.
@@ -123,13 +131,14 @@ final class AppModel {
         readPosts = Set(UserDefaults.standard.stringArray(forKey: Self.readKey) ?? [])
     }
 
-    /// Loads what every screen needs once: the tag list, the site notice and
-    /// the session kept from last time.
+    /// Loads what every screen needs once: the tag list, the site notice,
+    /// the ways to sign in and the session kept from last time.
     func bootstrap() async {
         async let topics: Void = loadTopics()
         async let config: Void = loadSiteConfig()
+        async let options: Void = loadAuthOptions()
         async let session: Void = restoreSession()
-        _ = await (topics, config, session)
+        _ = await (topics, config, options, session)
     }
 
     // MARK: Topics and site settings
@@ -150,6 +159,14 @@ final class AppModel {
         siteConfigLoadedAt = .now
     }
 
+    func loadAuthOptions() async {
+        let client = client
+        guard let options = try? await client.authOptions(), client === self.client else { return }
+        if options != authOptions {
+            withAnimation(.snappy) { authOptions = options }
+        }
+    }
+
     /// Catches up when the app becomes active: whatever failed at launch,
     /// and a site notice older than ten minutes.
     func catchUp() async {
@@ -157,6 +174,9 @@ final class AppModel {
         async let session: Void = restoreSession()
         if siteConfigLoadedAt.map({ Date.now.timeIntervalSince($0) > 600 }) ?? true {
             await loadSiteConfig()
+        }
+        if authOptions == nil {
+            await loadAuthOptions()
         }
         _ = await (topics, session)
     }
@@ -203,6 +223,44 @@ final class AppModel {
         await loadFollows()
     }
 
+    /// Signs in with a Kite Plus account in the system's sign-in browser,
+    /// which shares Safari's cookies, so a reader signed in to Kite Plus
+    /// there only confirms. switchAccount asks Kite Plus to offer its other
+    /// accounts; once signed in, the new account replaces the current one.
+    func signInWithKitePlus(switchAccount: Bool = false, using session: WebAuthenticationSession) async throws {
+        let client = client
+        let pkce = PKCE()
+        let callback = KitePlusSignIn.callback(for: client.server, httpsEnabled: KitePlusSignIn.httpsCallbackEnabled)
+        let start = KitePlusSignIn.startURL(
+            server: client.server, challenge: pkce.challenge, switchAccount: switchAccount, callback: callback
+        )
+        let returned: URL
+        do {
+            returned = try await session.authenticate(
+                using: start, callback: callback.session, preferredBrowserSession: nil, additionalHeaderFields: [:]
+            )
+        } catch let error as ASWebAuthenticationSessionError where error.code == .canceledLogin {
+            throw CancellationError()
+        }
+        let code: String
+        do {
+            code = try KitePlusSignIn.code(from: returned, expecting: callback)
+        } catch .accessDenied {
+            // Cancel on the server's confirmation page or at Kite Plus, which
+            // the reader chose as much as closing the sheet.
+            throw CancellationError()
+        }
+        let (user, token) = try await client.exchange(code: code, verifier: pkce.verifier)
+        guard client === self.client else { return }
+        if isSignedIn {
+            // The session of the account being replaced, which would
+            // otherwise stay valid on the server for its 30 days.
+            try? await client.signOut()
+        }
+        startSession(user, token: token)
+        await loadFollows()
+    }
+
     func register(email: String, password: String, displayName: String) async throws {
         let (user, token) = try await client.register(email: email, password: password, displayName: displayName)
         startSession(user, token: token)
@@ -232,6 +290,7 @@ final class AppModel {
         Keychain.setToken(token, for: Self.key(for: server))
         client.sessionToken = token
         apply(user)
+        followedHosts = []
         generation += 1
     }
 
@@ -379,6 +438,7 @@ final class AppModel {
         user = nil
         topics = []
         notice = ""
+        authOptions = nil
         followedHosts = []
         linkStates = [:]
         submissionIDs = Self.storedSubmissions(for: url)
@@ -436,6 +496,10 @@ final class AppModel {
             show(.about, in: .me)
         case let ("notices", id?):
             show(.notice(id), in: .discover)
+        case ("app", "auth"):
+            // A sign-in's callback, which its session takes; one that gets
+            // here belongs to no sign-in in progress.
+            break
         default:
             tab = .discover
         }

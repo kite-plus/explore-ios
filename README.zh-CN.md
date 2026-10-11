@@ -14,7 +14,7 @@ Kite 是 [Explore](https://github.com/kite-plus/explore) 的原生 iOS 客户端
 - **订阅**：订阅博客，在发现页的「订阅」标签里追更；订阅列表在「我的」里管理，可以导入其他阅读器导出的 OPML，也可以导出为 OPML 带到任何 RSS 阅读器。
 - **博客**：按最近更新排列的博客目录，每个博客都有自己的页面，展示订阅源、文章、语言和博客系统。
 - **搜索**：点发现页右上角的搜索按钮进入搜索页，可以浏览 Explore 的标签，并按名称、地址、简介即时搜索博客；博客目录顶部也有自己的搜索框。
-- **我的**：登录或创建账号，修改名称和密码，删除账号，用 DNS 记录认领自己的博客，提交博客并跟踪审核进度，还可以连接其他 Explore 服务器。
+- **我的**：服务器支持时用 Kite Plus 账号登录，也可以用邮箱和密码登录或创建账号；修改名称和密码，删除账号，用 DNS 记录认领自己的博客，提交博客并跟踪审核进度，还可以连接其他 Explore 服务器。
 - **阅读**：和网站一样，点开文章先显示一个不到一秒的过渡页（可以关掉），写着博客名和文章标题，然后默认在 App 内的 Safari 视图中打开，也可以改为直接用 Safari 打开，并可开启阅读器视图。链接和网站一样只加上 `utm_source`，不添加任何其他内容。打开过的文章在列表里会变淡，这些记录只留在设备上。
 - **分享**：文章和博客可以生成带 Kite 标志和二维码的卡片，存到相册或发给别人。扫码后，文章打开它在 Explore 上的分享页，博客打开它在 Explore 上的页面。读文章时，Safari 视图的分享按钮里也能分享卡片、订阅博客，或在 App 中查看博客。
 - **小组件**：在主屏幕（三种尺寸）和锁定屏幕上显示最新文章，可以只看中文或英文博客。点一下文章，就在作者的网站打开。
@@ -31,7 +31,7 @@ App 全程使用系统自带的 Liquid Glass，而不是模仿它：
 
 ## 隐私
 
-App 没有任何统计，也不向第三方发出请求：文章缩略图和博客图标都来自 Explore 服务器。阅读不需要账号，也不发送 Cookie。登录后，会话令牌保存在钥匙串里，只发给签发它的服务器。文章链接从不经过跳转页。
+App 没有任何统计，也不向第三方发出请求：文章缩略图和博客图标都来自 Explore 服务器。阅读不需要账号，也不发送 Cookie。用 Kite Plus 账号登录在系统的登录页里完成，App 看不到这个密码。登录后，会话令牌保存在钥匙串里，只发给签发它的服务器。文章链接从不经过跳转页。
 
 ## 构建
 
@@ -55,7 +55,7 @@ App 没有任何统计，也不向第三方发出请求：文章缩略图和博�
 
 ## 测试
 
-单元测试使用 Swift Testing，覆盖数据解码、时间解析、按天分组、链接标记、头像颜色、OPML 导出和深度链接：
+单元测试使用 Swift Testing，覆盖数据解码、时间解析、按天分组、链接标记、头像颜色、OPML 导出、深度链接和登录（PKCE、Kite Plus 回调，以及会话令牌怎么发送和读取）：
 
 ```bash
 xcodebuild test -project Explore.xcodeproj -scheme Explore -destination 'platform=iOS Simulator,name=iPhone 17 Pro'
@@ -65,7 +65,7 @@ xcodebuild test -project Explore.xcodeproj -scheme Explore -destination 'platfor
 
 ## 深度链接
 
-`explore://` 链接可以直接打开某个页面，路径和网站相同：`explore://blogs/{host}`、`explore://topics/{slug}`、`explore://submissions/{id}`、`explore://submit`、`explore://sign-in`、`explore://recommended`、`explore://following`、`explore://search` 和 `explore://about`。
+`explore://` 链接可以直接打开某个页面，路径和网站相同：`explore://blogs/{host}`、`explore://topics/{slug}`、`explore://submissions/{id}`、`explore://submit`、`explore://sign-in`、`explore://recommended`、`explore://following`、`explore://search` 和 `explore://about`。`explore://app/auth/done` 是 Kite Plus 登录返回的地址，不打开任何页面。
 
 ## 许可证
 

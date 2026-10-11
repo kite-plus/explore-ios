@@ -74,6 +74,53 @@ struct SessionTests {
         }
     }
 
+    @Test func optionsOfOlderServersArePasswordOnly() async throws {
+        let host = "old-options.test"
+        StubProtocol.answer(host, status: 404, body: #"{"error":{"code":"not_found","message":"Not found."}}"#)
+        #expect(try await client(host).authOptions() == .passwordOnly)
+    }
+
+    @Test func optionsAskInTheInterfaceLanguage() async throws {
+        let host = "options.test"
+        StubProtocol.answer(host, body: #"{"password":true,"oidc":{"name":"Kite Plus account","account_url":"https://id.example/me"}}"#)
+        let options = try await client(host).authOptions()
+        #expect(options.kitePlus?.name == "Kite Plus account")
+        let request = try #require(StubProtocol.requests(to: host).first)
+        #expect(request.url?.path() == "/api/v1/auth/options")
+        #expect(request.value(forHTTPHeaderField: "Accept-Language") == AppLanguage.current.acceptLanguage)
+    }
+
+    @Test func optionsFailuresOtherThanNotFoundStayErrors() async {
+        let host = "options-down.test"
+        StubProtocol.answer(host, status: 503, body: "<html>down</html>")
+        await #expect(throws: APIError.self) {
+            _ = try await client(host).authOptions()
+        }
+    }
+
+    @Test func exchangeSendsTheCodeWithTheVerifier() async throws {
+        let host = "exchange.test"
+        StubProtocol.answer(host, body: #"{"token":"app-token","expires_at":"2026-11-10T08:00:00Z","user":\#(user)}"#)
+        let (signedIn, token) = try await client(host).exchange(code: "the-code", verifier: "the-verifier")
+        #expect(token == "app-token")
+        #expect(signedIn.id == "9f1")
+        let request = try #require(StubProtocol.requests(to: host).first)
+        #expect(request.httpMethod == "POST")
+        #expect(request.url?.path() == "/api/v1/auth/app/exchange")
+        #expect(request.value(forHTTPHeaderField: "Authorization") == nil)
+        #expect(try json(request) == ["code": "the-code", "verifier": "the-verifier"])
+    }
+
+    @Test func exchangeRefusalKeepsItsCode() async {
+        let host = "exchange-refused.test"
+        StubProtocol.answer(host, status: 400, body: #"{"error":{"code":"invalid_grant","message":"Sign in again."}}"#)
+        do {
+            _ = try await client(host).exchange(code: "old", verifier: "v")
+            Issue.record("expected the exchange to fail")
+        } catch {
+            #expect((error as? APIError)?.code == "invalid_grant")
+        }
+    }
 }
 
 /// Answers every request to a host with what a test set for it, and keeps

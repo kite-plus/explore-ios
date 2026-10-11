@@ -141,10 +141,28 @@ final class APIClient {
 
     // MARK: Account
 
+    /// Which sign-ins the server offers. Servers from before Kite Plus
+    /// sign-in answer 404 and take passwords only.
+    func authOptions() async throws -> AuthOptions {
+        do {
+            return try await get("api/v1/auth/options", fresh: true)
+        } catch let error as APIError where error.status == 404 {
+            return .passwordOnly
+        }
+    }
+
     /// Signs in and returns the user with the new session token. Naming the
     /// client gets the token in the body rather than a cookie.
     func signIn(email: String, password: String) async throws -> (User, String) {
         try await startSession("api/v1/auth/login", json: ["email": email, "password": password, "client": "ios"])
+    }
+
+    /// Redeems the code a Kite Plus sign-in returned with the verifier whose
+    /// challenge started it.
+    func exchange(code: String, verifier: String) async throws -> (User, String) {
+        let (data, _) = try await perform(request("POST", "api/v1/auth/app/exchange", json: ["code": code, "verifier": verifier]))
+        let session = try decode(AppSession.self, from: data)
+        return (session.user, session.token)
     }
 
     func register(email: String, password: String, displayName: String) async throws -> (User, String) {
