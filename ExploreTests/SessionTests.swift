@@ -123,8 +123,8 @@ struct SessionTests {
     }
 }
 
-/// Answers every request to a host with what a test set for it, and keeps
-/// the requests, bodies included, for the test to read.
+/// Answers every request to a host, or to one path on it, with what a test
+/// set for it, and keeps the requests, bodies included, for the test to read.
 nonisolated final class StubProtocol: URLProtocol {
     private struct Answer: Sendable {
         let status: Int
@@ -135,9 +135,9 @@ nonisolated final class StubProtocol: URLProtocol {
     private static let answers = Mutex<[String: Answer]>([:])
     private static let sent = Mutex<[String: [URLRequest]]>([:])
 
-    static func answer(_ host: String, status: Int = 200, headers: [String: String] = [:], body: String = "") {
+    static func answer(_ host: String, path: String = "", status: Int = 200, headers: [String: String] = [:], body: String = "") {
         let answer = Answer(status: status, headers: headers.merging(["Content-Type": "application/json"]) { a, _ in a }, body: Data(body.utf8))
-        answers.withLock { $0[host] = answer }
+        answers.withLock { $0[host + path] = answer }
     }
 
     static func requests(to host: String) -> [URLRequest] {
@@ -155,7 +155,8 @@ nonisolated final class StubProtocol: URLProtocol {
             kept.httpBody = Self.read(stream)
         }
         Self.sent.withLock { $0[host, default: []].append(kept) }
-        let answer = Self.answers.withLock { $0[host] } ?? Answer(status: 404, headers: [:], body: Data())
+        let path = request.url?.path() ?? ""
+        let answer = Self.answers.withLock { $0[host + path] ?? $0[host] } ?? Answer(status: 404, headers: [:], body: Data())
         let response = HTTPURLResponse(url: request.url!, statusCode: answer.status, httpVersion: "HTTP/1.1", headerFields: answer.headers)!
         client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
         client?.urlProtocol(self, didLoad: answer.body)

@@ -10,6 +10,8 @@ struct EntryRow: View {
     var showsBlog = true
     /// The blog the list belongs to, for posts that do not carry one.
     var contextBlog: BlogRef?
+    /// Search words to mark in the title and excerpt.
+    var highlight: [String] = []
 
     @Environment(AppModel.self) private var app
     @Environment(\.navigate) private var navigate
@@ -40,12 +42,12 @@ struct EntryRow: View {
                     byline
                     Button(action: open) {
                         VStack(alignment: .leading, spacing: 4) {
-                            Text(entry.title)
+                            Text(SearchTerms.marked(entry.title, words: highlight))
                                 .font(.headline)
                                 .foregroundStyle(read ? .secondary : .primary)
                                 .lineLimit(3)
                             if let excerpt = entry.excerpt, !excerpt.isEmpty {
-                                Text(excerpt)
+                                Text(SearchTerms.marked(SearchTerms.snippet(excerpt, words: highlight), words: highlight))
                                     .font(.subheadline)
                                     .foregroundStyle(read ? .tertiary : .secondary)
                                     .lineLimit(2)

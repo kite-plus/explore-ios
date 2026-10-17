@@ -1,8 +1,8 @@
 import Foundation
 import Observation
 
-/// The whole blog list, kept on the device so search answers as you type.
-/// Explore has no search endpoint; its directory is small enough to hold.
+/// The whole blog list, kept on the device to search servers from before
+/// Explore's search endpoints; the directory is small enough to hold.
 @Observable
 final class BlogIndex {
     private(set) var blogs: [Blog] = []

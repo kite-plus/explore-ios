@@ -106,6 +106,19 @@ final class APIClient {
         try await get("api/v1/notices/\(id)", fresh: true)
     }
 
+    // MARK: Search
+
+    /// Posts whose title or feed excerpt holds every word of the query,
+    /// title matches first. Servers before search answer 404.
+    func searchEntries(_ query: String, cursor: String?, language: String?, limit: Int = 30) async throws -> SearchPage<Entry> {
+        try await get("api/v1/search/entries", query: searchQuery(query, cursor, language, limit))
+    }
+
+    /// Blogs whose name, host or description holds every word of the query.
+    func searchBlogs(_ query: String, cursor: String?, language: String?, limit: Int = 30) async throws -> SearchPage<Blog> {
+        try await get("api/v1/search/blogs", query: searchQuery(query, cursor, language, limit))
+    }
+
     func siteConfig() async throws -> SiteConfig {
         try await get("api/v1/site-config", fresh: true)
     }
@@ -250,12 +263,24 @@ final class APIClient {
         return items
     }
 
+    private func searchQuery(_ query: String, _ cursor: String?, _ language: String?, _ limit: Int) -> [URLQueryItem] {
+        [URLQueryItem(name: "q", value: query)] + listQuery(cursor, language, nil) + [URLQueryItem(name: "limit", value: String(limit))]
+    }
+
     func request(
         _ method: String, _ path: String, query: [URLQueryItem] = [], json: [String: Any]? = nil,
         signed: Bool = false, fresh: Bool = false, timeout: TimeInterval? = nil
     ) throws -> URLRequest {
         var url = server.appending(path: path)
-        if !query.isEmpty { url.append(queryItems: query) }
+        if !query.isEmpty {
+            url.append(queryItems: query)
+            // Servers read a bare "+" as a space, which would turn "c++" into "c".
+            if var components = URLComponents(url: url, resolvingAgainstBaseURL: false),
+               let encoded = components.percentEncodedQuery, encoded.contains("+") {
+                components.percentEncodedQuery = encoded.replacingOccurrences(of: "+", with: "%2B")
+                url = components.url ?? url
+            }
+        }
         var request = URLRequest(url: url)
         request.httpMethod = method
         request.setValue("application/json", forHTTPHeaderField: "Accept")

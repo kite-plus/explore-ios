@@ -68,9 +68,11 @@ struct BlogsView: View {
     @Environment(AppModel.self) private var app
     @AppStorage("blogs.language") private var language: LanguageFilter = .all
     @State private var model = DirectoryModel()
+    @State private var search = SearchModel(includesPosts: false)
     @State private var query = ""
 
     private var trimmed: String { query.trimmingCharacters(in: .whitespacesAndNewlines) }
+    private var searchQuery: SearchModel.Query { SearchModel.Query(text: trimmed, language: language.code) }
 
     var body: some View {
         ExploreStack(tab: .blogs) {
@@ -143,24 +145,60 @@ struct BlogsView: View {
             .task(id: "\(language.rawValue)|\(app.server.absoluteString)") {
                 await model.loadIfNeeded(using: app.client, language: language)
             }
-            .task(id: trimmed.isEmpty) {
-                if !trimmed.isEmpty {
+            .task(id: [trimmed, language.rawValue, app.server.absoluteString]) {
+                guard !trimmed.isEmpty else {
+                    search.reset()
+                    return
+                }
+                // Waits for a pause in typing; the next keystroke cancels this.
+                try? await Task.sleep(for: .milliseconds(300))
+                guard !Task.isCancelled else { return }
+                await search.search(searchQuery, using: app.client)
+                if search.phase == .unsupported {
                     await app.blogIndex.loadIfNeeded(using: app.client)
                 }
             }
         }
     }
 
-    /// Search runs over every blog, not only the pages loaded so far.
+    /// The server searches every blog in the chosen language; one from
+    /// before search leaves it to the device, over every blog.
     @ViewBuilder
     private var searchResults: some View {
-        let matches = app.blogIndex.matches(trimmed)
-        if matches.isEmpty {
-            BlogSearchEmpty(index: app.blogIndex, query: trimmed)
-        } else {
-            ForEach(matches) { blog in
-                BlogCard(blog: blog)
+        if search.phase == .unsupported {
+            let matches = app.blogIndex.matches(trimmed)
+            if matches.isEmpty {
+                BlogSearchEmpty(index: app.blogIndex, query: trimmed)
+            } else {
+                ForEach(matches) { blog in
+                    BlogCard(blog: blog)
+                }
             }
+        } else if case let .failed(message) = search.phase {
+            LoadFailedView(message: message) {
+                await search.search(searchQuery, using: app.client)
+            }
+        } else if !search.blogs.isEmpty {
+            let words = SearchTerms.words(in: search.query?.text ?? "")
+            ForEach(search.blogs) { blog in
+                BlogCard(blog: blog, highlight: words)
+            }
+            PageFooter(
+                isLoading: search.isLoadingMoreBlogs,
+                error: search.blogPageError,
+                hasMore: search.blogCursor != nil,
+                itemCount: search.blogs.count,
+                endText: nil
+            ) {
+                await search.loadMoreBlogs(using: app.client)
+            }
+        } else if search.query != searchQuery {
+            ForEach(0..<3, id: \.self) { _ in
+                BlogPlaceholder()
+            }
+        } else {
+            ContentUnavailableView.search(text: trimmed)
+                .padding(.vertical, 40)
         }
     }
 
@@ -208,6 +246,8 @@ struct BlogsView: View {
 /// the follow button sits above it so taps on it never open the page.
 struct BlogCard: View {
     let blog: Blog
+    /// Search words to mark in the name and description.
+    var highlight: [String] = []
 
     @Environment(\.zoomNamespace) private var zoomNamespace
 
@@ -223,7 +263,7 @@ struct BlogCard: View {
                 HStack(spacing: 12) {
                     BlogAvatar(host: blog.host, name: blog.name, size: 48)
                     VStack(alignment: .leading, spacing: 2) {
-                        Text(blog.name)
+                        Text(SearchTerms.marked(blog.name, words: highlight))
                             .font(.headline)
                             .foregroundStyle(.primary)
                             .lineLimit(1)
@@ -235,7 +275,7 @@ struct BlogCard: View {
                     Spacer(minLength: 110)
                 }
                 if !blog.about.isEmpty {
-                    Text(blog.about)
+                    Text(SearchTerms.marked(SearchTerms.snippet(blog.about, words: highlight), words: highlight))
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                         .lineLimit(2)

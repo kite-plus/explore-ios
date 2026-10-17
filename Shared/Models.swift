@@ -136,6 +136,36 @@ nonisolated struct Page<Item: Codable & Sendable>: Codable, Sendable {
     }
 }
 
+/// A page of search results. Only the first page counts the matches; posts
+/// are counted up to 1,000, and totalCapped says the count stopped there.
+nonisolated struct SearchPage<Item: Codable & Sendable>: Codable, Sendable {
+    let data: [Item]
+    let nextCursor: String?
+    let total: Int?
+    let totalCapped: Bool
+
+    enum CodingKeys: String, CodingKey {
+        case data, total
+        case nextCursor = "next_cursor"
+        case totalCapped = "total_capped"
+    }
+
+    init(data: [Item], nextCursor: String?, total: Int?, totalCapped: Bool = false) {
+        self.data = data
+        self.nextCursor = nextCursor
+        self.total = total
+        self.totalCapped = totalCapped
+    }
+
+    init(from decoder: any Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        data = try c.decode([Item].self, forKey: .data)
+        nextCursor = try c.decodeIfPresent(String.self, forKey: .nextCursor)
+        total = try c.decodeIfPresent(Int.self, forKey: .total)
+        totalCapped = try c.decodeIfPresent(Bool.self, forKey: .totalCapped) ?? false
+    }
+}
+
 nonisolated struct BlogPage: Codable, Sendable {
     let blog: Blog
     let entries: [Entry]

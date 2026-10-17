@@ -21,6 +21,72 @@
         }
       }
     },
+    "%lld blogs" : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld blog"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld blogs"
+                }
+              }
+            }
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld 个博客"
+          }
+        }
+      }
+    },
+    "%lld posts" : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld post"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld posts"
+                }
+              }
+            }
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld 篇文章"
+          }
+        }
+      }
+    },
+    "%lld+ posts" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld+ 篇文章"
+          }
+        }
+      }
+    },
     "A maintainer will review %@. Check its status any time under My Submissions." : {
       "localizations" : {
         "zh-Hans" : {
@@ -1981,6 +2047,16 @@
         }
       }
     },
+    "Posts" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "文章"
+          }
+        }
+      }
+    },
     "Posts Explore filed under this tag, newest first." : {
       "localizations" : {
         "zh-Hans" : {
@@ -2271,12 +2347,12 @@
         }
       }
     },
-    "Search blogs and tags" : {
+    "Search posts, blogs and tags" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "搜索博客和标签"
+            "value" : "搜索文章、博客和标签"
           }
         }
       }
@@ -2977,6 +3053,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "这条记录已过期，请重新生成。"
+          }
+        }
+      }
+    },
+    "This server can't search posts yet." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "这个服务器还不支持搜索文章。"
           }
         }
       }

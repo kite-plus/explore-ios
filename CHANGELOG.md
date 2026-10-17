@@ -11,11 +11,13 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 ### Added
 
 - Sign in with a Kite Plus account, the one account for every Kite Plus service, on servers that offer it. Sign In then leads with "Sign In with Kite Plus", which opens Kite Plus in the system's sign-in sheet; before returning to Kite, Explore asks you to confirm the account. The sheet shares Safari's sign-in, so if you are signed in to Kite Plus there you only confirm, and Kite never sees your Kite Plus password. Use Another Account, on the sign-in sheet and under Me, picks a different Kite Plus account. Accounts made with an email and password still sign in with them below; new accounts come from Kite Plus, so Create Account goes away on those servers. A Kite Plus account whose email already has an account on Explore is told to sign in with the password and link the two on the website's account page. explore.kite.plus does not offer Kite Plus sign-in yet; until it does, signing in works as before.
+- Search finds posts as well as blogs and tags, on servers with Explore's search (0.1.24 and later). Chinese matches as typed and other words whole, and the matching words are marked. Results show the tags that match, then the blogs in a row that scrolls sideways and loads more at its end, then the posts, those with every word in the title first, loading more as you scroll; a menu narrows them to Chinese or English blogs. A search starts once you pause typing, and not while an input method such as pinyin is still choosing the word. On servers without search, explore.kite.plus among them until it updates, Search finds blogs on the device as before and says it can't search posts there.
 - Under Me, an account that signs in with Kite Plus shows a Kite Plus Account badge, has no password to change, and offers Delete Kite Plus Account, which opens the Kite Plus account page; deleting it there deletes the account on Explore too. Delete Account still deletes only the account on Explore.
 
 ### Changed
 
 - The app now sends its session as an `Authorization: Bearer` header, and password sign-in asks for the token in the response instead of a cookie, as Explore's Kite Plus sign-in introduces. Servers from before it, including explore.kite.plus on 0.1.19, still get the session cookie alongside, and their cookie is read when no token comes back; the cookie goes once every server takes Bearer. Nothing changes for readers.
+- The search field at the top of Blogs asks the server too, in the language the filter shows, with results that load as you scroll, so it no longer downloads the whole directory first. Servers without search keep the search on the device.
 
 ### Fixed
 

@@ -1,7 +1,7 @@
 import SwiftUI
 import UIKit
 
-/// Search for blogs and tags, pushed from Discover's search button. The
+/// Search for posts, blogs and tags, pushed from Discover's search button. The
 /// field sits in the bar beside the back button and takes the keyboard
 /// at once, as feed apps have it.
 struct SearchScreen: View {
@@ -38,7 +38,7 @@ private struct SearchField: View {
             Image(systemName: "magnifyingglass")
                 .foregroundStyle(.secondary)
                 .accessibilityHidden(true)
-            FocusedTextField(text: $text, placeholder: String(localized: "Search blogs and tags"))
+            FocusedTextField(text: $text, placeholder: String(localized: "Search posts, blogs and tags"))
             if !text.isEmpty {
                 Button {
                     text = ""
@@ -83,7 +83,7 @@ private struct FocusedTextField: UIViewRepresentable {
     }
 
     func updateUIView(_ field: UITextField, context: Context) {
-        if field.text != text {
+        if field.markedTextRange == nil, field.text != text {
             field.text = text
         }
     }
@@ -100,6 +100,9 @@ private struct FocusedTextField: UIViewRepresentable {
         }
 
         @objc func changed(_ field: UITextField) {
+            // Pinyin and other input methods hold letters until a word is
+            // picked; searching for those would only flash wrong results.
+            guard field.markedTextRange == nil else { return }
             text.wrappedValue = field.text ?? ""
         }
 
